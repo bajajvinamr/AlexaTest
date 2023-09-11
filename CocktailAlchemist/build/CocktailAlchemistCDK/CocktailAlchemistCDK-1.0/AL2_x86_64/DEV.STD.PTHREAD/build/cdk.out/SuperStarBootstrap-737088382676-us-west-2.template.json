@@ -1,0 +1,422 @@
+{
+ "Description": "Bootstrap stack to enable Provisioner to operate on the account https://w.amazon.com/bin/view/Nebula/CCN/Provisioner/GettingStarted/",
+ "Parameters": {
+  "PackagingAggregateId": {
+   "Type": "String",
+   "Default": "default_aggregate_id",
+   "Description": "Aggregate Id that can be used to reference resources from different transformations"
+  },
+  "PackagingTransformId": {
+   "Type": "String",
+   "Default": "default_aggregate_id_transform",
+   "Description": "Deployment Id is used to figure out artifact locations in S3 and ECR"
+  },
+  "PackagingS3KeyPrefix": {
+   "Type": "String",
+   "Default": "local_development_resources",
+   "Description": "Deployment Id is used to figure out artifact locations in S3 and ECR"
+  },
+  "AmazonPipelinesRollbackFlag": {
+   "Type": "String",
+   "Default": "false",
+   "Description": "When a rollback deployment is triggered in Pipelines, the system will override the AmazonPipelinesRollbackFlag with a value of true"
+  }
+ },
+ "Conditions": {
+  "IsRollback": {
+   "Fn::Equals": [
+    {
+     "Ref": "AmazonPipelinesRollbackFlag"
+    },
+    "true"
+   ]
+  }
+ },
+ "Resources": {
+  "CfnRegistrarLambdaFuncRole3DB6244D": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ],
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": [
+          "cloudformation:RegisterType",
+          "cloudformation:DeregisterType",
+          "cloudformation:ListTypeVersions",
+          "cloudformation:DescribeTypeRegistration",
+          "cloudformation:SetTypeDefaultVersion"
+         ],
+         "Effect": "Allow",
+         "Resource": "*"
+        },
+        {
+         "Action": [
+          "s3:GetObject",
+          "s3:ListBucket"
+         ],
+         "Effect": "Allow",
+         "Resource": "*"
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "RegistrarPolicy"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "SuperStarBootstrap-737088382676-us-west-2/CfnRegistrarLambdaFuncRole/Resource"
+   }
+  },
+  "CfnRegistrarLambdaFuncRoleDefaultPolicy47F1B075": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "iam:PassRole",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "RPDKLoggingRole737088382676uswest29F57F71E",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "CfnRegistrarLambdaFuncRoleDefaultPolicy47F1B075",
+    "Roles": [
+     {
+      "Ref": "CfnRegistrarLambdaFuncRole3DB6244D"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "SuperStarBootstrap-737088382676-us-west-2/CfnRegistrarLambdaFuncRole/DefaultPolicy/Resource"
+   }
+  },
+  "CfnRegistrarLambdaFunc08366641": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "ZipFile": "\nimport boto3\nimport time\nimport cfnresponse\nimport logging\ncfn = boto3.client('cloudformation')\n\n# https://issues.amazon.com/issues/Provisioner-981\ndef lambda_handler(event, context):\n    logger = logging.getLogger()\n    logger.setLevel(logging.INFO)\n    try:\n        if event['RequestType'] == 'Delete':\n            logger.info('Deleted!')\n            cfnresponse.send(event, context, cfnresponse.SUCCESS, {})\n            return\n        props = event['ResourceProperties']\n        name = props['TypeName']\n        try:\n            versions=cfn.list_type_versions(Type='RESOURCE', TypeName=name, MaxResults=90)['TypeVersionSummaries'][:-10]\n        except Exception:\n            versions=[]\n        for vId in map(lambda vSum: vSum['VersionId'], versions):\n            try:\n                cfn.deregister_type(Type='RESOURCE', TypeName=name, VersionId=vId)\n            except Exception:\n                logger.error('Cant deregister version ' + vId)\n\n        for attempt in range(3):\n            try:\n                response = cfn.register_type(\n                    Type='RESOURCE',\n                    TypeName=name,\n                    SchemaHandlerPackage=props['S3Url'],\n                    LoggingConfig={\n                        'LogRoleArn': props['LogRoleArn'],\n                        'LogGroupName': props['LogGroupName']\n                    }\n                )\n                break\n            except Exception as e:\n                if attempt > 1:\n                    raise e\n                logger.exception('Registration failure. Waiting 5 seconds before re-try')\n                time.sleep(5)\n\n        reg_token = response['RegistrationToken']\n        describe_response = cfn.describe_type_registration(RegistrationToken = reg_token)\n        while describe_response['ProgressStatus'] == \"IN_PROGRESS\":\n            time.sleep(5)\n            describe_response = cfn.describe_type_registration(RegistrationToken = reg_token)\n        status = describe_response['ProgressStatus']\n        if status == \"FAILED\":\n            cfnresponse.send(event, context, cfnresponse.FAILED, {})\n\n        if ((status == \"COMPLETE\") or (status == \"COMPLETED\")) and ('TypeVersionArn' in describe_response):\n            version_id = describe_response['TypeVersionArn'].split('/')[-1]\n            dv_response = cfn.set_type_default_version(\n                Type='RESOURCE',\n                TypeName=name,\n                VersionId=version_id\n            )\n        else:\n            logger.info('Didnt set default version because of ' + str(describe_response))\n\n        logger.info(name + ' type registered.')\n        cfnresponse.send(event, context, cfnresponse.SUCCESS, {})\n    except Exception:\n        logger.exception('Signaling failure to CloudFormation.')\n        cfnresponse.send(event, context, cfnresponse.FAILED, {})\n"
+    },
+    "Handler": "index.lambda_handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "CfnRegistrarLambdaFuncRole3DB6244D",
+      "Arn"
+     ]
+    },
+    "Runtime": "python3.7",
+    "Timeout": 540
+   },
+   "DependsOn": [
+    "CfnRegistrarLambdaFuncRoleDefaultPolicy47F1B075",
+    "CfnRegistrarLambdaFuncRole3DB6244D"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "SuperStarBootstrap-737088382676-us-west-2/CfnRegistrarLambdaFunc/Resource"
+   }
+  },
+  "UrlPullerLambdaRoleE983445E": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+         ],
+         "Effect": "Allow",
+         "Resource": "*"
+        },
+        {
+         "Action": [
+          "ec2:CreateNetworkInterface",
+          "ec2:DescribeNetworkInterfaces",
+          "ec2:DeleteNetworkInterface"
+         ],
+         "Effect": "Allow",
+         "Resource": "*"
+        },
+        {
+         "Action": [
+          "execute-api:Invoke",
+          "execute-api:ManageConnections"
+         ],
+         "Effect": "Allow",
+         "Resource": "arn:aws:execute-api:*:*:*",
+         "Sid": "SuperStarAPICalls"
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "ReporterPolicy"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "SuperStarBootstrap-737088382676-us-west-2/UrlPullerLambdaRole/Resource"
+   }
+  },
+  "UrlPullerLambda126CEAAC": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "ZipFile": "\nfrom botocore.auth import SigV4Auth\nfrom botocore.awsrequest import AWSRequest\nimport boto3, time, logging, urllib3, json\nimport cfnresponse\n\nhttp = urllib3.PoolManager()\nsession = boto3.Session()\ncredentials = session.get_credentials()\ncreds = credentials.get_frozen_credentials()\n\ndef signed_request(method, url, service_name, region, data=None, params=None, headers=None):\n    body=json.dumps(data) if data is not None else None\n    request = AWSRequest(method=method, url=url, data=body, params=params, headers=headers)\n    SigV4Auth(creds, service_name, region).add_auth(request)\n    return http.request(method, url, headers=dict(request.headers), body=body)\n\ncfn = boto3.client('cloudformation')\n\n# https://issues.amazon.com/issues/Provisioner-981\ndef lambda_handler(event, context):\n    logger = logging.getLogger()\n    logger.setLevel(logging.INFO)\n    try:\n        if event['RequestType'] == 'Delete':\n            logger.info('Deleted!')\n            cfnresponse.send(event, context, cfnresponse.SUCCESS, {})\n            return\n\n        props = event['ResourceProperties']\n\n        r = signed_request(\n            method='GET',\n            url='https://'+props['Host']+'/v2/rpdk_bundles',\n            service_name='execute-api',\n            region='us-east-1',\n            headers={'Content-Type': 'application/x-amz-json-1.1'})\n\n        if r.status == 200:\n            pkgs = json.loads(r.data.decode('utf-8'))['bundles']\n            logger.info('RPDK S3 Urls: ' + str(pkgs))\n            cfnresponse.send(event, context, cfnresponse.SUCCESS, pkgs)\n        else:\n            logger.error('Error response: ' + str(r.status) + ' ' + str(r.headers) + ' ' + str(r.data))\n            cfnresponse.send(event, context, cfnresponse.FAILED, {})\n    except Exception:\n        logger.exception('Signaling failure to CloudFormation.')\n        cfnresponse.send(event, context, cfnresponse.FAILED, {})\n"
+    },
+    "Handler": "index.lambda_handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "UrlPullerLambdaRoleE983445E",
+      "Arn"
+     ]
+    },
+    "Runtime": "python3.7",
+    "Timeout": 120
+   },
+   "DependsOn": [
+    "UrlPullerLambdaRoleE983445E"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "SuperStarBootstrap-737088382676-us-west-2/UrlPullerLambda/Resource"
+   }
+  },
+  "RPDKLoggingRole737088382676uswest29F57F71E": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "resources.cloudformation.amazonaws.com"
+       }
+      },
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "cloudformation.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:DescribeLogGroups",
+          "logs:DescribeLogStreams",
+          "logs:PutLogEvents",
+          "cloudwatch:ListMetrics",
+          "cloudwatch:PutMetricData"
+         ],
+         "Effect": "Allow",
+         "Resource": "*"
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "ReporterPolicy"
+     }
+    ],
+    "RoleName": "RPDKLoggingRole-737088382676-us-west-2"
+   },
+   "Metadata": {
+    "aws:cdk:path": "SuperStarBootstrap-737088382676-us-west-2/RPDKLoggingRole-737088382676-us-west-2/Resource"
+   }
+  },
+  "SuperStarRPDKLogGroup21CFC120": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": "/SuperStar/RPDK",
+    "RetentionInDays": 180
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "SuperStarBootstrap-737088382676-us-west-2/SuperStarRPDKLogGroup/Resource"
+   }
+  },
+  "UrlPuller": {
+   "Type": "Custom::RpdkUrlPuller",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "UrlPullerLambda126CEAAC",
+      "Arn"
+     ]
+    },
+    "LambdaVersion": 0.8938126327865874,
+    "Host": "api.provisioner.superstar.amazon.dev"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "SuperStarBootstrap-737088382676-us-west-2/UrlPuller/Default"
+   }
+  },
+  "ServiceEnvironment": {
+   "Type": "Custom::CfnTypeRegister",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "CfnRegistrarLambdaFunc08366641",
+      "Arn"
+     ]
+    },
+    "LambdaVersion": 0.8938126327865874,
+    "TypeName": "Retail::ConsumerNetwork::ServiceEnvironment",
+    "S3Url": {
+     "Fn::GetAtt": [
+      "UrlPuller",
+      "ServiceEnvironmentHandler"
+     ]
+    },
+    "LogRoleArn": {
+     "Fn::GetAtt": [
+      "RPDKLoggingRole737088382676uswest29F57F71E",
+      "Arn"
+     ]
+    },
+    "LogGroupName": {
+     "Ref": "SuperStarRPDKLogGroup21CFC120"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "SuperStarBootstrap-737088382676-us-west-2/ServiceEnvironment/Default"
+   }
+  },
+  "ClientConfiguration": {
+   "Type": "Custom::CfnTypeRegister",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "CfnRegistrarLambdaFunc08366641",
+      "Arn"
+     ]
+    },
+    "LambdaVersion": 0.8938126327865874,
+    "TypeName": "Retail::ConsumerNetwork::ClientConfiguration",
+    "S3Url": {
+     "Fn::GetAtt": [
+      "UrlPuller",
+      "ClientConfigurationHandler"
+     ]
+    },
+    "LogRoleArn": {
+     "Fn::GetAtt": [
+      "RPDKLoggingRole737088382676uswest29F57F71E",
+      "Arn"
+     ]
+    },
+    "LogGroupName": {
+     "Ref": "SuperStarRPDKLogGroup21CFC120"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "SuperStarBootstrap-737088382676-us-west-2/ClientConfiguration/Default"
+   }
+  },
+  "ProviderConfiguration": {
+   "Type": "Custom::CfnTypeRegister",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "CfnRegistrarLambdaFunc08366641",
+      "Arn"
+     ]
+    },
+    "LambdaVersion": 0.8938126327865874,
+    "TypeName": "Retail::ConsumerNetwork::ProviderConfiguration",
+    "S3Url": {
+     "Fn::GetAtt": [
+      "UrlPuller",
+      "ProviderConfigurationHandler"
+     ]
+    },
+    "LogRoleArn": {
+     "Fn::GetAtt": [
+      "RPDKLoggingRole737088382676uswest29F57F71E",
+      "Arn"
+     ]
+    },
+    "LogGroupName": {
+     "Ref": "SuperStarRPDKLogGroup21CFC120"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "SuperStarBootstrap-737088382676-us-west-2/ProviderConfiguration/Default"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/0WNwU7DMBBEv6V3ZxuqIsENUQkuHKqIO9okS+Vie61duxVY+XeclIjTvNHMzu6hhXbzhP4nbDVHEk0oTRS+WLUcSJph/Gp65qRJMMLzSu/ko8NEZgcPj3UCr7pUne2hHD7DEQU9JRJTzYHDaFPdM7X2USx6KB07mrNFj+zs8D3bG03Goe9HhPKSw7Bc1mzlmvJJobzx6VU4xzlbeZpMR8pZhrqeNbH/t/XZH08m8Ehw1u1l18I93G3Oam0jOSTrCbqb/gIAZmM4HQEAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "SuperStarBootstrap-737088382676-us-west-2/CDKMetadata/Default"
+   }
+  }
+ }
+}

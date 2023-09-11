@@ -1,0 +1,367 @@
+{
+ "Metadata": {
+  "HighCastleBlueprintID#3c5b7308-d575-48bd-bd28-bce1ff16a0d9": "22.0.0",
+  "HighCastleDeploymentType": "Pipelines"
+ },
+ "Parameters": {
+  "PackagingAggregateId": {
+   "Type": "String",
+   "Default": "default_aggregate_id",
+   "Description": "Aggregate Id that can be used to reference resources from different transformations"
+  },
+  "PackagingTransformId": {
+   "Type": "String",
+   "Default": "default_aggregate_id_transform",
+   "Description": "Deployment Id is used to figure out artifact locations in S3 and ECR"
+  },
+  "PackagingS3KeyPrefix": {
+   "Type": "String",
+   "Default": "local_development_resources",
+   "Description": "Deployment Id is used to figure out artifact locations in S3 and ECR"
+  },
+  "AmazonPipelinesRollbackFlag": {
+   "Type": "String",
+   "Default": "false",
+   "Description": "When a rollback deployment is triggered in Pipelines, the system will override the AmazonPipelinesRollbackFlag with a value of true"
+  }
+ },
+ "Conditions": {
+  "IsRollback": {
+   "Fn::Equals": [
+    {
+     "Ref": "AmazonPipelinesRollbackFlag"
+    },
+    "true"
+   ]
+  }
+ },
+ "Resources": {
+  "CocktailAlchemistLambdauswest2gammaaliaslambdaCocktailAlchemistLambdaStackuswest2gammaFunctionCocktailAlchemistLambdagammaCurrentVersionF0E284F6": {
+   "Type": "AWS::Lambda::Alias",
+   "Properties": {
+    "FunctionName": {
+     "Ref": "FunctionCocktailAlchemistLambdagamma9BE6C33A"
+    },
+    "FunctionVersion": {
+     "Fn::GetAtt": [
+      "FunctionCocktailAlchemistLambdagammaCurrentVersion535F2A28eb7b4359235eadbf3f06eb1c7a093240",
+      "Version"
+     ]
+    },
+    "Name": "live"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-LambdaStack-us-west-2-gamma/CocktailAlchemist-Lambda-us-west-2-gamma/alias-lambda-CocktailAlchemist-LambdaStack-us-west-2-gamma--Function-CocktailAlchemist-Lambda-gamma--CurrentVersion/Resource"
+   }
+  },
+  "FunctionCocktailAlchemistLambdagamma9BE6C33A": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "deploymentbucket-cc64298188a7b3d1e4b8d990b42e52a11c4f94b0",
+     "S3Key": "local_development_resources_74d8c4d78d3666a14e1cf8a29c91771b6154bd30f111c86401a5ea67e0883663/artifact"
+    },
+    "FunctionName": "CocktailAlchemist-Lambda-gamma",
+    "Handler": "com.alexa.cocktailalchemist.lambda.HelloWorldStreamHandler",
+    "MemorySize": 512,
+    "Role": {
+     "Fn::GetAtt": [
+      "FunctionCocktailAlchemistLambdagammaServiceRole3B2C4185",
+      "Arn"
+     ]
+    },
+    "Runtime": "java11",
+    "Tags": [
+     {
+      "Key": "brazil-asset:location:bucketName",
+      "Value": "deploymentbucket-cc64298188a7b3d1e4b8d990b42e52a11c4f94b0"
+     },
+     {
+      "Key": "brazil-asset:location:objectKey",
+      "Value": "local_development_resources_74d8c4d78d3666a14e1cf8a29c91771b6154bd30f111c86401a5ea67e0883663/artifact"
+     },
+     {
+      "Key": "HighCastleBlueprintID-3c5b7308-d575-48bd-bd28-bce1ff16a0d9",
+      "Value": "22.0.0"
+     },
+     {
+      "Key": "HighCastleDeploymentType",
+      "Value": "Pipelines"
+     }
+    ],
+    "Timeout": 30,
+    "VpcConfig": {
+     "SecurityGroupIds": [
+      {
+       "Fn::GetAtt": [
+        "FunctionCocktailAlchemistLambdagammaSecurityGroupA6E9EC49",
+        "GroupId"
+       ]
+      }
+     ],
+     "SubnetIds": [
+      {
+       "Fn::ImportValue": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpcPrivateSubnet1Subnet26DA8502D1273738"
+      },
+      {
+       "Fn::ImportValue": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpcPrivateSubnet2Subnet1582B1927587BDA1"
+      },
+      {
+       "Fn::ImportValue": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpcPrivateSubnet3Subnet3B7FB66736264C2C"
+      }
+     ]
+    }
+   },
+   "DependsOn": [
+    "FunctionCocktailAlchemistLambdagammaServiceRole3B2C4185"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-LambdaStack-us-west-2-gamma/Function-CocktailAlchemist-Lambda-gamma/Resource",
+    "aws:asset:path": ".",
+    "BuildMethod": "makefile",
+    "aws:asset:property": "Code"
+   }
+  },
+  "FunctionCocktailAlchemistLambdagammaSecurityGroupA6E9EC49": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Automatic security group for Lambda Function CocktailAlchemistLambdaStackuswest2gammaFunctionCocktailAlchemistLambdagammaFCBC39C5",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "HighCastleBlueprintID-3c5b7308-d575-48bd-bd28-bce1ff16a0d9",
+      "Value": "22.0.0"
+     },
+     {
+      "Key": "HighCastleDeploymentType",
+      "Value": "Pipelines"
+     }
+    ],
+    "VpcId": {
+     "Fn::ImportValue": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpc410949D69A02AAFC"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-LambdaStack-us-west-2-gamma/Function-CocktailAlchemist-Lambda-gammaSecurityGroup/Resource"
+   }
+  },
+  "FunctionCocktailAlchemistLambdagammaServiceRole3B2C4185": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     },
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "HighCastleBlueprintID-3c5b7308-d575-48bd-bd28-bce1ff16a0d9",
+      "Value": "22.0.0"
+     },
+     {
+      "Key": "HighCastleDeploymentType",
+      "Value": "Pipelines"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-LambdaStack-us-west-2-gamma/Function-CocktailAlchemist-Lambda-gammaServiceRole/Resource"
+   }
+  },
+  "FunctionCocktailAlchemistLambdagammaCurrentVersion535F2A28eb7b4359235eadbf3f06eb1c7a093240": {
+   "Type": "AWS::Lambda::Version",
+   "Properties": {
+    "FunctionName": {
+     "Ref": "FunctionCocktailAlchemistLambdagamma9BE6C33A"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-LambdaStack-us-west-2-gamma/Function-CocktailAlchemist-Lambda-gamma/CurrentVersion/Resource"
+   }
+  },
+  "FunctionCocktailAlchemistLambdagammaCocktailAlchemist8D65DCD2": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "EventSourceToken": "amzn1.ask.skill.8d72a536-6c5b-4141-925a-8f49a9160bea",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "FunctionCocktailAlchemistLambdagamma9BE6C33A",
+      "Arn"
+     ]
+    },
+    "Principal": "alexa-appkit.amazon.com"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-LambdaStack-us-west-2-gamma/Function-CocktailAlchemist-Lambda-gamma/CocktailAlchemist"
+   }
+  },
+  "CocktailAlchemistLambdagammaINVOCATIONSERRORSSUMLOWSEVF0E90FD0": {
+   "Type": "AWS::CloudWatch::Alarm",
+   "Properties": {
+    "AlarmName": "CocktailAlchemist-Lambda-gamma_INVOCATIONS_ERRORS_SUM_LOW_SEV",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "DatapointsToAlarm": 10,
+    "Dimensions": [
+     {
+      "Name": "FunctionName",
+      "Value": "CocktailAlchemist-Lambda-gamma"
+     }
+    ],
+    "EvaluationPeriods": 10,
+    "MetricName": "Errors",
+    "Namespace": "AWS/Lambda",
+    "Period": 60,
+    "Statistic": "Sum",
+    "Threshold": 20,
+    "Unit": "Count"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-LambdaStack-us-west-2-gamma/CocktailAlchemist-Lambda-gamma_INVOCATIONS_ERRORS_SUM_LOW_SEV/Resource"
+   }
+  },
+  "CocktailAlchemistLambdagammaINVOCATIONSERRORSSUMHIGHSEV0F4D74C5": {
+   "Type": "AWS::CloudWatch::Alarm",
+   "Properties": {
+    "AlarmName": "CocktailAlchemist-Lambda-gamma_INVOCATIONS_ERRORS_SUM_HIGH_SEV",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "DatapointsToAlarm": 15,
+    "Dimensions": [
+     {
+      "Name": "FunctionName",
+      "Value": "CocktailAlchemist-Lambda-gamma"
+     }
+    ],
+    "EvaluationPeriods": 15,
+    "MetricName": "Errors",
+    "Namespace": "AWS/Lambda",
+    "Period": 60,
+    "Statistic": "Sum",
+    "Threshold": 50,
+    "Unit": "Count"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-LambdaStack-us-west-2-gamma/CocktailAlchemist-Lambda-gamma_INVOCATIONS_ERRORS_SUM_HIGH_SEV/Resource"
+   }
+  },
+  "CocktailAlchemistLambdagammaINVOCATIONTHROTTLESSUMLOWSEVE03E8BB1": {
+   "Type": "AWS::CloudWatch::Alarm",
+   "Properties": {
+    "AlarmName": "CocktailAlchemist-Lambda-gamma_INVOCATION_THROTTLES_SUM_LOW_SEV",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "DatapointsToAlarm": 10,
+    "Dimensions": [
+     {
+      "Name": "FunctionName",
+      "Value": "CocktailAlchemist-Lambda-gamma"
+     }
+    ],
+    "EvaluationPeriods": 10,
+    "MetricName": "Throttles",
+    "Namespace": "AWS/Lambda",
+    "Period": 60,
+    "Statistic": "Sum",
+    "Threshold": 5,
+    "Unit": "Count"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-LambdaStack-us-west-2-gamma/CocktailAlchemist-Lambda-gamma_INVOCATION_THROTTLES_SUM_LOW_SEV/Resource"
+   }
+  },
+  "CocktailAlchemistLambdagammaINVOCATIONTHROTTLESSUMHIGHSEVA2CA4D0A": {
+   "Type": "AWS::CloudWatch::Alarm",
+   "Properties": {
+    "AlarmName": "CocktailAlchemist-Lambda-gamma_INVOCATION_THROTTLES_SUM_HIGH_SEV",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "DatapointsToAlarm": 15,
+    "Dimensions": [
+     {
+      "Name": "FunctionName",
+      "Value": "CocktailAlchemist-Lambda-gamma"
+     }
+    ],
+    "EvaluationPeriods": 15,
+    "MetricName": "Throttles",
+    "Namespace": "AWS/Lambda",
+    "Period": 60,
+    "Statistic": "Sum",
+    "Threshold": 10,
+    "Unit": "Count"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-LambdaStack-us-west-2-gamma/CocktailAlchemist-Lambda-gamma_INVOCATION_THROTTLES_SUM_HIGH_SEV/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1WOS08CMRSFf8vsO5dhokR3GghsyZCwNZf2Gi/0MelDgk3/u1OHGF2d7zwW5wE6WC2bFzRfdjHySJotBdjQqN3NkI2HiPIienh6hq7Ba2ilurSaT5DX73aPHg1F8mIya2cVR3ZWTLO3rNGcFEJ+1Yyh9jNsk5U/oyn55SP5cM/+4J684VBdESR7yAeSyXO87bxLY138C4pgNJAHp6l2VYuQ2iV1xSg/6hP0Zn4yQSlioOCSl/P8zkVYpwjOYfHZd/AIy+YcmFufbGRDMMz6DZRT9K43AQAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-LambdaStack-us-west-2-gamma/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "ExportsOutputRefFunctionCocktailAlchemistLambdagamma9BE6C33ACC6C8A66": {
+   "Value": {
+    "Ref": "FunctionCocktailAlchemistLambdagamma9BE6C33A"
+   },
+   "Export": {
+    "Name": "CocktailAlchemist-LambdaStack-us-west-2-gamma:ExportsOutputRefFunctionCocktailAlchemistLambdagamma9BE6C33ACC6C8A66"
+   }
+  },
+  "ExportsOutputFnGetAttFunctionCocktailAlchemistLambdagamma9BE6C33AArn10014C71": {
+   "Value": {
+    "Fn::GetAtt": [
+     "FunctionCocktailAlchemistLambdagamma9BE6C33A",
+     "Arn"
+    ]
+   },
+   "Export": {
+    "Name": "CocktailAlchemist-LambdaStack-us-west-2-gamma:ExportsOutputFnGetAttFunctionCocktailAlchemistLambdagamma9BE6C33AArn10014C71"
+   }
+  }
+ }
+}

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: DaggerRuntime-2.x.234007.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/DaggerRuntime/DaggerRuntime-2.x.234007.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/dagger-2.13.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/DaggerRuntime/DaggerRuntime-2.x.234007.0/AL2_x86_64/generic-flavor/src/third-party-artifacts/com/google/dagger/dagger/2.13/dagger-2.13-sources" />
+    </SOURCES>
+  </library>
+</component>

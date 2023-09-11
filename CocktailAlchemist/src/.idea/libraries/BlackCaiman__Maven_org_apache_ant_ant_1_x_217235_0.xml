@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: Maven-org-apache-ant_ant-1.x.217235.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/Maven-org-apache-ant_ant/Maven-org-apache-ant_ant-1.x.217235.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/ant-1.10.12.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Maven-org-apache-ant_ant/Maven-org-apache-ant_ant-1.x.217235.0/AL2_x86_64/generic-flavor/src/third-party-artifacts/org/apache/ant/ant/1.10.12/ant-1.10.12-sources" />
+    </SOURCES>
+  </library>
+</component>

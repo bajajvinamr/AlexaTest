@@ -1,0 +1,1336 @@
+{
+ "Description": "ASK Skill Deployer Stack. It contains the infrastructure for deploying skills.",
+ "Parameters": {
+  "PackagingAggregateId": {
+   "Type": "String",
+   "Default": "default_aggregate_id",
+   "Description": "Aggregate Id that can be used to reference resources from different transformations"
+  },
+  "PackagingTransformId": {
+   "Type": "String",
+   "Default": "default_aggregate_id_transform",
+   "Description": "Deployment Id is used to figure out artifact locations in S3 and ECR"
+  },
+  "PackagingS3KeyPrefix": {
+   "Type": "String",
+   "Default": "local_development_resources",
+   "Description": "Deployment Id is used to figure out artifact locations in S3 and ECR"
+  },
+  "AmazonPipelinesRollbackFlag": {
+   "Type": "String",
+   "Default": "false",
+   "Description": "When a rollback deployment is triggered in Pipelines, the system will override the AmazonPipelinesRollbackFlag with a value of true"
+  }
+ },
+ "Conditions": {
+  "IsRollback": {
+   "Fn::Equals": [
+    {
+     "Ref": "AmazonPipelinesRollbackFlag"
+    },
+    "true"
+   ]
+  }
+ },
+ "Resources": {
+  "SmapiFunctionServiceRole24C49B15": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     },
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/SmapiFunction/ServiceRole/Resource"
+   }
+  },
+  "SmapiFunctionServiceRoleDefaultPolicyD79283D8": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:DescribeSecret"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":secretsmanager:us-west-2:737088382676:secret:ask-config-MU3P1O0KM8EYT-??????"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": "s3:GetObject",
+       "Effect": "Allow",
+       "Resource": "arn:aws:s3:::deploymentbucket-cc64298188a7b3d1e4b8d990b42e52a11c4f94b0/*"
+      },
+      {
+       "Action": "kms:Decrypt",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "BONESBootstrap-5831802-737088382676-us-west-2:BARSKeyArn"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "SmapiFunctionServiceRoleDefaultPolicyD79283D8",
+    "Roles": [
+     {
+      "Ref": "SmapiFunctionServiceRole24C49B15"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/SmapiFunction/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "SmapiFunctionSecurityGroupEFFDF15C": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Automatic security group for Lambda Function CocktailAlchemistskilldeployeruswest2gammaSmapiFunction19479D0A",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "VpcId": {
+     "Fn::ImportValue": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpc410949D69A02AAFC"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/SmapiFunction/SecurityGroup/Resource"
+   }
+  },
+  "SmapiFunction287154F4": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "deploymentbucket-cc64298188a7b3d1e4b8d990b42e52a11c4f94b0",
+     "S3Key": "local_development_resources_transform/cdk.out/89d96a7e461d9c503e95f63521757aa1c9082dad6f2f35444c8786e67b5f0cec_asset.89d96a7e461d9c503e95f63521757aa1c9082dad6f2f35444c8786e67b5f0cec.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "SECRET_ID": {
+       "Fn::Join": [
+        "",
+        [
+         "arn:",
+         {
+          "Ref": "AWS::Partition"
+         },
+         ":secretsmanager:us-west-2:737088382676:secret:ask-config-MU3P1O0KM8EYT"
+        ]
+       ]
+      },
+      "NODE_EXTRA_CA_CERTS": "/opt/dist/certs.pem",
+      "SMAPI_ENDPOINT": "https://asma-5ty-public-na-pp-tcp.iad.amazon.com",
+      "LWA_TOKEN_ENDPOINT": "https://api.amazon.com"
+     }
+    },
+    "Handler": "index.handle",
+    "Layers": [
+     {
+      "Ref": "AmazonCertsLayer47167D39"
+     }
+    ],
+    "MemorySize": 256,
+    "Role": {
+     "Fn::GetAtt": [
+      "SmapiFunctionServiceRole24C49B15",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs14.x",
+    "Timeout": 60,
+    "VpcConfig": {
+     "SecurityGroupIds": [
+      {
+       "Fn::GetAtt": [
+        "SmapiFunctionSecurityGroupEFFDF15C",
+        "GroupId"
+       ]
+      }
+     ],
+     "SubnetIds": [
+      {
+       "Fn::ImportValue": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpcPrivateSubnet1Subnet26DA8502D1273738"
+      },
+      {
+       "Fn::ImportValue": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpcPrivateSubnet2Subnet1582B1927587BDA1"
+      },
+      {
+       "Fn::ImportValue": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpcPrivateSubnet3Subnet3B7FB66736264C2C"
+      }
+     ]
+    }
+   },
+   "DependsOn": [
+    "SmapiFunctionServiceRoleDefaultPolicyD79283D8",
+    "SmapiFunctionServiceRole24C49B15"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/SmapiFunction/Resource",
+    "aws:asset:path": "asset.89d96a7e461d9c503e95f63521757aa1c9082dad6f2f35444c8786e67b5f0cec",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "ValidationFunctionServiceRole934D0B98": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     },
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/ValidationFunction/ServiceRole/Resource"
+   }
+  },
+  "ValidationFunctionServiceRoleDefaultPolicyE32E5084": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:DescribeSecret"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":secretsmanager:us-west-2:737088382676:secret:ask-config-MU3P1O0KM8EYT-??????"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": "s3:GetObject",
+       "Effect": "Allow",
+       "Resource": "arn:aws:s3:::deploymentbucket-cc64298188a7b3d1e4b8d990b42e52a11c4f94b0/*"
+      },
+      {
+       "Action": "kms:Decrypt",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "BONESBootstrap-5831802-737088382676-us-west-2:BARSKeyArn"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ValidationFunctionServiceRoleDefaultPolicyE32E5084",
+    "Roles": [
+     {
+      "Ref": "ValidationFunctionServiceRole934D0B98"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/ValidationFunction/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "ValidationFunctionSecurityGroupA243A665": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Automatic security group for Lambda Function CocktailAlchemistskilldeployeruswest2gammaValidationFunctionF4851EE9",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "VpcId": {
+     "Fn::ImportValue": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpc410949D69A02AAFC"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/ValidationFunction/SecurityGroup/Resource"
+   }
+  },
+  "ValidationFunctionB150DCA9": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "deploymentbucket-cc64298188a7b3d1e4b8d990b42e52a11c4f94b0",
+     "S3Key": "local_development_resources_transform/cdk.out/5a3663ce3e50ece5538e00e1f36ec9bae09ff86d9cd6853ef97bac132a8d55c7_asset.5a3663ce3e50ece5538e00e1f36ec9bae09ff86d9cd6853ef97bac132a8d55c7.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "SECRET_ID": {
+       "Fn::Join": [
+        "",
+        [
+         "arn:",
+         {
+          "Ref": "AWS::Partition"
+         },
+         ":secretsmanager:us-west-2:737088382676:secret:ask-config-MU3P1O0KM8EYT"
+        ]
+       ]
+      },
+      "NODE_EXTRA_CA_CERTS": "/opt/dist/certs.pem",
+      "SMAPI_ENDPOINT": "https://asma-5ty-public-na-pp-tcp.iad.amazon.com",
+      "LWA_TOKEN_ENDPOINT": "https://api.amazon.com"
+     }
+    },
+    "Handler": "index.handle",
+    "Layers": [
+     {
+      "Ref": "AmazonCertsLayer47167D39"
+     }
+    ],
+    "MemorySize": 256,
+    "Role": {
+     "Fn::GetAtt": [
+      "ValidationFunctionServiceRole934D0B98",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs14.x",
+    "Timeout": 60,
+    "VpcConfig": {
+     "SecurityGroupIds": [
+      {
+       "Fn::GetAtt": [
+        "ValidationFunctionSecurityGroupA243A665",
+        "GroupId"
+       ]
+      }
+     ],
+     "SubnetIds": [
+      {
+       "Fn::ImportValue": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpcPrivateSubnet1Subnet26DA8502D1273738"
+      },
+      {
+       "Fn::ImportValue": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpcPrivateSubnet2Subnet1582B1927587BDA1"
+      },
+      {
+       "Fn::ImportValue": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpcPrivateSubnet3Subnet3B7FB66736264C2C"
+      }
+     ]
+    }
+   },
+   "DependsOn": [
+    "ValidationFunctionServiceRoleDefaultPolicyE32E5084",
+    "ValidationFunctionServiceRole934D0B98"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/ValidationFunction/Resource",
+    "aws:asset:path": "asset.5a3663ce3e50ece5538e00e1f36ec9bae09ff86d9cd6853ef97bac132a8d55c7",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "CertificationFunctionServiceRole9BF036FD": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     },
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/CertificationFunction/ServiceRole/Resource"
+   }
+  },
+  "CertificationFunctionServiceRoleDefaultPolicy99B065BF": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:DescribeSecret"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":secretsmanager:us-west-2:737088382676:secret:ask-config-MU3P1O0KM8EYT-??????"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": "s3:GetObject",
+       "Effect": "Allow",
+       "Resource": "arn:aws:s3:::deploymentbucket-cc64298188a7b3d1e4b8d990b42e52a11c4f94b0/*"
+      },
+      {
+       "Action": "kms:Decrypt",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "BONESBootstrap-5831802-737088382676-us-west-2:BARSKeyArn"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "CertificationFunctionServiceRoleDefaultPolicy99B065BF",
+    "Roles": [
+     {
+      "Ref": "CertificationFunctionServiceRole9BF036FD"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/CertificationFunction/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "CertificationFunctionSecurityGroup060F52D3": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Automatic security group for Lambda Function CocktailAlchemistskilldeployeruswest2gammaCertificationFunction327B8BF5",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "VpcId": {
+     "Fn::ImportValue": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpc410949D69A02AAFC"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/CertificationFunction/SecurityGroup/Resource"
+   }
+  },
+  "CertificationFunction5A5F1D12": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "deploymentbucket-cc64298188a7b3d1e4b8d990b42e52a11c4f94b0",
+     "S3Key": "local_development_resources_transform/cdk.out/ee9a971a6dc859e3f59841877535bd6a2abb27e1431d2d6773da745b009180e1_asset.ee9a971a6dc859e3f59841877535bd6a2abb27e1431d2d6773da745b009180e1.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "SECRET_ID": {
+       "Fn::Join": [
+        "",
+        [
+         "arn:",
+         {
+          "Ref": "AWS::Partition"
+         },
+         ":secretsmanager:us-west-2:737088382676:secret:ask-config-MU3P1O0KM8EYT"
+        ]
+       ]
+      },
+      "NODE_EXTRA_CA_CERTS": "/opt/dist/certs.pem",
+      "SMAPI_ENDPOINT": "https://asma-5ty-public-na-pp-tcp.iad.amazon.com",
+      "LWA_TOKEN_ENDPOINT": "https://api.amazon.com"
+     }
+    },
+    "Handler": "index.handle",
+    "Layers": [
+     {
+      "Ref": "AmazonCertsLayer47167D39"
+     }
+    ],
+    "MemorySize": 256,
+    "Role": {
+     "Fn::GetAtt": [
+      "CertificationFunctionServiceRole9BF036FD",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs14.x",
+    "Timeout": 60,
+    "VpcConfig": {
+     "SecurityGroupIds": [
+      {
+       "Fn::GetAtt": [
+        "CertificationFunctionSecurityGroup060F52D3",
+        "GroupId"
+       ]
+      }
+     ],
+     "SubnetIds": [
+      {
+       "Fn::ImportValue": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpcPrivateSubnet1Subnet26DA8502D1273738"
+      },
+      {
+       "Fn::ImportValue": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpcPrivateSubnet2Subnet1582B1927587BDA1"
+      },
+      {
+       "Fn::ImportValue": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpcPrivateSubnet3Subnet3B7FB66736264C2C"
+      }
+     ]
+    }
+   },
+   "DependsOn": [
+    "CertificationFunctionServiceRoleDefaultPolicy99B065BF",
+    "CertificationFunctionServiceRole9BF036FD"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/CertificationFunction/Resource",
+    "aws:asset:path": "asset.ee9a971a6dc859e3f59841877535bd6a2abb27e1431d2d6773da745b009180e1",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "ValidationStateMachineLogs13C13BCF": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "RetentionInDays": 731
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/ValidationStateMachineLogs/Resource"
+   }
+  },
+  "ValidationStateMachineRole8C78AAF1": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "states.us-west-2.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/ValidationStateMachine/Role/Resource"
+   }
+  },
+  "ValidationStateMachineRoleDefaultPolicy95133EDE": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogDelivery",
+        "logs:GetLogDelivery",
+        "logs:UpdateLogDelivery",
+        "logs:DeleteLogDelivery",
+        "logs:ListLogDeliveries",
+        "logs:PutResourcePolicy",
+        "logs:DescribeResourcePolicies",
+        "logs:DescribeLogGroups"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "ValidationFunctionB150DCA9",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "ValidationFunctionB150DCA9",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ValidationStateMachineRoleDefaultPolicy95133EDE",
+    "Roles": [
+     {
+      "Ref": "ValidationStateMachineRole8C78AAF1"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/ValidationStateMachine/Role/DefaultPolicy/Resource"
+   }
+  },
+  "ValidationStateMachine06C840F7": {
+   "Type": "AWS::StepFunctions::StateMachine",
+   "Properties": {
+    "DefinitionString": {
+     "Fn::Join": [
+      "",
+      [
+       "{\"StartAt\":\"Start Validation\",\"States\":{\"Start Validation\":{\"Next\":\"Poll Validation\",\"Retry\":[{\"ErrorEquals\":[\"Lambda.ClientExecutionTimeoutException\",\"Lambda.ServiceException\",\"Lambda.AWSLambdaException\",\"Lambda.SdkClientException\"],\"IntervalSeconds\":2,\"MaxAttempts\":6,\"BackoffRate\":2}],\"Type\":\"Task\",\"OutputPath\":\"$.Payload\",\"Resource\":\"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":states:::lambda:invoke\",\"Parameters\":{\"FunctionName\":\"",
+       {
+        "Fn::GetAtt": [
+         "ValidationFunctionB150DCA9",
+         "Arn"
+        ]
+       },
+       "\",\"Payload.$\":\"$\"}},\"Poll Validation\":{\"Next\":\"Check Validation Completion\",\"Retry\":[{\"ErrorEquals\":[\"Lambda.ClientExecutionTimeoutException\",\"Lambda.ServiceException\",\"Lambda.AWSLambdaException\",\"Lambda.SdkClientException\"],\"IntervalSeconds\":2,\"MaxAttempts\":6,\"BackoffRate\":2}],\"Type\":\"Task\",\"OutputPath\":\"$.Payload\",\"Resource\":\"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":states:::lambda:invoke\",\"Parameters\":{\"FunctionName\":\"",
+       {
+        "Fn::GetAtt": [
+         "ValidationFunctionB150DCA9",
+         "Arn"
+        ]
+       },
+       "\",\"Payload.$\":\"$\"}},\"Wait For Validation\":{\"Type\":\"Wait\",\"SecondsPath\":\"$.waitSeconds\",\"Next\":\"Poll Validation\"},\"Check Validation Completion\":{\"Type\":\"Choice\",\"Choices\":[{\"Variable\":\"$.status\",\"StringEquals\":\"Success\",\"Next\":\"Validation Success\"},{\"Variable\":\"$.status\",\"StringEquals\":\"Failed\",\"Next\":\"Validation Failed\"}],\"Default\":\"Wait For Validation\"},\"Validation Success\":{\"Type\":\"Succeed\"},\"Validation Failed\":{\"Type\":\"Fail\"}}}"
+      ]
+     ]
+    },
+    "LoggingConfiguration": {
+     "Destinations": [
+      {
+       "CloudWatchLogsLogGroup": {
+        "LogGroupArn": {
+         "Fn::GetAtt": [
+          "ValidationStateMachineLogs13C13BCF",
+          "Arn"
+         ]
+        }
+       }
+      }
+     ],
+     "Level": "ALL"
+    },
+    "RoleArn": {
+     "Fn::GetAtt": [
+      "ValidationStateMachineRole8C78AAF1",
+      "Arn"
+     ]
+    },
+    "StateMachineType": "STANDARD"
+   },
+   "DependsOn": [
+    "ValidationStateMachineRoleDefaultPolicy95133EDE",
+    "ValidationStateMachineRole8C78AAF1"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/ValidationStateMachine/Resource"
+   }
+  },
+  "CertificationStateMachineLogsA5CD7EB5": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "RetentionInDays": 731
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/CertificationStateMachineLogs/Resource"
+   }
+  },
+  "CertificationStateMachineRoleD6A7EEE9": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "states.us-west-2.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/CertificationStateMachine/Role/Resource"
+   }
+  },
+  "CertificationStateMachineRoleDefaultPolicyB09C08A7": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogDelivery",
+        "logs:GetLogDelivery",
+        "logs:UpdateLogDelivery",
+        "logs:DeleteLogDelivery",
+        "logs:ListLogDeliveries",
+        "logs:PutResourcePolicy",
+        "logs:DescribeResourcePolicies",
+        "logs:DescribeLogGroups"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "CertificationFunction5A5F1D12",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "CertificationFunction5A5F1D12",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "CertificationStateMachineRoleDefaultPolicyB09C08A7",
+    "Roles": [
+     {
+      "Ref": "CertificationStateMachineRoleD6A7EEE9"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/CertificationStateMachine/Role/DefaultPolicy/Resource"
+   }
+  },
+  "CertificationStateMachineC208725B": {
+   "Type": "AWS::StepFunctions::StateMachine",
+   "Properties": {
+    "DefinitionString": {
+     "Fn::Join": [
+      "",
+      [
+       "{\"StartAt\":\"Start Certification\",\"States\":{\"Start Certification\":{\"Next\":\"Wait for Skill Version\",\"Retry\":[{\"ErrorEquals\":[\"Lambda.ClientExecutionTimeoutException\",\"Lambda.ServiceException\",\"Lambda.AWSLambdaException\",\"Lambda.SdkClientException\"],\"IntervalSeconds\":2,\"MaxAttempts\":6,\"BackoffRate\":2}],\"Type\":\"Task\",\"OutputPath\":\"$.Payload\",\"Resource\":\"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":states:::lambda:invoke\",\"Parameters\":{\"FunctionName\":\"",
+       {
+        "Fn::GetAtt": [
+         "CertificationFunction5A5F1D12",
+         "Arn"
+        ]
+       },
+       "\",\"Payload.$\":\"$\"}},\"Wait for Skill Version\":{\"Type\":\"Wait\",\"SecondsPath\":\"$.waitSeconds\",\"Next\":\"Get Certification Skill Version\"},\"Get Certification Skill Version\":{\"Next\":\"Poll Certification\",\"Retry\":[{\"ErrorEquals\":[\"Lambda.ClientExecutionTimeoutException\",\"Lambda.ServiceException\",\"Lambda.AWSLambdaException\",\"Lambda.SdkClientException\"],\"IntervalSeconds\":2,\"MaxAttempts\":6,\"BackoffRate\":2}],\"Type\":\"Task\",\"OutputPath\":\"$.Payload\",\"Resource\":\"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":states:::lambda:invoke\",\"Parameters\":{\"FunctionName\":\"",
+       {
+        "Fn::GetAtt": [
+         "CertificationFunction5A5F1D12",
+         "Arn"
+        ]
+       },
+       "\",\"Payload.$\":\"$\"}},\"Poll Certification\":{\"Next\":\"Check Certification Completion\",\"Retry\":[{\"ErrorEquals\":[\"Lambda.ClientExecutionTimeoutException\",\"Lambda.ServiceException\",\"Lambda.AWSLambdaException\",\"Lambda.SdkClientException\"],\"IntervalSeconds\":2,\"MaxAttempts\":6,\"BackoffRate\":2}],\"Type\":\"Task\",\"OutputPath\":\"$.Payload\",\"Resource\":\"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":states:::lambda:invoke\",\"Parameters\":{\"FunctionName\":\"",
+       {
+        "Fn::GetAtt": [
+         "CertificationFunction5A5F1D12",
+         "Arn"
+        ]
+       },
+       "\",\"Payload.$\":\"$\"}},\"Wait For Certification\":{\"Type\":\"Wait\",\"SecondsPath\":\"$.waitSeconds\",\"Next\":\"Poll Certification\"},\"Check Certification Completion\":{\"Type\":\"Choice\",\"Choices\":[{\"Variable\":\"$.status\",\"StringEquals\":\"Success\",\"Next\":\"Certification Success\"},{\"Variable\":\"$.status\",\"StringEquals\":\"Failed\",\"Next\":\"Certification Failed\"}],\"Default\":\"Wait For Certification\"},\"Certification Success\":{\"Type\":\"Succeed\"},\"Certification Failed\":{\"Type\":\"Fail\"}}}"
+      ]
+     ]
+    },
+    "LoggingConfiguration": {
+     "Destinations": [
+      {
+       "CloudWatchLogsLogGroup": {
+        "LogGroupArn": {
+         "Fn::GetAtt": [
+          "CertificationStateMachineLogsA5CD7EB5",
+          "Arn"
+         ]
+        }
+       }
+      }
+     ],
+     "Level": "ALL"
+    },
+    "RoleArn": {
+     "Fn::GetAtt": [
+      "CertificationStateMachineRoleD6A7EEE9",
+      "Arn"
+     ]
+    },
+    "StateMachineType": "STANDARD"
+   },
+   "DependsOn": [
+    "CertificationStateMachineRoleDefaultPolicyB09C08A7",
+    "CertificationStateMachineRoleD6A7EEE9"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/CertificationStateMachine/Resource"
+   }
+  },
+  "StateMachineLogs3CB16D3C": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "RetentionInDays": 731
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/StateMachineLogs/Resource"
+   }
+  },
+  "StateMachineRoleB840431D": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "states.us-west-2.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/StateMachine/Role/Resource"
+   }
+  },
+  "StateMachineRoleDefaultPolicyDF1E6607": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogDelivery",
+        "logs:GetLogDelivery",
+        "logs:UpdateLogDelivery",
+        "logs:DeleteLogDelivery",
+        "logs:ListLogDeliveries",
+        "logs:PutResourcePolicy",
+        "logs:DescribeResourcePolicies",
+        "logs:DescribeLogGroups"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "SmapiFunction287154F4",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "SmapiFunction287154F4",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "StateMachineRoleDefaultPolicyDF1E6607",
+    "Roles": [
+     {
+      "Ref": "StateMachineRoleB840431D"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/StateMachine/Role/DefaultPolicy/Resource"
+   }
+  },
+  "StateMachine2E01A3A5": {
+   "Type": "AWS::StepFunctions::StateMachine",
+   "Properties": {
+    "DefinitionString": {
+     "Fn::Join": [
+      "",
+      [
+       "{\"StartAt\":\"InvokeSMAPI\",\"States\":{\"InvokeSMAPI\":{\"Next\":\"CheckState\",\"Retry\":[{\"ErrorEquals\":[\"Lambda.ClientExecutionTimeoutException\",\"Lambda.ServiceException\",\"Lambda.AWSLambdaException\",\"Lambda.SdkClientException\"],\"IntervalSeconds\":2,\"MaxAttempts\":6,\"BackoffRate\":2}],\"Type\":\"Task\",\"OutputPath\":\"$.Payload\",\"Resource\":\"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":states:::lambda:invoke\",\"Parameters\":{\"FunctionName\":\"",
+       {
+        "Fn::GetAtt": [
+         "SmapiFunction287154F4",
+         "Arn"
+        ]
+       },
+       "\",\"Payload.$\":\"$\"}},\"Wait\":{\"Type\":\"Wait\",\"SecondsPath\":\"$.waitSeconds\",\"Next\":\"InvokeSMAPI\"},\"CheckState\":{\"Type\":\"Choice\",\"Choices\":[{\"Variable\":\"$.status\",\"StringEquals\":\"DeploymentSuccess\",\"Next\":\"Success\"},{\"Variable\":\"$.status\",\"StringEquals\":\"DeploymentFailed\",\"Next\":\"Failure\"}],\"Default\":\"Wait\"},\"Success\":{\"Type\":\"Succeed\"},\"Failure\":{\"Type\":\"Fail\"}}}"
+      ]
+     ]
+    },
+    "LoggingConfiguration": {
+     "Destinations": [
+      {
+       "CloudWatchLogsLogGroup": {
+        "LogGroupArn": {
+         "Fn::GetAtt": [
+          "StateMachineLogs3CB16D3C",
+          "Arn"
+         ]
+        }
+       }
+      }
+     ],
+     "Level": "ALL"
+    },
+    "RoleArn": {
+     "Fn::GetAtt": [
+      "StateMachineRoleB840431D",
+      "Arn"
+     ]
+    },
+    "StateMachineType": "STANDARD"
+   },
+   "DependsOn": [
+    "StateMachineRoleDefaultPolicyDF1E6607",
+    "StateMachineRoleB840431D"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/StateMachine/Resource"
+   }
+  },
+  "CfnFunctionServiceRoleA9E8D86C": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     },
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/CfnFunction/ServiceRole/Resource"
+   }
+  },
+  "CfnFunctionServiceRoleDefaultPolicyFEEE06F8": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "states:StartExecution",
+       "Effect": "Allow",
+       "Resource": {
+        "Ref": "ValidationStateMachine06C840F7"
+       }
+      },
+      {
+       "Action": "states:StartExecution",
+       "Effect": "Allow",
+       "Resource": {
+        "Ref": "CertificationStateMachineC208725B"
+       }
+      },
+      {
+       "Action": "states:StartExecution",
+       "Effect": "Allow",
+       "Resource": {
+        "Ref": "StateMachine2E01A3A5"
+       }
+      },
+      {
+       "Action": [
+        "cloudformation:DescribeStacks",
+        "cloudformation:DescribeStackEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": "arn:aws:cloudformation:us-west-2:737088382676:stack/*"
+      },
+      {
+       "Action": [
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:DescribeSecret"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":secretsmanager:us-west-2:737088382676:secret:ask-config-MU3P1O0KM8EYT-??????"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": "s3:GetObject",
+       "Effect": "Allow",
+       "Resource": "arn:aws:s3:::deploymentbucket-cc64298188a7b3d1e4b8d990b42e52a11c4f94b0/*"
+      },
+      {
+       "Action": "kms:Decrypt",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "BONESBootstrap-5831802-737088382676-us-west-2:BARSKeyArn"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "CfnFunctionServiceRoleDefaultPolicyFEEE06F8",
+    "Roles": [
+     {
+      "Ref": "CfnFunctionServiceRoleA9E8D86C"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/CfnFunction/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "CfnFunctionSecurityGroup575399DA": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Automatic security group for Lambda Function CocktailAlchemistskilldeployeruswest2gammaCfnFunction7B8E4541",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "VpcId": {
+     "Fn::ImportValue": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpc410949D69A02AAFC"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/CfnFunction/SecurityGroup/Resource"
+   }
+  },
+  "CfnFunctionD7182995": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "deploymentbucket-cc64298188a7b3d1e4b8d990b42e52a11c4f94b0",
+     "S3Key": "local_development_resources_transform/cdk.out/bee21039eea678ea646283b91310db11b1ed645e25c4b94c4e8d1b929fd5e35a_asset.bee21039eea678ea646283b91310db11b1ed645e25c4b94c4e8d1b929fd5e35a.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "STATE_MACHINE_ARN": {
+       "Ref": "StateMachine2E01A3A5"
+      },
+      "VALIDATION_STATE_MACHINE_ARN": {
+       "Ref": "ValidationStateMachine06C840F7"
+      },
+      "CERTIFICATION_STATE_MACHINE_ARN": {
+       "Ref": "CertificationStateMachineC208725B"
+      },
+      "SECRET_ID": {
+       "Fn::Join": [
+        "",
+        [
+         "arn:",
+         {
+          "Ref": "AWS::Partition"
+         },
+         ":secretsmanager:us-west-2:737088382676:secret:ask-config-MU3P1O0KM8EYT"
+        ]
+       ]
+      },
+      "NODE_EXTRA_CA_CERTS": "/opt/dist/certs.pem",
+      "SMAPI_ENDPOINT": "https://asma-5ty-public-na-pp-tcp.iad.amazon.com",
+      "LWA_TOKEN_ENDPOINT": "https://api.amazon.com"
+     }
+    },
+    "Handler": "index.handle",
+    "Layers": [
+     {
+      "Ref": "AmazonCertsLayer47167D39"
+     }
+    ],
+    "MemorySize": 256,
+    "Role": {
+     "Fn::GetAtt": [
+      "CfnFunctionServiceRoleA9E8D86C",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs14.x",
+    "Timeout": 60,
+    "VpcConfig": {
+     "SecurityGroupIds": [
+      {
+       "Fn::GetAtt": [
+        "CfnFunctionSecurityGroup575399DA",
+        "GroupId"
+       ]
+      }
+     ],
+     "SubnetIds": [
+      {
+       "Fn::ImportValue": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpcPrivateSubnet1Subnet26DA8502D1273738"
+      },
+      {
+       "Fn::ImportValue": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpcPrivateSubnet2Subnet1582B1927587BDA1"
+      },
+      {
+       "Fn::ImportValue": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpcPrivateSubnet3Subnet3B7FB66736264C2C"
+      }
+     ]
+    }
+   },
+   "DependsOn": [
+    "CfnFunctionServiceRoleDefaultPolicyFEEE06F8",
+    "CfnFunctionServiceRoleA9E8D86C"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/CfnFunction/Resource",
+    "aws:asset:path": "asset.bee21039eea678ea646283b91310db11b1ed645e25c4b94c4e8d1b929fd5e35a",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "AmazonCertsLayer47167D39": {
+   "Type": "AWS::Lambda::LayerVersion",
+   "Properties": {
+    "Content": {
+     "S3Bucket": "deploymentbucket-cc64298188a7b3d1e4b8d990b42e52a11c4f94b0",
+     "S3Key": "local_development_resources_transform/cdk.out/d757fde4f232bbef4d5ca97d6d265653ad9ccb2b2cfe407669519576bd382889_asset.d757fde4f232bbef4d5ca97d6d265653ad9ccb2b2cfe407669519576bd382889.zip"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/AmazonCertsLayer/Resource",
+    "aws:asset:path": "asset.d757fde4f232bbef4d5ca97d6d265653ad9ccb2b2cfe407669519576bd382889.zip",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Content"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1VQXW/CMAz8LbwHA92HtrcNJqZJTEIgbY/IpKaYpkkVp0xd1f++tDAET3cXn52z72EMj5PBCxa/dlRySYYtCbxRaVxdkA3rgDpXCTw9w3iAPzLUaT40vIVmtrNL9FhQIK+imDmbcmBn1YrEVV6Tiv5NY7DYpgjNvLK6L0fvhS+wJv9FXs6Fa90qxgKalTPUlXpcOsO67uSJtUruNihCQeC1g6hhWumcwhSFFOkEmjXpynOo372ryq735iGOCFTuzolkE1BygUWf+sMeXU63hrj53nHcbl1pTZSqObJR38hBxWMF+kS9j0fs/7nSrTIui80Ll11y/PO2VX346M/YZv225xu2yrqU4CCjYzKGB5gMDsI89JUNXBCsTvgHMKB3ZscBAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-skill-deployer-us-west-2-gamma/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "ExportsOutputFnGetAttCfnFunctionD7182995ArnF86A8B17": {
+   "Value": {
+    "Fn::GetAtt": [
+     "CfnFunctionD7182995",
+     "Arn"
+    ]
+   },
+   "Export": {
+    "Name": "CocktailAlchemist-skill-deployer-us-west-2-gamma:ExportsOutputFnGetAttCfnFunctionD7182995ArnF86A8B17"
+   }
+  }
+ }
+}

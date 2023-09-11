@@ -1,0 +1,1 @@
+/Users/khsrivas/brazil-pkg-cache/packages/Fortify/Fortify-17.20.0.432677.0/AL2_x86_64/DEV.STD.PTHREAD/build/Fortify/Core/private-bin/awb/eclipse/features/org.eclipse.datatools.connectivity.oda.feature_1.12.0.v201406061321-7E7C7YBgJ9ET9OHLDfLZ/META-INF/MANIFEST.MF

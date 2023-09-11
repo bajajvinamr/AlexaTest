@@ -1,0 +1,386 @@
+{
+ "Parameters": {
+  "PackagingAggregateId": {
+   "Type": "String",
+   "Default": "default_aggregate_id",
+   "Description": "Aggregate Id that can be used to reference resources from different transformations"
+  },
+  "PackagingTransformId": {
+   "Type": "String",
+   "Default": "default_aggregate_id_transform",
+   "Description": "Deployment Id is used to figure out artifact locations in S3 and ECR"
+  },
+  "PackagingS3KeyPrefix": {
+   "Type": "String",
+   "Default": "local_development_resources",
+   "Description": "Deployment Id is used to figure out artifact locations in S3 and ECR"
+  },
+  "AmazonPipelinesRollbackFlag": {
+   "Type": "String",
+   "Default": "false",
+   "Description": "When a rollback deployment is triggered in Pipelines, the system will override the AmazonPipelinesRollbackFlag with a value of true"
+  }
+ },
+ "Conditions": {
+  "IsRollback": {
+   "Fn::Equals": [
+    {
+     "Ref": "AmazonPipelinesRollbackFlag"
+    },
+    "true"
+   ]
+  }
+ },
+ "Resources": {
+  "SummaryDashboard486079CD": {
+   "Type": "AWS::CloudWatch::Dashboard",
+   "Properties": {
+    "DashboardBody": {
+     "Fn::Join": [
+      "",
+      [
+       "{\"start\":\"-P14D\",\"periodOverride\":\"inherit\",\"widgets\":[{\"type\":\"text\",\"width\":24,\"height\":1,\"x\":0,\"y\":0,\"properties\":{\"markdown\":\"# Summary dashboard\"}},{\"type\":\"text\",\"width\":24,\"height\":1,\"x\":0,\"y\":1,\"properties\":{\"markdown\":\"## Lambda function\"}},{\"type\":\"metric\",\"width\":24,\"height\":6,\"x\":0,\"y\":2,\"properties\":{\"view\":\"timeSeries\",\"title\":\"AVG TPS (1 minute)\",\"region\":\"",
+       {
+        "Ref": "AWS::Region"
+       },
+       "\",\"metrics\":[[{\"label\":\"TPS\",\"expression\":\"requests/PERIOD(requests)\",\"period\":60}],[\"AWS/Lambda\",\"Invocations\",\"FunctionName\",\"",
+       {
+        "Fn::ImportValue": "CocktailAlchemist-LambdaStack-us-west-2-gamma:ExportsOutputRefFunctionCocktailAlchemistLambdagamma9BE6C33ACC6C8A66"
+       },
+       "\",{\"period\":60,\"stat\":\"Sum\",\"visible\":false,\"id\":\"requests\"}]],\"yAxis\":{\"left\":{\"min\":0,\"showUnits\":false}}}},{\"type\":\"metric\",\"width\":24,\"height\":6,\"x\":0,\"y\":8,\"properties\":{\"view\":\"timeSeries\",\"title\":\"Concurrency\",\"region\":\"",
+       {
+        "Ref": "AWS::Region"
+       },
+       "\",\"metrics\":[[\"AWS/Lambda\",\"ConcurrentExecutions\",\"FunctionName\",\"",
+       {
+        "Fn::ImportValue": "CocktailAlchemist-LambdaStack-us-west-2-gamma:ExportsOutputRefFunctionCocktailAlchemistLambdagamma9BE6C33ACC6C8A66"
+       },
+       "\",{\"stat\":\"Maximum\"}]],\"yAxis\":{\"left\":{\"showUnits\":false}}}},{\"type\":\"metric\",\"width\":24,\"height\":6,\"x\":0,\"y\":14,\"properties\":{\"view\":\"timeSeries\",\"title\":\"Duration\",\"region\":\"",
+       {
+        "Ref": "AWS::Region"
+       },
+       "\",\"metrics\":[[\"AWS/Lambda\",\"Duration\",\"FunctionName\",\"",
+       {
+        "Fn::ImportValue": "CocktailAlchemist-LambdaStack-us-west-2-gamma:ExportsOutputRefFunctionCocktailAlchemistLambdagamma9BE6C33ACC6C8A66"
+       },
+       "\",{\"label\":\"P50\",\"stat\":\"p50\"}],[\"AWS/Lambda\",\"Duration\",\"FunctionName\",\"",
+       {
+        "Fn::ImportValue": "CocktailAlchemist-LambdaStack-us-west-2-gamma:ExportsOutputRefFunctionCocktailAlchemistLambdagamma9BE6C33ACC6C8A66"
+       },
+       "\",{\"label\":\"P90\",\"stat\":\"p90\"}],[\"AWS/Lambda\",\"Duration\",\"FunctionName\",\"",
+       {
+        "Fn::ImportValue": "CocktailAlchemist-LambdaStack-us-west-2-gamma:ExportsOutputRefFunctionCocktailAlchemistLambdagamma9BE6C33ACC6C8A66"
+       },
+       "\",{\"label\":\"P99\",\"stat\":\"p99\"}]],\"yAxis\":{\"left\":{\"min\":0,\"label\":\"ms\",\"showUnits\":false}}}},{\"type\":\"metric\",\"width\":24,\"height\":6,\"x\":0,\"y\":20,\"properties\":{\"view\":\"timeSeries\",\"title\":\"Error Count and Rate\",\"region\":\"",
+       {
+        "Ref": "AWS::Region"
+       },
+       "\",\"metrics\":[[\"AWS/Lambda\",\"Errors\",\"FunctionName\",\"",
+       {
+        "Fn::ImportValue": "CocktailAlchemist-LambdaStack-us-west-2-gamma:ExportsOutputRefFunctionCocktailAlchemistLambdagamma9BE6C33ACC6C8A66"
+       },
+       "\",{\"label\":\"Counts\",\"stat\":\"Sum\",\"id\":\"errors\"}],[{\"label\":\"Rates\",\"expression\":\"errors*100/invocations\",\"yAxis\":\"right\"}],[\"AWS/Lambda\",\"Invocations\",\"FunctionName\",\"",
+       {
+        "Fn::ImportValue": "CocktailAlchemist-LambdaStack-us-west-2-gamma:ExportsOutputRefFunctionCocktailAlchemistLambdagamma9BE6C33ACC6C8A66"
+       },
+       "\",{\"stat\":\"Sum\",\"visible\":false,\"id\":\"invocations\"}]],\"yAxis\":{\"left\":{\"min\":0,\"showUnits\":false},\"right\":{\"min\":0,\"label\":\"%\",\"showUnits\":false}}}}]}"
+      ]
+     ]
+    },
+    "DashboardName": "CocktailAlchemist-Summary"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-Monitoring-gamma/SummaryDashboard/Resource"
+   }
+  },
+  "ServiceDashboard3C555A71": {
+   "Type": "AWS::CloudWatch::Dashboard",
+   "Properties": {
+    "DashboardBody": {
+     "Fn::Join": [
+      "",
+      [
+       "{\"start\":\"-PT8H\",\"periodOverride\":\"inherit\",\"widgets\":[{\"type\":\"text\",\"width\":24,\"height\":1,\"x\":0,\"y\":0,\"properties\":{\"markdown\":\"# Service dashboard\"}},{\"type\":\"metric\",\"width\":12,\"height\":6,\"x\":0,\"y\":1,\"properties\":{\"view\":\"timeSeries\",\"title\":\"Error count\",\"region\":\"",
+       {
+        "Ref": "AWS::Region"
+       },
+       "\",\"annotations\":{\"alarms\":[\"",
+       {
+        "Fn::GetAtt": [
+         "LambdaFunctionErrorCountAlarmF5590235",
+         "Arn"
+        ]
+       },
+       "\"]},\"yAxis\":{\"left\":{\"min\":0,\"showUnits\":false}}}},{\"type\":\"metric\",\"width\":12,\"height\":6,\"x\":12,\"y\":1,\"properties\":{\"view\":\"timeSeries\",\"title\":\"Error rate\",\"region\":\"",
+       {
+        "Ref": "AWS::Region"
+       },
+       "\",\"annotations\":{\"alarms\":[\"",
+       {
+        "Fn::GetAtt": [
+         "LambdaFunctionErrorRateAlarm5DAA71B1",
+         "Arn"
+        ]
+       },
+       "\"]},\"yAxis\":{\"left\":{\"min\":0,\"label\":\"%\",\"showUnits\":false}}}},{\"type\":\"metric\",\"width\":24,\"height\":6,\"x\":0,\"y\":7,\"properties\":{\"view\":\"timeSeries\",\"title\":\"Throttle rate\",\"region\":\"",
+       {
+        "Ref": "AWS::Region"
+       },
+       "\",\"annotations\":{\"alarms\":[\"",
+       {
+        "Fn::GetAtt": [
+         "LambdaFunctionThrottleRate27ECBE56",
+         "Arn"
+        ]
+       },
+       "\"]},\"yAxis\":{\"left\":{\"min\":0,\"label\":\"%\",\"showUnits\":false}}}},{\"type\":\"metric\",\"width\":24,\"height\":6,\"x\":0,\"y\":13,\"properties\":{\"view\":\"timeSeries\",\"title\":\"Provisioned concurrency spillover\",\"region\":\"",
+       {
+        "Ref": "AWS::Region"
+       },
+       "\",\"annotations\":{\"alarms\":[\"",
+       {
+        "Fn::GetAtt": [
+         "ProvisionConcurrencySpilloverAlarmA69DA30E",
+         "Arn"
+        ]
+       },
+       "\"]},\"yAxis\":{\"left\":{\"min\":0,\"showUnits\":false}}}},{\"type\":\"metric\",\"width\":24,\"height\":6,\"x\":0,\"y\":19,\"properties\":{\"view\":\"timeSeries\",\"title\":\"Duration\",\"region\":\"",
+       {
+        "Ref": "AWS::Region"
+       },
+       "\",\"annotations\":{\"alarms\":[\"",
+       {
+        "Fn::GetAtt": [
+         "LambdaFunctionDurationAlarmE4D8C0C5",
+         "Arn"
+        ]
+       },
+       "\"]},\"yAxis\":{\"left\":{\"min\":0,\"label\":\"ms\",\"showUnits\":false}}}}]}"
+      ]
+     ]
+    },
+    "DashboardName": "CocktailAlchemist-Service"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-Monitoring-gamma/ServiceDashboard/Resource"
+   }
+  },
+  "LambdaFunctionErrorCountAlarmF5590235": {
+   "Type": "AWS::CloudWatch::Alarm",
+   "Properties": {
+    "ComparisonOperator": "GreaterThanThreshold",
+    "Dimensions": [
+     {
+      "Name": "FunctionName",
+      "Value": {
+       "Fn::ImportValue": "CocktailAlchemist-LambdaStack-us-west-2-gamma:ExportsOutputRefFunctionCocktailAlchemistLambdagamma9BE6C33ACC6C8A66"
+      }
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "Errors",
+    "Namespace": "AWS/Lambda",
+    "Period": 60,
+    "Statistic": "Sum",
+    "Threshold": 1
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-Monitoring-gamma/LambdaFunctionErrorCountAlarm/Resource"
+   }
+  },
+  "LambdaFunctionErrorRateAlarm5DAA71B1": {
+   "Type": "AWS::CloudWatch::Alarm",
+   "Properties": {
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "EvaluationPeriods": 5,
+    "Metrics": [
+     {
+      "Expression": "errors*100/invocations",
+      "Id": "expr_1",
+      "Label": "Rates"
+     },
+     {
+      "Id": "errors",
+      "MetricStat": {
+       "Metric": {
+        "Dimensions": [
+         {
+          "Name": "FunctionName",
+          "Value": {
+           "Fn::ImportValue": "CocktailAlchemist-LambdaStack-us-west-2-gamma:ExportsOutputRefFunctionCocktailAlchemistLambdagamma9BE6C33ACC6C8A66"
+          }
+         }
+        ],
+        "MetricName": "Errors",
+        "Namespace": "AWS/Lambda"
+       },
+       "Period": 60,
+       "Stat": "Sum"
+      },
+      "ReturnData": false
+     },
+     {
+      "Id": "invocations",
+      "MetricStat": {
+       "Metric": {
+        "Dimensions": [
+         {
+          "Name": "FunctionName",
+          "Value": {
+           "Fn::ImportValue": "CocktailAlchemist-LambdaStack-us-west-2-gamma:ExportsOutputRefFunctionCocktailAlchemistLambdagamma9BE6C33ACC6C8A66"
+          }
+         }
+        ],
+        "MetricName": "Invocations",
+        "Namespace": "AWS/Lambda"
+       },
+       "Period": 60,
+       "Stat": "Sum"
+      },
+      "ReturnData": false
+     }
+    ],
+    "Threshold": 0.5
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-Monitoring-gamma/LambdaFunctionErrorRateAlarm/Resource"
+   }
+  },
+  "LambdaFunctionThrottleRate27ECBE56": {
+   "Type": "AWS::CloudWatch::Alarm",
+   "Properties": {
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "EvaluationPeriods": 5,
+    "Metrics": [
+     {
+      "Expression": "throttles*100/invocations",
+      "Id": "expr_1",
+      "Label": "Rates"
+     },
+     {
+      "Id": "throttles",
+      "MetricStat": {
+       "Metric": {
+        "Dimensions": [
+         {
+          "Name": "FunctionName",
+          "Value": {
+           "Fn::ImportValue": "CocktailAlchemist-LambdaStack-us-west-2-gamma:ExportsOutputRefFunctionCocktailAlchemistLambdagamma9BE6C33ACC6C8A66"
+          }
+         }
+        ],
+        "MetricName": "Throttles",
+        "Namespace": "AWS/Lambda"
+       },
+       "Period": 60,
+       "Stat": "Sum"
+      },
+      "ReturnData": false
+     },
+     {
+      "Id": "invocations",
+      "MetricStat": {
+       "Metric": {
+        "Dimensions": [
+         {
+          "Name": "FunctionName",
+          "Value": {
+           "Fn::ImportValue": "CocktailAlchemist-LambdaStack-us-west-2-gamma:ExportsOutputRefFunctionCocktailAlchemistLambdagamma9BE6C33ACC6C8A66"
+          }
+         }
+        ],
+        "MetricName": "Invocations",
+        "Namespace": "AWS/Lambda"
+       },
+       "Period": 60,
+       "Stat": "Sum"
+      },
+      "ReturnData": false
+     }
+    ],
+    "Threshold": 1
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-Monitoring-gamma/LambdaFunctionThrottleRate/Resource"
+   }
+  },
+  "ProvisionConcurrencySpilloverAlarmA69DA30E": {
+   "Type": "AWS::CloudWatch::Alarm",
+   "Properties": {
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "EvaluationPeriods": 3,
+    "Metrics": [
+     {
+      "Id": "m1",
+      "Label": "ProvisionedConcurrencySpilloverInvocations",
+      "MetricStat": {
+       "Metric": {
+        "Dimensions": [
+         {
+          "Name": "FunctionName",
+          "Value": {
+           "Fn::ImportValue": "CocktailAlchemist-LambdaStack-us-west-2-gamma:ExportsOutputRefFunctionCocktailAlchemistLambdagamma9BE6C33ACC6C8A66"
+          }
+         }
+        ],
+        "MetricName": "ProvisionedConcurrencySpilloverInvocations",
+        "Namespace": "AWS/Lambda"
+       },
+       "Period": 60,
+       "Stat": "Maximum"
+      },
+      "ReturnData": true
+     }
+    ],
+    "Threshold": 5,
+    "TreatMissingData": "notBreaching"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-Monitoring-gamma/ProvisionConcurrencySpilloverAlarm/Resource"
+   }
+  },
+  "LambdaFunctionDurationAlarmE4D8C0C5": {
+   "Type": "AWS::CloudWatch::Alarm",
+   "Properties": {
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "EvaluationPeriods": 5,
+    "Metrics": [
+     {
+      "Id": "m1",
+      "Label": "P99",
+      "MetricStat": {
+       "Metric": {
+        "Dimensions": [
+         {
+          "Name": "FunctionName",
+          "Value": {
+           "Fn::ImportValue": "CocktailAlchemist-LambdaStack-us-west-2-gamma:ExportsOutputRefFunctionCocktailAlchemistLambdagamma9BE6C33ACC6C8A66"
+          }
+         }
+        ],
+        "MetricName": "Duration",
+        "Namespace": "AWS/Lambda"
+       },
+       "Period": 60,
+       "Stat": "p99"
+      },
+      "ReturnData": true
+     }
+    ],
+    "Threshold": 5000
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-Monitoring-gamma/LambdaFunctionDurationAlarm/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/0WKTQ6CMBBGz8Iehp+o0Z0GDmDwAGZox1Bop6QtEiXcXdCFq++9L28HGRzy6IzmzemgBtKKyUNFg7YvQxxuAUUfF3A8QRbh5BMh+0SrBubywVd0aCiQi1cpLUsVlOV4ze5C21FOGEQLc4W+bSw6uWV/uWh0Zru+sGxUk7ejE7TEbCVB59NnkcEe8qjzSiVu5KAMQf3bD1Nk31+9AAAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-Monitoring-gamma/CDKMetadata/Default"
+   }
+  }
+ }
+}

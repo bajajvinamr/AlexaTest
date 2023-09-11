@@ -1,0 +1,6 @@
+{"phase":"start","data":{"pid":96112},"id":"96112","operation":"brazil-build","time":1694372888759.1838,"program":"brazil-build"}
+{"phase":"start","data":{"package":"CopySrcBuild-1.0"},"id":"CopySrcBuild-1.0","operation":"bootstrap-buildtool","time":1694372888759.9768,"program":"brazil-build"}
+{"phase":"finish","data":{},"id":"CopySrcBuild-1.0","operation":"bootstrap-buildtool","time":1694372888760.8372,"program":"brazil-build"}
+{"phase":"start","data":{"command":"copysrc"},"id":"copysrc","operation":"exec-buildsystem","time":1694372888761.014,"program":"brazil-build"}
+{"phase":"finish","data":{},"id":"copysrc","operation":"exec-buildsystem","time":1694372889628.302,"program":"brazil-build"}
+{"phase":"finish","data":{"pid":96112,"exit_code":0},"id":"96112","operation":"brazil-build","time":1694372889628.906,"program":"brazil-build"}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LaunchRequestHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CocktailAlchemist</a> &gt; <a href="index.source.html" class="el_package">com.alexa.cocktailalchemist.lambda.handlers</a> &gt; <span class="el_source">LaunchRequestHandler.java</span></div><h1>LaunchRequestHandler.java</h1><pre class="source lang-java linenums">package com.alexa.cocktailalchemist.lambda.handlers;
+
+import com.alexa.cocktailalchemist.lambda.utils.ResourceBundleProvider;
+import com.amazon.ask.dispatcher.request.handler.HandlerInput;
+import com.amazon.ask.dispatcher.request.handler.RequestHandler;
+import com.amazon.ask.model.LaunchRequest;
+import com.amazon.ask.model.Response;
+import com.amazon.ask.request.Predicates;
+
+import java.util.Optional;
+import java.util.ResourceBundle;
+
+/**
+ * A basic skill handler to handle launch requests from user.
+ */
+<span class="fc" id="L16">public class LaunchRequestHandler implements RequestHandler {</span>
+    @Override
+    public boolean canHandle(HandlerInput input) {
+<span class="fc" id="L19">        return input.matches(Predicates.requestType(LaunchRequest.class));</span>
+    }
+
+    @Override
+    public Optional&lt;Response&gt; handle(HandlerInput input) {
+<span class="fc" id="L24">        String speechText = &quot;Welcome to Cocktail Alchemist! I'm here to help you &quot; +</span>
+                &quot;discover delightful cocktails. You can ask for a cocktail suggestion or a recipe.&quot;;
+<span class="fc" id="L26">        String repromptText = &quot;For example, you could say, 'Suggest a gin drink.'&quot;;</span>
+<span class="fc" id="L27">        return input.getResponseBuilder()</span>
+<span class="fc" id="L28">                .withSpeech(speechText)</span>
+<span class="fc" id="L29">                .withReprompt(repromptText)</span>
+<span class="fc" id="L30">                .withShouldEndSession(false)</span>
+<span class="fc" id="L31">                .build();</span>
+    }
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,21 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: Apache-HttpComponents-HttpCore-4.4.x.555650.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpCore/Apache-HttpComponents-HttpCore-4.4.x.555650.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/Apache-HttpComponents-HttpCore-4.4.x.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpCore/Apache-HttpComponents-HttpCore-4.4.x.555650.0/AL2_x86_64/generic-flavor/src/httpcore-nio/src/test/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpCore/Apache-HttpComponents-HttpCore-4.4.x.555650.0/AL2_x86_64/generic-flavor/src/httpcore/src/main/java-deprecated" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpCore/Apache-HttpComponents-HttpCore-4.4.x.555650.0/AL2_x86_64/generic-flavor/src/httpcore/src/main/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpCore/Apache-HttpComponents-HttpCore-4.4.x.555650.0/AL2_x86_64/generic-flavor/src/httpcore-ab/src/test/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpCore/Apache-HttpComponents-HttpCore-4.4.x.555650.0/AL2_x86_64/generic-flavor/src/httpcore-nio/src/main/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpCore/Apache-HttpComponents-HttpCore-4.4.x.555650.0/AL2_x86_64/generic-flavor/src/httpcore-nio/src/examples" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpCore/Apache-HttpComponents-HttpCore-4.4.x.555650.0/AL2_x86_64/generic-flavor/src/httpcore/src/examples" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpCore/Apache-HttpComponents-HttpCore-4.4.x.555650.0/AL2_x86_64/generic-flavor/src/httpcore-ab/src/main/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpCore/Apache-HttpComponents-HttpCore-4.4.x.555650.0/AL2_x86_64/generic-flavor/src/httpcore-deprecated" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpCore/Apache-HttpComponents-HttpCore-4.4.x.555650.0/AL2_x86_64/generic-flavor/src/httpcore-nio/src/main/java-deprecated" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpCore/Apache-HttpComponents-HttpCore-4.4.x.555650.0/AL2_x86_64/generic-flavor/src/httpcore/src/test/java" />
+    </SOURCES>
+  </library>
+</component>

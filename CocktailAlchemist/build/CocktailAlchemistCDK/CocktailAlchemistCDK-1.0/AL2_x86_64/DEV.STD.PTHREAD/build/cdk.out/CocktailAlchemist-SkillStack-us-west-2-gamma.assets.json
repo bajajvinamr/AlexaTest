@@ -1,0 +1,19 @@
+{
+  "version": "33.0.0",
+  "files": {
+    "de94519c94b4ed3c7b6b5cbb7e9024e8609b57ea5e415e4224693eed2e4421c2": {
+      "source": {
+        "path": "asset.de94519c94b4ed3c7b6b5cbb7e9024e8609b57ea5e415e4224693eed2e4421c2.zip",
+        "packaging": "file"
+      },
+      "destinations": {
+        "development-737088382676-us-west-2": {
+          "bucketName": "deploymentbucket-cc64298188a7b3d1e4b8d990b42e52a11c4f94b0",
+          "objectKey": "local_development_resources_transform/cdk.out/de94519c94b4ed3c7b6b5cbb7e9024e8609b57ea5e415e4224693eed2e4421c2_asset.de94519c94b4ed3c7b6b5cbb7e9024e8609b57ea5e415e4224693eed2e4421c2.zip",
+          "region": "us-west-2"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

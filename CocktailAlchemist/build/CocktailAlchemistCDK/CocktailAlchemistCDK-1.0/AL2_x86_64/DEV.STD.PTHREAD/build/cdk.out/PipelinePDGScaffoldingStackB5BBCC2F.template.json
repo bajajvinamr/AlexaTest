@@ -1,0 +1,619 @@
+{
+ "Parameters": {
+  "PackagingAggregateId": {
+   "Type": "String",
+   "Default": "dummy",
+   "Description": "Aggregate Id that can be used to reference resources from different transformations"
+  },
+  "PackagingTransformId": {
+   "Type": "String",
+   "Default": "dummy",
+   "Description": "Deployment Id is used to figure out artifact locations in S3 and ECR"
+  },
+  "PackagingS3KeyPrefix": {
+   "Type": "String",
+   "Default": "dummy",
+   "Description": "Deployment Id is used to figure out artifact locations in S3 and ECR"
+  }
+ },
+ "Resources": {
+  "PDGScaffoldingBARSKeyAE62FDF4": {
+   "Type": "AWS::KMS::Key",
+   "Properties": {
+    "Description": "KMS key used to encrypt at rest artifacts used for deployments. This is the BARS key.",
+    "EnableKeyRotation": true,
+    "Enabled": true,
+    "KeyPolicy": {
+     "Statement": [
+      {
+       "Action": "kms:*",
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":iam::737088382676:root"
+          ]
+         ]
+        }
+       },
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "kms:CreateGrant",
+        "kms:ListGrants",
+        "kms:RevokeGrant"
+       ],
+       "Condition": {
+        "Bool": {
+         "kms:GrantIsForAWSResource": "true"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": {
+         "Fn::GetAtt": [
+          "PDGScaffoldingPipelinesBARSRole9AA1B109",
+          "Arn"
+         ]
+        }
+       },
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PDGScaffoldingStack/PDGScaffolding/BARSKey/Resource"
+   }
+  },
+  "PDGScaffoldingBARSKeyAliasC724903D": {
+   "Type": "AWS::KMS::Alias",
+   "Properties": {
+    "AliasName": "alias/PDGArtifactEncryptionK-61436d60b3bbabfc4e97c1a6540240d0d72d4d1c",
+    "TargetKeyId": {
+     "Fn::GetAtt": [
+      "PDGScaffoldingBARSKeyAE62FDF4",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PDGScaffoldingStack/PDGScaffolding/BARSKey/Alias/Resource"
+   }
+  },
+  "PDGScaffoldingImageRepo7286E077": {
+   "Type": "AWS::ECR::Repository",
+   "Properties": {
+    "LifecyclePolicy": {
+     "LifecyclePolicyText": "{\"rules\":[{\"rulePriority\":1,\"description\":\"Expire consumed image count more than 800\",\"selection\":{\"tagStatus\":\"tagged\",\"tagPrefixList\":[\"BATS_CI_\"],\"countType\":\"imageCountMoreThan\",\"countNumber\":800},\"action\":{\"type\":\"expire\"}},{\"rulePriority\":2,\"description\":\"Expire image count more than 1600\",\"selection\":{\"tagStatus\":\"any\",\"countType\":\"imageCountMoreThan\",\"countNumber\":1600},\"action\":{\"type\":\"expire\"}}]}"
+    },
+    "RepositoryName": "pdgecrrepo-78d3f91db79bea11abe5421c1769512ca4eb5f4a",
+    "RepositoryPolicyText": {
+     "Statement": [
+      {
+       "Action": [
+        "ecr:BatchGetImage",
+        "ecr:GetDownloadUrlForLayer"
+       ],
+       "Condition": {
+        "StringLike": {
+         "aws:sourceArn": {
+          "Fn::Sub": "arn:${AWS::Partition}:lambda:${AWS::Region}:${AWS::AccountId}:function:*"
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       },
+       "Sid": "LambdaECRImageRetrievalPolicy"
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PDGScaffoldingStack/PDGScaffolding/ImageRepo/Resource"
+   }
+  },
+  "PDGScaffoldingAccessLoggingBucketC38D9CD2": {
+   "Type": "AWS::S3::Bucket",
+   "Properties": {
+    "BucketEncryption": {
+     "ServerSideEncryptionConfiguration": [
+      {
+       "ServerSideEncryptionByDefault": {
+        "SSEAlgorithm": "AES256"
+       }
+      }
+     ]
+    },
+    "BucketName": "pipelinespdgdeployment-98a9d64c12c4e32482f244af5eab62e67bae14e4",
+    "LifecycleConfiguration": {
+     "Rules": [
+      {
+       "ExpirationInDays": 3653,
+       "Id": "ExpireAfterTenYears",
+       "Status": "Enabled"
+      }
+     ]
+    },
+    "PublicAccessBlockConfiguration": {
+     "BlockPublicAcls": true,
+     "BlockPublicPolicy": true,
+     "IgnorePublicAcls": true,
+     "RestrictPublicBuckets": true
+    },
+    "VersioningConfiguration": {
+     "Status": "Enabled"
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PDGScaffoldingStack/PDGScaffolding/AccessLoggingBucket/Resource"
+   }
+  },
+  "PDGScaffoldingAccessLoggingBucketPolicy3785CD94": {
+   "Type": "AWS::S3::BucketPolicy",
+   "Properties": {
+    "Bucket": {
+     "Ref": "PDGScaffoldingAccessLoggingBucketC38D9CD2"
+    },
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "s3:*",
+       "Condition": {
+        "Bool": {
+         "aws:SecureTransport": "false"
+        }
+       },
+       "Effect": "Deny",
+       "Principal": {
+        "AWS": "*"
+       },
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "PDGScaffoldingAccessLoggingBucketC38D9CD2",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "PDGScaffoldingAccessLoggingBucketC38D9CD2",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "s3:PutObject",
+       "Condition": {
+        "ArnLike": {
+         "aws:SourceArn": {
+          "Fn::GetAtt": [
+           "PDGScaffoldingACD368C7",
+           "Arn"
+          ]
+         }
+        },
+        "StringEquals": {
+         "aws:SourceAccount": "737088382676"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "logging.s3.amazonaws.com"
+       },
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          {
+           "Fn::GetAtt": [
+            "PDGScaffoldingAccessLoggingBucketC38D9CD2",
+            "Arn"
+           ]
+          },
+          "/*"
+         ]
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PDGScaffoldingStack/PDGScaffolding/AccessLoggingBucket/Policy/Resource"
+   }
+  },
+  "PDGScaffoldingACD368C7": {
+   "Type": "AWS::S3::Bucket",
+   "Properties": {
+    "BucketEncryption": {
+     "ServerSideEncryptionConfiguration": [
+      {
+       "ServerSideEncryptionByDefault": {
+        "KMSMasterKeyID": {
+         "Fn::GetAtt": [
+          "PDGScaffoldingBARSKeyAE62FDF4",
+          "Arn"
+         ]
+        },
+        "SSEAlgorithm": "aws:kms"
+       }
+      }
+     ]
+    },
+    "BucketName": "pipelinespdgdeployment-8a0809970ab7f11eb9bb01d315a7e7ff07967ebe",
+    "LoggingConfiguration": {
+     "DestinationBucketName": {
+      "Ref": "PDGScaffoldingAccessLoggingBucketC38D9CD2"
+     }
+    },
+    "PublicAccessBlockConfiguration": {
+     "BlockPublicAcls": true,
+     "BlockPublicPolicy": true,
+     "IgnorePublicAcls": true,
+     "RestrictPublicBuckets": true
+    },
+    "VersioningConfiguration": {
+     "Status": "Enabled"
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PDGScaffoldingStack/PDGScaffolding/Resource/Resource"
+   }
+  },
+  "PDGScaffoldingPolicyAAB2309E": {
+   "Type": "AWS::S3::BucketPolicy",
+   "Properties": {
+    "Bucket": {
+     "Ref": "PDGScaffoldingACD368C7"
+    },
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "s3:*",
+       "Condition": {
+        "Bool": {
+         "aws:SecureTransport": "false"
+        }
+       },
+       "Effect": "Deny",
+       "Principal": {
+        "AWS": "*"
+       },
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "PDGScaffoldingACD368C7",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "PDGScaffoldingACD368C7",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PDGScaffoldingStack/PDGScaffolding/Resource/Policy/Resource"
+   }
+  },
+  "PDGScaffoldingPipelinesBARSRole9AA1B109": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Condition": {
+        "StringEquals": {
+         "sts:ExternalId": "Pipeline:5831802:CDService"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "bars.amazon.com"
+       }
+      },
+      {
+       "Action": "sts:AssumeRole",
+       "Condition": {
+        "StringEquals": {
+         "sts:ExternalId": "5831802"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "pipelines.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "RoleName": "PdgPipelinesRole-64dfbfe309374e05a119ce244cc164bc3e229bf8"
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PDGScaffoldingStack/PDGScaffolding/PipelinesBARSRole/Resource"
+   }
+  },
+  "PDGScaffoldingPipelinesBARSRoleDefaultPolicy269A142A": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "s3:PutObject",
+        "s3:PutObjectLegalHold",
+        "s3:PutObjectRetention",
+        "s3:PutObjectTagging",
+        "s3:PutObjectVersionTagging",
+        "s3:Abort*"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          {
+           "Fn::GetAtt": [
+            "PDGScaffoldingACD368C7",
+            "Arn"
+           ]
+          },
+          "/*"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": [
+        "kms:Encrypt",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*",
+        "kms:Decrypt"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "PDGScaffoldingBARSKeyAE62FDF4",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "s3:GetObject*",
+        "s3:GetBucket*",
+        "s3:List*",
+        "s3:DeleteObject*",
+        "s3:PutObject",
+        "s3:PutObjectLegalHold",
+        "s3:PutObjectRetention",
+        "s3:PutObjectTagging",
+        "s3:PutObjectVersionTagging",
+        "s3:Abort*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "PDGScaffoldingACD368C7",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "PDGScaffoldingACD368C7",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "kms:Decrypt",
+        "kms:DescribeKey",
+        "kms:Encrypt",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "PDGScaffoldingBARSKeyAE62FDF4",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage",
+        "ecr:CompleteLayerUpload",
+        "ecr:UploadLayerPart",
+        "ecr:InitiateLayerUpload",
+        "ecr:PutImage"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "PDGScaffoldingImageRepo7286E077",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": "ecr:GetAuthorizationToken",
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "ecr:DescribeImages",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "PDGScaffoldingImageRepo7286E077",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "PDGScaffoldingPipelinesBARSRoleDefaultPolicy269A142A",
+    "Roles": [
+     {
+      "Ref": "PDGScaffoldingPipelinesBARSRole9AA1B109"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PDGScaffoldingStack/PDGScaffolding/PipelinesBARSRole/DefaultPolicy/Resource"
+   }
+  },
+  "PDGPipelineReadRoleA0F8441F": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Condition": {
+        "StringEquals": {
+         "sts:ExternalId": "5831802"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "pipelines.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Ref": "PDGPipelineReadManagedPolicy"
+     }
+    ],
+    "RoleName": "PdgPipelinesReadRole-ec392fc9ff0e657931a2d38f12e19c177a517730"
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PDGScaffoldingStack/PDGPipelineReadRole/Resource"
+   }
+  },
+  "PDGPipelineReadManagedPolicy": {
+   "Type": "AWS::IAM::ManagedPolicy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "s3:Get*",
+        "s3:List*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "PDGScaffoldingACD368C7",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "PDGScaffoldingACD368C7",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "kms:Decrypt*",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "PDGScaffoldingBARSKeyAE62FDF4",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PDGScaffoldingStack/PDGPipelineReadManagedPolicy"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/0VNy07DMBD8ltydbdoCghsNIA6AFCUfgIyzoG38iPwoKpb/nSSOlNPM7Dz2Biq42xePXP3p3UgjStLoIL5zj7UJum+eXzvPxcDqU9u96AtZoxVqzzoUwWJ3rIMY0Cd2gPsHqAr+60rRD6WkL4hP37rhliv0aNnkfMZBTeNveGWTNcNJEnezWEhiKCzEFkfjyBu7xDaVmDtCzA9nZ2UZGiNJXLdz1okRV9OikbhszbglN/bBNf/Bfi0l1qIzwYpcWnli2vQIZ7e7HCq4hX1xdkSlDdqTQmgz/gP4YrVuUgEAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PDGScaffoldingStack/CDKMetadata/Default"
+   }
+  }
+ }
+}

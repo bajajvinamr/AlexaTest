@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: HydraTestPlatformMetricsPublisher-1.1.434135.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/HydraTestPlatformMetricsPublisher/HydraTestPlatformMetricsPublisher-1.1.434135.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/HydraTestPlatformMetricsPublisher-1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/HydraTestPlatformMetricsPublisher/HydraTestPlatformMetricsPublisher-1.1.434135.0/AL2_x86_64/generic-flavor/src/tst" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/HydraTestPlatformMetricsPublisher/HydraTestPlatformMetricsPublisher-1.1.434135.0/AL2_x86_64/generic-flavor/src/src" />
+    </SOURCES>
+  </library>
+</component>

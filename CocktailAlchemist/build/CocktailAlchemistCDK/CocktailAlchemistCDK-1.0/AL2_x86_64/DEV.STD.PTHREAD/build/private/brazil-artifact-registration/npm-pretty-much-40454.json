@@ -1,0 +1,3 @@
+{"direction":"consumed","namespace":"npm","repo":"NpmMetadataIndex","name":"aws-cdk-lib","version":"2.35.0","sha1sum":"abbf8af3d85ad2af438f6ce344c26204451f8ec5"}
+{"direction":"consumed","namespace":"npm","repo":"NpmMetadataIndex","name":"typescript","version":"4.1.6","sha1sum":"1becd85d77567c3c741172339e93ce2e69932138"}
+{"direction":"produced","namespace":"npm","repo":"Brazil","name":"@amzn/cocktailalchemistcdk","version":"1.0.0"}

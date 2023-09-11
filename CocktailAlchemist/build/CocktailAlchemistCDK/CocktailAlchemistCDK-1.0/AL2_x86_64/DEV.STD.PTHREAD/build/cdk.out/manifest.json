@@ -1,0 +1,2009 @@
+{
+  "version": "33.0.0",
+  "artifacts": {
+    "PipelinePipelineDeploymentStackC613E31E": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://737088382676/us-east-1",
+      "properties": {
+        "templateFile": "PipelinePipelineDeploymentStackC613E31E.template.json",
+        "terminationProtection": true,
+        "validateOnSynth": false,
+        "stackName": "Pipeline-CocktailAlchemist"
+      },
+      "metadata": {
+        "/Pipeline/PipelineDeploymentStack/PackagingAggregateId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingAggregateId"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/PackagingTransformId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingTransformId"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/PackagingS3KeyPrefix": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingS3KeyPrefix"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/BARS/BARSKey/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSBARSKey008C869E"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/BARS/BARSKey/Alias/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSBARSKeyAlias802DC3FE"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/BARS/ImageRepo/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSImageRepoC9741AEA"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/BARS/AccessLoggingBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSAccessLoggingBucketE36DE718"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/BARS/AccessLoggingBucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSAccessLoggingBucketPolicyD060BA2A"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/BARS/Resource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARS772963B4"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/BARS/Resource/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSPolicy7A3163C8"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/BARS/PipelinesBARSRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSPipelinesBARSRole10256C1D"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/BARS/PipelinesBARSRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSPipelinesBARSRoleDefaultPolicy5D505A53"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/BARSKeyArnExport": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSKeyArnExport"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/BATS/BATSKey/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BATSBATSKeyFA7EDF59"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/BATS/BATSKey/Alias/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BATSBATSKeyAliasAA98823D"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/BATS/AccessLoggingBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BATSAccessLoggingBucketAC8B82A9"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/BATS/AccessLoggingBucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BATSAccessLoggingBucketPolicy13A1A022"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/BATS/Resource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BATS64B3E3E8"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/BATS/Resource/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BATSPolicy784D9320"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/BATS/BATSImageRepo/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BATSBATSImageRepoFE8EA8AF"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/PipelinesBATSRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelinesBATSRoleA29413FE"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/PipelinesBATSRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelinesBATSRoleDefaultPolicy70C0B771"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/BATSLogGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BATSLogGroup272A6107"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/BATSSandboxCodeBuildServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BATSSandboxCodeBuildServiceRoleFAB1DFA7"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/BATSSandboxCodeBuildServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BATSSandboxCodeBuildServiceRoleDefaultPolicyA66536B2"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/BATSSandboxCodeBuildProject/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BATSSandboxCodeBuildProject9C2743A4"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/ChangeSetApproverRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ChangeSetApproverRoleAD563530"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/CloudFormationExecutionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CloudFormationExecutionRole09AE950A"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/PipelinesChangeSetExecutionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelinesChangeSetExecutionRole93499E34"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/PipelinesCloudFormationRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelinesCloudFormationRole9A8154EF"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/PipelinesCloudFormationManagedPolicy": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelinesCloudFormationManagedPolicy"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/Pipeline/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineC660917D"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/Pipeline/pipelineID": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelinepipelineID9ABE0107"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/Pipeline/pipelineURL": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelinepipelineURL16E1BB2E"
+          }
+        ],
+        "/Pipeline/PipelineDeploymentStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ]
+      },
+      "displayName": "Pipeline/PipelineDeploymentStack"
+    },
+    "PipelinePDGScaffoldingStackB5BBCC2F": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://737088382676/us-west-2",
+      "properties": {
+        "templateFile": "PipelinePDGScaffoldingStackB5BBCC2F.template.json",
+        "terminationProtection": true,
+        "validateOnSynth": false,
+        "stackName": "PDGPipelineScaffold-CocktailAlchemist"
+      },
+      "metadata": {
+        "/Pipeline/PDGScaffoldingStack/PackagingAggregateId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingAggregateId"
+          }
+        ],
+        "/Pipeline/PDGScaffoldingStack/PackagingTransformId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingTransformId"
+          }
+        ],
+        "/Pipeline/PDGScaffoldingStack/PackagingS3KeyPrefix": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingS3KeyPrefix"
+          }
+        ],
+        "/Pipeline/PDGScaffoldingStack/PDGScaffolding/BARSKey/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PDGScaffoldingBARSKeyAE62FDF4"
+          }
+        ],
+        "/Pipeline/PDGScaffoldingStack/PDGScaffolding/BARSKey/Alias/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PDGScaffoldingBARSKeyAliasC724903D"
+          }
+        ],
+        "/Pipeline/PDGScaffoldingStack/PDGScaffolding/ImageRepo/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PDGScaffoldingImageRepo7286E077"
+          }
+        ],
+        "/Pipeline/PDGScaffoldingStack/PDGScaffolding/AccessLoggingBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PDGScaffoldingAccessLoggingBucketC38D9CD2"
+          }
+        ],
+        "/Pipeline/PDGScaffoldingStack/PDGScaffolding/AccessLoggingBucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PDGScaffoldingAccessLoggingBucketPolicy3785CD94"
+          }
+        ],
+        "/Pipeline/PDGScaffoldingStack/PDGScaffolding/Resource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PDGScaffoldingACD368C7"
+          }
+        ],
+        "/Pipeline/PDGScaffoldingStack/PDGScaffolding/Resource/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PDGScaffoldingPolicyAAB2309E"
+          }
+        ],
+        "/Pipeline/PDGScaffoldingStack/PDGScaffolding/PipelinesBARSRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PDGScaffoldingPipelinesBARSRole9AA1B109"
+          }
+        ],
+        "/Pipeline/PDGScaffoldingStack/PDGScaffolding/PipelinesBARSRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PDGScaffoldingPipelinesBARSRoleDefaultPolicy269A142A"
+          }
+        ],
+        "/Pipeline/PDGScaffoldingStack/PDGPipelineReadRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PDGPipelineReadRoleA0F8441F"
+          }
+        ],
+        "/Pipeline/PDGScaffoldingStack/PDGPipelineReadManagedPolicy": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PDGPipelineReadManagedPolicy"
+          }
+        ],
+        "/Pipeline/PDGScaffoldingStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ]
+      },
+      "displayName": "Pipeline/PDGScaffoldingStack"
+    },
+    "CocktailAlchemist-VpcStack-us-west-2-gamma.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "CocktailAlchemist-VpcStack-us-west-2-gamma.assets.json"
+      }
+    },
+    "CocktailAlchemist-VpcStack-us-west-2-gamma": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://737088382676/us-west-2",
+      "properties": {
+        "templateFile": "CocktailAlchemist-VpcStack-us-west-2-gamma.template.json",
+        "terminationProtection": true,
+        "validateOnSynth": false,
+        "additionalDependencies": [
+          "CocktailAlchemist-VpcStack-us-west-2-gamma.assets"
+        ]
+      },
+      "dependencies": [
+        "CocktailAlchemist-VpcStack-us-west-2-gamma.assets"
+      ],
+      "metadata": {
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma": [
+          {
+            "type": "bootstrapRepo",
+            "data": "737088382676.dkr.ecr.us-west-2.amazonaws.com/barsecrrepo-9a02629faf118f5e8cd97900d6918e7565c384a8"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/PackagingAggregateId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingAggregateId"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/PackagingTransformId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingTransformId"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/PackagingS3KeyPrefix": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingS3KeyPrefix"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/AmazonPipelinesRollbackFlag": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmazonPipelinesRollbackFlag"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/IsRollback": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IsRollback"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc": [
+          {
+            "type": "aws:cdk:warning",
+            "data": "Use of independently audited resource.",
+            "trace": [
+              "Annotations.addMessage (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1071)",
+              "Annotations.addWarning (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/node_modules/aws-cdk-lib/core/lib/annotations.js:1:504)",
+              "independentlyAuditedResource (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/node_modules/@amzn/motecdk/lib/mote-core/lib/index.js:220:38)",
+              "/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/lib/app.ts:86:38",
+              "Array.forEach (<anonymous>)",
+              "Object.<anonymous> (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/lib/app.ts:47:14)",
+              "Module._compile (node:internal/modules/cjs/loader:1233:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1287:10)",
+              "Module.load (node:internal/modules/cjs/loader:1091:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:938:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:83:12)",
+              "node:internal/main/run_main_module:23:47"
+            ]
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpc410949D6"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPublicSubnet1SubnetB32510F9"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPublicSubnet1RouteTableF0063D39"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPublicSubnet1RouteTableAssociationBF4DB124"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet1/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPublicSubnet1DefaultRouteA35506FA"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet1/EIP": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPublicSubnet1EIP44BE4D52"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet1/NATGateway": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPublicSubnet1NATGateway3D9168D3"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet2/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPublicSubnet2Subnet66F02624"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet2/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPublicSubnet2RouteTable08704A64"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet2/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPublicSubnet2RouteTableAssociation60DD818F"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet2/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPublicSubnet2DefaultRoute913DB785"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet3/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPublicSubnet3SubnetFE84DC8A"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet3/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPublicSubnet3RouteTable7E666758"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet3/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPublicSubnet3RouteTableAssociationF131D5C5"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet3/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPublicSubnet3DefaultRoute452BAB00"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPrivateSubnet1Subnet26DA8502"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPrivateSubnet1RouteTable9F4A3392"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPrivateSubnet1RouteTableAssociation52B15627"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet1/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPrivateSubnet1DefaultRoute00766C6C"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet2/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPrivateSubnet2Subnet1582B192"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet2/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPrivateSubnet2RouteTable9BCC97D8"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet2/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPrivateSubnet2RouteTableAssociation77586D38"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet2/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPrivateSubnet2DefaultRoute47E123BC"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet3/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPrivateSubnet3Subnet3B7FB667"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet3/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPrivateSubnet3RouteTable501423EB"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet3/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPrivateSubnet3RouteTableAssociationEF2824A7"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet3/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcPrivateSubnet3DefaultRouteD0280F8D"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/IGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcIGWF8A9AA34"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/VPCGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaVpcVPCGW033C0BF5"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/Exports/Output{\"Ref\":\"gammaVpc410949D6\"}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputRefgammaVpc410949D69A02AAFC"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/Exports/Output{\"Ref\":\"gammaVpcPrivateSubnet1Subnet26DA8502\"}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputRefgammaVpcPrivateSubnet1Subnet26DA8502D1273738"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/Exports/Output{\"Ref\":\"gammaVpcPrivateSubnet2Subnet1582B192\"}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputRefgammaVpcPrivateSubnet2Subnet1582B1927587BDA1"
+          }
+        ],
+        "/CocktailAlchemist-VpcStack-us-west-2-gamma/Exports/Output{\"Ref\":\"gammaVpcPrivateSubnet3Subnet3B7FB667\"}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputRefgammaVpcPrivateSubnet3Subnet3B7FB66736264C2C"
+          }
+        ]
+      },
+      "displayName": "CocktailAlchemist-VpcStack-us-west-2-gamma"
+    },
+    "CocktailAlchemist-SuperstarStack-us-west-2-gamma.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "CocktailAlchemist-SuperstarStack-us-west-2-gamma.assets.json"
+      }
+    },
+    "CocktailAlchemist-SuperstarStack-us-west-2-gamma": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://737088382676/us-west-2",
+      "properties": {
+        "templateFile": "CocktailAlchemist-SuperstarStack-us-west-2-gamma.template.json",
+        "terminationProtection": true,
+        "validateOnSynth": false,
+        "additionalDependencies": [
+          "CocktailAlchemist-SuperstarStack-us-west-2-gamma.assets"
+        ]
+      },
+      "dependencies": [
+        "CocktailAlchemist-VpcStack-us-west-2-gamma",
+        "CocktailAlchemist-SuperstarStack-us-west-2-gamma.assets"
+      ],
+      "metadata": {
+        "/CocktailAlchemist-SuperstarStack-us-west-2-gamma": [
+          {
+            "type": "bootstrapRepo",
+            "data": "737088382676.dkr.ecr.us-west-2.amazonaws.com/barsecrrepo-9a02629faf118f5e8cd97900d6918e7565c384a8"
+          }
+        ],
+        "/CocktailAlchemist-SuperstarStack-us-west-2-gamma/PackagingAggregateId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingAggregateId"
+          }
+        ],
+        "/CocktailAlchemist-SuperstarStack-us-west-2-gamma/PackagingTransformId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingTransformId"
+          }
+        ],
+        "/CocktailAlchemist-SuperstarStack-us-west-2-gamma/PackagingS3KeyPrefix": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingS3KeyPrefix"
+          }
+        ],
+        "/CocktailAlchemist-SuperstarStack-us-west-2-gamma/AmazonPipelinesRollbackFlag": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmazonPipelinesRollbackFlag"
+          }
+        ],
+        "/CocktailAlchemist-SuperstarStack-us-west-2-gamma/IsRollback": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IsRollback"
+          }
+        ],
+        "/CocktailAlchemist-SuperstarStack-us-west-2-gamma/gamma-CocktailAlchemistEnvironment/Cfn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaCocktailAlchemistEnvironmentCfnD12738BD"
+          }
+        ],
+        "/CocktailAlchemist-SuperstarStack-us-west-2-gamma/gamma-CocktailAlchemistEnvironment/gamma-Vpc/Cfn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "gammaCocktailAlchemistEnvironmentgammaVpcCfn1AC76E28"
+          }
+        ],
+        "/CocktailAlchemist-SuperstarStack-us-west-2-gamma/cloudAuthPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "cloudAuthPolicy63DE67D2"
+          }
+        ],
+        "/CocktailAlchemist-SuperstarStack-us-west-2-gamma/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ]
+      },
+      "displayName": "CocktailAlchemist-SuperstarStack-us-west-2-gamma"
+    },
+    "CocktailAlchemist-LambdaStack-us-west-2-gamma.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "CocktailAlchemist-LambdaStack-us-west-2-gamma.assets.json"
+      }
+    },
+    "CocktailAlchemist-LambdaStack-us-west-2-gamma": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://737088382676/us-west-2",
+      "properties": {
+        "templateFile": "CocktailAlchemist-LambdaStack-us-west-2-gamma.template.json",
+        "terminationProtection": true,
+        "validateOnSynth": false,
+        "additionalDependencies": [
+          "CocktailAlchemist-LambdaStack-us-west-2-gamma.assets"
+        ]
+      },
+      "dependencies": [
+        "CocktailAlchemist-VpcStack-us-west-2-gamma",
+        "CocktailAlchemist-LambdaStack-us-west-2-gamma.assets"
+      ],
+      "metadata": {
+        "/CocktailAlchemist-LambdaStack-us-west-2-gamma": [
+          {
+            "type": "bootstrapRepo",
+            "data": "737088382676.dkr.ecr.us-west-2.amazonaws.com/barsecrrepo-9a02629faf118f5e8cd97900d6918e7565c384a8"
+          }
+        ],
+        "/CocktailAlchemist-LambdaStack-us-west-2-gamma/PackagingAggregateId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingAggregateId"
+          }
+        ],
+        "/CocktailAlchemist-LambdaStack-us-west-2-gamma/PackagingTransformId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingTransformId"
+          }
+        ],
+        "/CocktailAlchemist-LambdaStack-us-west-2-gamma/PackagingS3KeyPrefix": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingS3KeyPrefix"
+          }
+        ],
+        "/CocktailAlchemist-LambdaStack-us-west-2-gamma/AmazonPipelinesRollbackFlag": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmazonPipelinesRollbackFlag"
+          }
+        ],
+        "/CocktailAlchemist-LambdaStack-us-west-2-gamma/IsRollback": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IsRollback"
+          }
+        ],
+        "/CocktailAlchemist-LambdaStack-us-west-2-gamma/CocktailAlchemist-Lambda-us-west-2-gamma/alias-lambda-CocktailAlchemist-LambdaStack-us-west-2-gamma--Function-CocktailAlchemist-Lambda-gamma--CurrentVersion/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CocktailAlchemistLambdauswest2gammaaliaslambdaCocktailAlchemistLambdaStackuswest2gammaFunctionCocktailAlchemistLambdagammaCurrentVersionF0E284F6"
+          }
+        ],
+        "/CocktailAlchemist-LambdaStack-us-west-2-gamma/Function-CocktailAlchemist-Lambda-gamma": [
+          {
+            "type": "aws:cdk:warning",
+            "data": "AWS Lambda has changed their authorization strategy, which may cause client invocations using the 'Qualifier' parameter of the lambda function to fail with Access Denied errors.\nIf you are using a lambda Version or Alias, make sure to call 'grantInvoke' or 'addPermission' on the Version or Alias, not the underlying Function\nSee: https://github.com/aws/aws-cdk/issues/19273",
+            "trace": [
+              "Annotations.addMessage (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1071)",
+              "Annotations.addWarning (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/node_modules/aws-cdk-lib/core/lib/annotations.js:1:504)",
+              "SecureFunction.warnInvokeFunctionPermissions (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/node_modules/aws-cdk-lib/aws-lambda/lib/function-base.js:1:1050)",
+              "SecureFunction.considerWarningOnInvokeFunctionPermissions (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/node_modules/aws-cdk-lib/aws-lambda/lib/function-base.js:1:910)",
+              "SecureFunction.addPermission (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/node_modules/aws-cdk-lib/aws-lambda/lib/function-base.js:2:541)",
+              "SecureFunction.addPermission (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/node_modules/@amzn/motecdk/lib/mote-lambda/lib/function.js:202:22)",
+              "LambdaBinding.applyServicePrincipalPermission (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/node_modules/@amzn/ask-cdk/src/constructs/binding.ts:68:17)",
+              "LambdaBinding.bind (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/node_modules/@amzn/ask-cdk/src/constructs/binding.ts:62:12)",
+              "/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/node_modules/@amzn/ask-cdk/src/constructs/skill.ts:234:34",
+              "Array.map (<anonymous>)",
+              "new Skill (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/node_modules/@amzn/ask-cdk/src/constructs/skill.ts:234:8)",
+              "new SkillStack (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/lib/skill-stack.ts:39:22)",
+              "/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/lib/app.ts:123:22",
+              "Array.forEach (<anonymous>)",
+              "Object.<anonymous> (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/lib/app.ts:47:14)",
+              "Module._compile (node:internal/modules/cjs/loader:1233:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1287:10)",
+              "Module.load (node:internal/modules/cjs/loader:1091:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:938:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:83:12)",
+              "node:internal/main/run_main_module:23:47"
+            ]
+          }
+        ],
+        "/CocktailAlchemist-LambdaStack-us-west-2-gamma/Function-CocktailAlchemist-Lambda-gamma/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FunctionCocktailAlchemistLambdagamma9BE6C33A"
+          }
+        ],
+        "/CocktailAlchemist-LambdaStack-us-west-2-gamma/Function-CocktailAlchemist-Lambda-gamma/SecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FunctionCocktailAlchemistLambdagammaSecurityGroupA6E9EC49"
+          }
+        ],
+        "/CocktailAlchemist-LambdaStack-us-west-2-gamma/Function-CocktailAlchemist-Lambda-gamma/ServiceRole": [
+          {
+            "type": "aws:cdk:info",
+            "data": "You are using a newer version of monocdk than 2.35.0! Keeping your dependencies up-to-date is the right choice! However, note that we are not able to account for new functionality, and Mote may not have securely configured all use-cases.",
+            "trace": [
+              "Annotations.addMessage (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1071)",
+              "Annotations.addInfo (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/node_modules/aws-cdk-lib/core/lib/annotations.js:1:586)",
+              "new <anonymous> (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/node_modules/@amzn/motecdk/lib/mote-core/lib/index.js:149:54)",
+              "new SecureRole (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/node_modules/@amzn/motecdk/lib/mote-iam/lib/role.js:41:9)",
+              "SecureFunctionDefaults (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/node_modules/@amzn/motecdk/lib/mote-lambda/lib/function.js:30:9)",
+              "new SecureFunction (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/node_modules/@amzn/motecdk/lib/mote-lambda/lib/function.js:86:26)",
+              "new AlexaSecureFunction (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/node_modules/@amzn/alexa-extended-cdk-constructs/lib/lambda/alexa-secure-function.ts:117:31)",
+              "new LambdaStack (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/lib/lambda.ts:31:31)",
+              "/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/lib/app.ts:82:36",
+              "Array.forEach (<anonymous>)",
+              "Object.<anonymous> (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/lib/app.ts:47:14)",
+              "Module._compile (node:internal/modules/cjs/loader:1233:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1287:10)",
+              "Module.load (node:internal/modules/cjs/loader:1091:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:938:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:83:12)",
+              "node:internal/main/run_main_module:23:47"
+            ]
+          }
+        ],
+        "/CocktailAlchemist-LambdaStack-us-west-2-gamma/Function-CocktailAlchemist-Lambda-gamma/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FunctionCocktailAlchemistLambdagammaServiceRole3B2C4185"
+          }
+        ],
+        "/CocktailAlchemist-LambdaStack-us-west-2-gamma/Function-CocktailAlchemist-Lambda-gamma/CurrentVersion/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FunctionCocktailAlchemistLambdagammaCurrentVersion535F2A28eb7b4359235eadbf3f06eb1c7a093240"
+          }
+        ],
+        "/CocktailAlchemist-LambdaStack-us-west-2-gamma/Function-CocktailAlchemist-Lambda-gamma/CocktailAlchemist": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FunctionCocktailAlchemistLambdagammaCocktailAlchemist8D65DCD2"
+          }
+        ],
+        "/CocktailAlchemist-LambdaStack-us-west-2-gamma/CocktailAlchemist-Lambda-gamma_INVOCATIONS_ERRORS_SUM_LOW_SEV/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CocktailAlchemistLambdagammaINVOCATIONSERRORSSUMLOWSEVF0E90FD0"
+          }
+        ],
+        "/CocktailAlchemist-LambdaStack-us-west-2-gamma/CocktailAlchemist-Lambda-gamma_INVOCATIONS_ERRORS_SUM_HIGH_SEV/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CocktailAlchemistLambdagammaINVOCATIONSERRORSSUMHIGHSEV0F4D74C5"
+          }
+        ],
+        "/CocktailAlchemist-LambdaStack-us-west-2-gamma/CocktailAlchemist-Lambda-gamma_INVOCATION_THROTTLES_SUM_LOW_SEV/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CocktailAlchemistLambdagammaINVOCATIONTHROTTLESSUMLOWSEVE03E8BB1"
+          }
+        ],
+        "/CocktailAlchemist-LambdaStack-us-west-2-gamma/CocktailAlchemist-Lambda-gamma_INVOCATION_THROTTLES_SUM_HIGH_SEV/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CocktailAlchemistLambdagammaINVOCATIONTHROTTLESSUMHIGHSEVA2CA4D0A"
+          }
+        ],
+        "/CocktailAlchemist-LambdaStack-us-west-2-gamma/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/CocktailAlchemist-LambdaStack-us-west-2-gamma/Exports/Output{\"Ref\":\"FunctionCocktailAlchemistLambdagamma9BE6C33A\"}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputRefFunctionCocktailAlchemistLambdagamma9BE6C33ACC6C8A66"
+          }
+        ],
+        "/CocktailAlchemist-LambdaStack-us-west-2-gamma/Exports/Output{\"Fn::GetAtt\":[\"FunctionCocktailAlchemistLambdagamma9BE6C33A\",\"Arn\"]}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputFnGetAttFunctionCocktailAlchemistLambdagamma9BE6C33AArn10014C71"
+          }
+        ]
+      },
+      "displayName": "CocktailAlchemist-LambdaStack-us-west-2-gamma"
+    },
+    "CocktailAlchemist-Monitoring-gamma.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "CocktailAlchemist-Monitoring-gamma.assets.json"
+      }
+    },
+    "CocktailAlchemist-Monitoring-gamma": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://737088382676/us-west-2",
+      "properties": {
+        "templateFile": "CocktailAlchemist-Monitoring-gamma.template.json",
+        "terminationProtection": true,
+        "validateOnSynth": false,
+        "additionalDependencies": [
+          "CocktailAlchemist-Monitoring-gamma.assets"
+        ]
+      },
+      "dependencies": [
+        "CocktailAlchemist-LambdaStack-us-west-2-gamma",
+        "CocktailAlchemist-Monitoring-gamma.assets"
+      ],
+      "metadata": {
+        "/CocktailAlchemist-Monitoring-gamma": [
+          {
+            "type": "bootstrapRepo",
+            "data": "737088382676.dkr.ecr.us-west-2.amazonaws.com/barsecrrepo-9a02629faf118f5e8cd97900d6918e7565c384a8"
+          }
+        ],
+        "/CocktailAlchemist-Monitoring-gamma/PackagingAggregateId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingAggregateId"
+          }
+        ],
+        "/CocktailAlchemist-Monitoring-gamma/PackagingTransformId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingTransformId"
+          }
+        ],
+        "/CocktailAlchemist-Monitoring-gamma/PackagingS3KeyPrefix": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingS3KeyPrefix"
+          }
+        ],
+        "/CocktailAlchemist-Monitoring-gamma/AmazonPipelinesRollbackFlag": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmazonPipelinesRollbackFlag"
+          }
+        ],
+        "/CocktailAlchemist-Monitoring-gamma/IsRollback": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IsRollback"
+          }
+        ],
+        "/CocktailAlchemist-Monitoring-gamma/SummaryDashboard/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SummaryDashboard486079CD"
+          }
+        ],
+        "/CocktailAlchemist-Monitoring-gamma/ServiceDashboard/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServiceDashboard3C555A71"
+          }
+        ],
+        "/CocktailAlchemist-Monitoring-gamma/LambdaFunctionErrorCountAlarm/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaFunctionErrorCountAlarmF5590235"
+          }
+        ],
+        "/CocktailAlchemist-Monitoring-gamma/LambdaFunctionErrorRateAlarm/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaFunctionErrorRateAlarm5DAA71B1"
+          }
+        ],
+        "/CocktailAlchemist-Monitoring-gamma/LambdaFunctionThrottleRate/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaFunctionThrottleRate27ECBE56"
+          }
+        ],
+        "/CocktailAlchemist-Monitoring-gamma/ProvisionConcurrencySpilloverAlarm/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ProvisionConcurrencySpilloverAlarmA69DA30E"
+          }
+        ],
+        "/CocktailAlchemist-Monitoring-gamma/LambdaFunctionDurationAlarm/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaFunctionDurationAlarmE4D8C0C5"
+          }
+        ],
+        "/CocktailAlchemist-Monitoring-gamma/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ]
+      },
+      "displayName": "CocktailAlchemist-Monitoring-gamma"
+    },
+    "CocktailAlchemist-Hydra-us-west-2-gamma.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "CocktailAlchemist-Hydra-us-west-2-gamma.assets.json"
+      }
+    },
+    "CocktailAlchemist-Hydra-us-west-2-gamma": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://737088382676/us-west-2",
+      "properties": {
+        "templateFile": "CocktailAlchemist-Hydra-us-west-2-gamma.template.json",
+        "terminationProtection": true,
+        "validateOnSynth": false,
+        "additionalDependencies": [
+          "CocktailAlchemist-Hydra-us-west-2-gamma.assets"
+        ]
+      },
+      "dependencies": [
+        "CocktailAlchemist-LambdaStack-us-west-2-gamma",
+        "CocktailAlchemist-Hydra-us-west-2-gamma.assets"
+      ],
+      "metadata": {
+        "/CocktailAlchemist-Hydra-us-west-2-gamma": [
+          {
+            "type": "bootstrapRepo",
+            "data": "737088382676.dkr.ecr.us-west-2.amazonaws.com/barsecrrepo-9a02629faf118f5e8cd97900d6918e7565c384a8"
+          }
+        ],
+        "/CocktailAlchemist-Hydra-us-west-2-gamma/PackagingAggregateId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingAggregateId"
+          }
+        ],
+        "/CocktailAlchemist-Hydra-us-west-2-gamma/PackagingTransformId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingTransformId"
+          }
+        ],
+        "/CocktailAlchemist-Hydra-us-west-2-gamma/PackagingS3KeyPrefix": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingS3KeyPrefix"
+          }
+        ],
+        "/CocktailAlchemist-Hydra-us-west-2-gamma/AmazonPipelinesRollbackFlag": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmazonPipelinesRollbackFlag"
+          }
+        ],
+        "/CocktailAlchemist-Hydra-us-west-2-gamma/IsRollback": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IsRollback"
+          }
+        ],
+        "/CocktailAlchemist-Hydra-us-west-2-gamma/CocktailAlchemist-HydraTestRunResources-gamma/HydraTestInvocationRole": [
+          {
+            "type": "aws:cdk:warning",
+            "data": "Use of independently audited resource.",
+            "trace": [
+              "Annotations.addMessage (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1071)",
+              "Annotations.addWarning (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/node_modules/aws-cdk-lib/core/lib/annotations.js:1:504)",
+              "independentlyAuditedResource (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/node_modules/@amzn/motecdk/lib/mote-core/lib/index.js:220:38)",
+              "HydraStack.grantPermissions (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/lib/hydra-stack.ts:38:85)",
+              "new HydraStack (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/lib/hydra-stack.ts:35:12)",
+              "/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/lib/app.ts:99:22",
+              "Array.forEach (<anonymous>)",
+              "Object.<anonymous> (/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemistCDK/lib/app.ts:47:14)",
+              "Module._compile (node:internal/modules/cjs/loader:1233:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1287:10)",
+              "Module.load (node:internal/modules/cjs/loader:1091:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:938:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:83:12)",
+              "node:internal/main/run_main_module:23:47"
+            ]
+          }
+        ],
+        "/CocktailAlchemist-Hydra-us-west-2-gamma/CocktailAlchemist-HydraTestRunResources-gamma/HydraTestInvocationRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CocktailAlchemistHydraTestRunResourcesgammaHydraTestInvocationRoleFC162A50"
+          }
+        ],
+        "/CocktailAlchemist-Hydra-us-west-2-gamma/CocktailAlchemist-HydraTestRunResources-gamma/HydraTestInvocationRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CocktailAlchemistHydraTestRunResourcesgammaHydraTestInvocationRoleDefaultPolicyE483C66D"
+          }
+        ],
+        "/CocktailAlchemist-Hydra-us-west-2-gamma/CocktailAlchemist-HydraTestRunResources-gamma/HydraPersistentConfiguration": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CocktailAlchemistHydraTestRunResourcesgammaHydraPersistentConfiguration6858A638"
+          }
+        ],
+        "/CocktailAlchemist-Hydra-us-west-2-gamma/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ]
+      },
+      "displayName": "CocktailAlchemist-Hydra-us-west-2-gamma"
+    },
+    "CocktailAlchemist-skill-deployer-us-west-2-gamma.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "CocktailAlchemist-skill-deployer-us-west-2-gamma.assets.json"
+      }
+    },
+    "CocktailAlchemist-skill-deployer-us-west-2-gamma": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://737088382676/us-west-2",
+      "properties": {
+        "templateFile": "CocktailAlchemist-skill-deployer-us-west-2-gamma.template.json",
+        "terminationProtection": true,
+        "validateOnSynth": false,
+        "additionalDependencies": [
+          "CocktailAlchemist-skill-deployer-us-west-2-gamma.assets"
+        ]
+      },
+      "dependencies": [
+        "CocktailAlchemist-VpcStack-us-west-2-gamma",
+        "CocktailAlchemist-skill-deployer-us-west-2-gamma.assets"
+      ],
+      "metadata": {
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma": [
+          {
+            "type": "bootstrapRepo",
+            "data": "737088382676.dkr.ecr.us-west-2.amazonaws.com/barsecrrepo-9a02629faf118f5e8cd97900d6918e7565c384a8"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/PackagingAggregateId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingAggregateId"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/PackagingTransformId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingTransformId"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/PackagingS3KeyPrefix": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingS3KeyPrefix"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/AmazonPipelinesRollbackFlag": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmazonPipelinesRollbackFlag"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/IsRollback": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IsRollback"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/SmapiFunction/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SmapiFunctionServiceRole24C49B15"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/SmapiFunction/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SmapiFunctionServiceRoleDefaultPolicyD79283D8"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/SmapiFunction/SecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SmapiFunctionSecurityGroupEFFDF15C"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/SmapiFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SmapiFunction287154F4"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/ValidationFunction/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ValidationFunctionServiceRole934D0B98"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/ValidationFunction/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ValidationFunctionServiceRoleDefaultPolicyE32E5084"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/ValidationFunction/SecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ValidationFunctionSecurityGroupA243A665"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/ValidationFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ValidationFunctionB150DCA9"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/CertificationFunction/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CertificationFunctionServiceRole9BF036FD"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/CertificationFunction/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CertificationFunctionServiceRoleDefaultPolicy99B065BF"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/CertificationFunction/SecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CertificationFunctionSecurityGroup060F52D3"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/CertificationFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CertificationFunction5A5F1D12"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/ValidationStateMachineLogs/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ValidationStateMachineLogs13C13BCF"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/ValidationStateMachine/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ValidationStateMachineRole8C78AAF1"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/ValidationStateMachine/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ValidationStateMachineRoleDefaultPolicy95133EDE"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/ValidationStateMachine/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ValidationStateMachine06C840F7"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/CertificationStateMachineLogs/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CertificationStateMachineLogsA5CD7EB5"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/CertificationStateMachine/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CertificationStateMachineRoleD6A7EEE9"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/CertificationStateMachine/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CertificationStateMachineRoleDefaultPolicyB09C08A7"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/CertificationStateMachine/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CertificationStateMachineC208725B"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/StateMachineLogs/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "StateMachineLogs3CB16D3C"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/StateMachine/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "StateMachineRoleB840431D"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/StateMachine/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "StateMachineRoleDefaultPolicyDF1E6607"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/StateMachine/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "StateMachine2E01A3A5"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/CfnFunction/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CfnFunctionServiceRoleA9E8D86C"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/CfnFunction/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CfnFunctionServiceRoleDefaultPolicyFEEE06F8"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/CfnFunction/SecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CfnFunctionSecurityGroup575399DA"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/CfnFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CfnFunctionD7182995"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/AmazonCertsLayer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmazonCertsLayer47167D39"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/CocktailAlchemist-skill-deployer-us-west-2-gamma/Exports/Output{\"Fn::GetAtt\":[\"CfnFunctionD7182995\",\"Arn\"]}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputFnGetAttCfnFunctionD7182995ArnF86A8B17"
+          }
+        ]
+      },
+      "displayName": "CocktailAlchemist-skill-deployer-us-west-2-gamma"
+    },
+    "CocktailAlchemist-SkillStack-us-west-2-gamma.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "CocktailAlchemist-SkillStack-us-west-2-gamma.assets.json"
+      }
+    },
+    "CocktailAlchemist-SkillStack-us-west-2-gamma": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://737088382676/us-west-2",
+      "properties": {
+        "templateFile": "CocktailAlchemist-SkillStack-us-west-2-gamma.template.json",
+        "terminationProtection": true,
+        "validateOnSynth": false,
+        "additionalDependencies": [
+          "CocktailAlchemist-SkillStack-us-west-2-gamma.assets"
+        ],
+        "stackName": "CocktailAlchemist-cdk-alexa-skill-baseline-application-gamma"
+      },
+      "dependencies": [
+        "CocktailAlchemist-LambdaStack-us-west-2-gamma",
+        "CocktailAlchemist-skill-deployer-us-west-2-gamma",
+        "CocktailAlchemist-SkillStack-us-west-2-gamma.assets"
+      ],
+      "metadata": {
+        "/CocktailAlchemist-SkillStack-us-west-2-gamma": [
+          {
+            "type": "bootstrapRepo",
+            "data": "737088382676.dkr.ecr.us-west-2.amazonaws.com/barsecrrepo-9a02629faf118f5e8cd97900d6918e7565c384a8"
+          }
+        ],
+        "/CocktailAlchemist-SkillStack-us-west-2-gamma/PackagingAggregateId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingAggregateId"
+          }
+        ],
+        "/CocktailAlchemist-SkillStack-us-west-2-gamma/PackagingTransformId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingTransformId"
+          }
+        ],
+        "/CocktailAlchemist-SkillStack-us-west-2-gamma/PackagingS3KeyPrefix": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingS3KeyPrefix"
+          }
+        ],
+        "/CocktailAlchemist-SkillStack-us-west-2-gamma/AmazonPipelinesRollbackFlag": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmazonPipelinesRollbackFlag"
+          }
+        ],
+        "/CocktailAlchemist-SkillStack-us-west-2-gamma/IsRollback": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IsRollback"
+          }
+        ],
+        "/CocktailAlchemist-SkillStack-us-west-2-gamma/CocktailAlchemist-Skill-us-west-2-gamma/Resource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CocktailAlchemistSkilluswest2gammaF63DEE1F"
+          }
+        ],
+        "/CocktailAlchemist-SkillStack-us-west-2-gamma/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ]
+      },
+      "displayName": "CocktailAlchemist-SkillStack-us-west-2-gamma"
+    },
+    "SuperStarBootstrapGlobal-737088382676.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "SuperStarBootstrapGlobal-737088382676.assets.json"
+      }
+    },
+    "SuperStarBootstrapGlobal-737088382676": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://737088382676/us-east-1",
+      "properties": {
+        "templateFile": "SuperStarBootstrapGlobal-737088382676.template.json",
+        "terminationProtection": true,
+        "validateOnSynth": false,
+        "additionalDependencies": [
+          "SuperStarBootstrapGlobal-737088382676.assets"
+        ]
+      },
+      "dependencies": [
+        "PipelinePipelineDeploymentStackC613E31E",
+        "SuperStarBootstrapGlobal-737088382676.assets"
+      ],
+      "metadata": {
+        "/SuperStarBootstrapGlobal-737088382676": [
+          {
+            "type": "bootstrapRepo",
+            "data": "737088382676.dkr.ecr.us-east-1.amazonaws.com/barsecrrepo-e84d0a06329ca3019a1124ccb3fd40be3a3e765a"
+          }
+        ],
+        "/SuperStarBootstrapGlobal-737088382676/PackagingAggregateId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingAggregateId"
+          }
+        ],
+        "/SuperStarBootstrapGlobal-737088382676/PackagingTransformId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingTransformId"
+          }
+        ],
+        "/SuperStarBootstrapGlobal-737088382676/PackagingS3KeyPrefix": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingS3KeyPrefix"
+          }
+        ],
+        "/SuperStarBootstrapGlobal-737088382676/AmazonPipelinesRollbackFlag": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmazonPipelinesRollbackFlag"
+          }
+        ],
+        "/SuperStarBootstrapGlobal-737088382676/IsRollback": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IsRollback"
+          }
+        ],
+        "/SuperStarBootstrapGlobal-737088382676/ProvisionerRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ProvisionerRoleCD6E5884"
+          }
+        ],
+        "/SuperStarBootstrapGlobal-737088382676/ProvisionerRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ProvisionerRoleDefaultPolicy91BE224F"
+          }
+        ],
+        "/SuperStarBootstrapGlobal-737088382676/SuperStarCfnRegistrarLambdaRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SuperStarCfnRegistrarLambdaRole8D5CE144"
+          }
+        ],
+        "/SuperStarBootstrapGlobal-737088382676/SuperStarCfnRegistrarLambdaRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SuperStarCfnRegistrarLambdaRoleDefaultPolicyB1416441"
+          }
+        ],
+        "/SuperStarBootstrapGlobal-737088382676/VersionAnnouncerLambdaFuncSuperStarVersionAnnouncerLambdaRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "VersionAnnouncerLambdaFuncSuperStarVersionAnnouncerLambdaRole7F21498B"
+          }
+        ],
+        "/SuperStarBootstrapGlobal-737088382676/VersionAnnouncerLambdaFunc/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "VersionAnnouncerLambdaFuncC72B5F0C"
+          }
+        ],
+        "/SuperStarBootstrapGlobal-737088382676/BootstrapVersionAnnouncement/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersionAnnouncement"
+          }
+        ],
+        "/SuperStarBootstrapGlobal-737088382676/SuperStarRPDKLoggingRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SuperStarRPDKLoggingRole70DA39AE"
+          }
+        ],
+        "/SuperStarBootstrapGlobal-737088382676/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ]
+      },
+      "displayName": "SuperStarBootstrapGlobal-737088382676"
+    },
+    "SuperStarBootstrap-737088382676-us-west-2.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "SuperStarBootstrap-737088382676-us-west-2.assets.json"
+      }
+    },
+    "SuperStarBootstrap-737088382676-us-west-2": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://737088382676/us-west-2",
+      "properties": {
+        "templateFile": "SuperStarBootstrap-737088382676-us-west-2.template.json",
+        "terminationProtection": true,
+        "validateOnSynth": false,
+        "additionalDependencies": [
+          "SuperStarBootstrap-737088382676-us-west-2.assets"
+        ]
+      },
+      "dependencies": [
+        "SuperStarBootstrapGlobal-737088382676",
+        "SuperStarBootstrap-737088382676-us-west-2.assets"
+      ],
+      "metadata": {
+        "/SuperStarBootstrap-737088382676-us-west-2": [
+          {
+            "type": "bootstrapRepo",
+            "data": "737088382676.dkr.ecr.us-west-2.amazonaws.com/barsecrrepo-9a02629faf118f5e8cd97900d6918e7565c384a8"
+          }
+        ],
+        "/SuperStarBootstrap-737088382676-us-west-2/PackagingAggregateId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingAggregateId"
+          }
+        ],
+        "/SuperStarBootstrap-737088382676-us-west-2/PackagingTransformId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingTransformId"
+          }
+        ],
+        "/SuperStarBootstrap-737088382676-us-west-2/PackagingS3KeyPrefix": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PackagingS3KeyPrefix"
+          }
+        ],
+        "/SuperStarBootstrap-737088382676-us-west-2/AmazonPipelinesRollbackFlag": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmazonPipelinesRollbackFlag"
+          }
+        ],
+        "/SuperStarBootstrap-737088382676-us-west-2/IsRollback": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IsRollback"
+          }
+        ],
+        "/SuperStarBootstrap-737088382676-us-west-2/CfnRegistrarLambdaFuncRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CfnRegistrarLambdaFuncRole3DB6244D"
+          }
+        ],
+        "/SuperStarBootstrap-737088382676-us-west-2/CfnRegistrarLambdaFuncRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CfnRegistrarLambdaFuncRoleDefaultPolicy47F1B075"
+          }
+        ],
+        "/SuperStarBootstrap-737088382676-us-west-2/CfnRegistrarLambdaFunc/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CfnRegistrarLambdaFunc08366641"
+          }
+        ],
+        "/SuperStarBootstrap-737088382676-us-west-2/UrlPullerLambdaRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UrlPullerLambdaRoleE983445E"
+          }
+        ],
+        "/SuperStarBootstrap-737088382676-us-west-2/UrlPullerLambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UrlPullerLambda126CEAAC"
+          }
+        ],
+        "/SuperStarBootstrap-737088382676-us-west-2/RPDKLoggingRole-737088382676-us-west-2/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RPDKLoggingRole737088382676uswest29F57F71E"
+          }
+        ],
+        "/SuperStarBootstrap-737088382676-us-west-2/SuperStarRPDKLogGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SuperStarRPDKLogGroup21CFC120"
+          }
+        ],
+        "/SuperStarBootstrap-737088382676-us-west-2/UrlPuller/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UrlPuller"
+          }
+        ],
+        "/SuperStarBootstrap-737088382676-us-west-2/ServiceEnvironment/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServiceEnvironment"
+          }
+        ],
+        "/SuperStarBootstrap-737088382676-us-west-2/ClientConfiguration/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ClientConfiguration"
+          }
+        ],
+        "/SuperStarBootstrap-737088382676-us-west-2/ProviderConfiguration/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ProviderConfiguration"
+          }
+        ],
+        "/SuperStarBootstrap-737088382676-us-west-2/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ]
+      },
+      "displayName": "SuperStarBootstrap-737088382676-us-west-2"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "BONESBootstrap-5831802-737088382676-us-east-1": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://737088382676/us-east-1",
+      "properties": {
+        "templateFile": "BONESBootstrap-5831802-737088382676-us-east-1.template.json",
+        "terminationProtection": true,
+        "validateOnSynth": false
+      },
+      "metadata": {
+        "/BONESBootstrap-5831802-737088382676-us-east-1/BARS/BARSKey/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSBARSKey008C869E"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-east-1/BARS/BARSKey/Alias/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSBARSKeyAlias802DC3FE"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-east-1/BARS/ImageRepo/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSImageRepoC9741AEA"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-east-1/BARS/AccessLoggingBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSAccessLoggingBucketE36DE718"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-east-1/BARS/AccessLoggingBucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSAccessLoggingBucketPolicyD060BA2A"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-east-1/BARS/Resource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARS772963B4"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-east-1/BARS/Resource/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSPolicy7A3163C8"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-east-1/BARS/PipelinesBARSRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSPipelinesBARSRole10256C1D"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-east-1/BARS/PipelinesBARSRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSPipelinesBARSRoleDefaultPolicy5D505A53"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-east-1/BARSKeyArnExport": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSKeyArnExport"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-east-1/CodeDeploy/PipelinesCodeDeployRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CodeDeployPipelinesCodeDeployRoleDDA586B5"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-east-1/CodeDeploy/PipelinesCodeDeployPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CodeDeployPipelinesCodeDeployPolicyE6BCA7ED"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-east-1/PipelinesCloudWatch/PipelinesCloudWatchRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelinesCloudWatchPipelinesCloudWatchRole3350B38B"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-east-1/PipelinesCloudWatch/PipelinesCloudWatchPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelinesCloudWatchPipelinesCloudWatchPolicy76913B55"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-east-1/ChangeSetApproverRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ChangeSetApproverRoleAD563530"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-east-1/CloudFormationExecutionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CloudFormationExecutionRole09AE950A"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-east-1/PipelinesCloudFormationRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelinesCloudFormationRole9A8154EF"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-east-1/PipelinesCloudFormationManagedPolicy": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelinesCloudFormationManagedPolicy"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-east-1/Hydra/HydraTestBATSManagedPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HydraHydraTestBATSManagedPolicy4D07D27F"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-east-1/Hydra/HydraTestBATS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HydraHydraTestBATS8497CB1A"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-east-1/Hydra/HydraTestManagedPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HydraHydraTestManagedPolicy2F797490"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-east-1/Hydra/HydraTest/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HydraHydraTestFCCFEF3F"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-east-1/Hydra/HydraTestResults/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HydraHydraTestResults39111CFE"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-east-1/Hydra/HydraTestResults/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HydraHydraTestResultsDefaultPolicy5D738582"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-east-1/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ]
+      },
+      "displayName": "BONESBootstrap-5831802-737088382676-us-east-1"
+    },
+    "BONESBootstrap-5831802-737088382676-us-west-2": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://737088382676/us-west-2",
+      "properties": {
+        "templateFile": "BONESBootstrap-5831802-737088382676-us-west-2.template.json",
+        "terminationProtection": true,
+        "validateOnSynth": false
+      },
+      "metadata": {
+        "/BONESBootstrap-5831802-737088382676-us-west-2/BARS/BARSKey/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSBARSKey008C869E"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-west-2/BARS/BARSKey/Alias/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSBARSKeyAlias802DC3FE"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-west-2/BARS/ImageRepo/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSImageRepoC9741AEA"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-west-2/BARS/AccessLoggingBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSAccessLoggingBucketE36DE718"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-west-2/BARS/AccessLoggingBucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSAccessLoggingBucketPolicyD060BA2A"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-west-2/BARS/Resource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARS772963B4"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-west-2/BARS/Resource/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSPolicy7A3163C8"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-west-2/BARS/PipelinesBARSRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSPipelinesBARSRole10256C1D"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-west-2/BARS/PipelinesBARSRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSPipelinesBARSRoleDefaultPolicy5D505A53"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-west-2/BARSKeyArnExport": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BARSKeyArnExport"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-west-2/CodeDeploy/PipelinesCodeDeployRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CodeDeployPipelinesCodeDeployRoleDDA586B5"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-west-2/CodeDeploy/PipelinesCodeDeployPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CodeDeployPipelinesCodeDeployPolicyE6BCA7ED"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-west-2/PipelinesCloudWatch/PipelinesCloudWatchRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelinesCloudWatchPipelinesCloudWatchRole3350B38B"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-west-2/PipelinesCloudWatch/PipelinesCloudWatchPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelinesCloudWatchPipelinesCloudWatchPolicy76913B55"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-west-2/ChangeSetApproverRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ChangeSetApproverRoleAD563530"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-west-2/CloudFormationExecutionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CloudFormationExecutionRole09AE950A"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-west-2/PipelinesCloudFormationRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelinesCloudFormationRole9A8154EF"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-west-2/PipelinesCloudFormationManagedPolicy": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelinesCloudFormationManagedPolicy"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-west-2/Hydra/HydraTestBATSManagedPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HydraHydraTestBATSManagedPolicy4D07D27F"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-west-2/Hydra/HydraTestBATS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HydraHydraTestBATS8497CB1A"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-west-2/Hydra/HydraTestManagedPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HydraHydraTestManagedPolicy2F797490"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-west-2/Hydra/HydraTest/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HydraHydraTestFCCFEF3F"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-west-2/Hydra/HydraTestResults/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HydraHydraTestResults39111CFE"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-west-2/Hydra/HydraTestResults/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HydraHydraTestResultsDefaultPolicy5D738582"
+          }
+        ],
+        "/BONESBootstrap-5831802-737088382676-us-west-2/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ]
+      },
+      "displayName": "BONESBootstrap-5831802-737088382676-us-west-2"
+    }
+  }
+}

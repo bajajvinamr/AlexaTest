@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: Maven-org-junit-platform_junit-platform-reporting-1.x.43020.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/Maven-org-junit-platform_junit-platform-reporting/Maven-org-junit-platform_junit-platform-reporting-1.x.43020.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/junit-platform-reporting-1.9.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Maven-org-junit-platform_junit-platform-reporting/Maven-org-junit-platform_junit-platform-reporting-1.x.43020.0/AL2_x86_64/generic-flavor/src/third-party-artifacts/org/junit/platform/junit-platform-reporting/1.9.2/junit-platform-reporting-1.9.2-sources" />
+    </SOURCES>
+  </library>
+</component>

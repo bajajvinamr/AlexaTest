@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: JUnixSocket-2.x.25160.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/JUnixSocket/JUnixSocket-2.x.25160.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/junixsocket-common-2.6.2.jar!/" />
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/JUnixSocket/JUnixSocket-2.x.25160.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/junixsocket-native-common-2.6.2.jar!/" />
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/JUnixSocket/JUnixSocket-2.x.25160.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/junixsocket-mysql-2.6.2.jar!/" />
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/JUnixSocket/JUnixSocket-2.x.25160.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/junixsocket-rmi-2.6.2.jar!/" />
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/JUnixSocket/JUnixSocket-2.x.25160.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/junixsocket-demo-2.6.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

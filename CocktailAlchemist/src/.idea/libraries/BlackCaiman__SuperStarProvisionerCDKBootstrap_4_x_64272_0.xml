@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: SuperStarProvisionerCDKBootstrap-4.x.64272.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/SuperStarProvisionerCDKBootstrap/SuperStarProvisionerCDKBootstrap-4.x.64272.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/SuperStarProvisionerCDKBootstrap-4.x.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/SuperStarProvisionerCDKBootstrap/SuperStarProvisionerCDKBootstrap-4.x.64272.0/AL2_x86_64/generic-flavor/src/node_modules/jsii-rosetta/test/translations/statements" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/SuperStarProvisionerCDKBootstrap/SuperStarProvisionerCDKBootstrap-4.x.64272.0/AL2_x86_64/generic-flavor/src/node_modules/jsii-rosetta/test/translations/calls" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/SuperStarProvisionerCDKBootstrap/SuperStarProvisionerCDKBootstrap-4.x.64272.0/AL2_x86_64/generic-flavor/src/node_modules/jsii-rosetta/test/translations/identifiers" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/SuperStarProvisionerCDKBootstrap/SuperStarProvisionerCDKBootstrap-4.x.64272.0/AL2_x86_64/generic-flavor/src/node_modules/jsii-rosetta/test/translations/imports" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/SuperStarProvisionerCDKBootstrap/SuperStarProvisionerCDKBootstrap-4.x.64272.0/AL2_x86_64/generic-flavor/src/node_modules/jsii-rosetta/test/translations/expressions" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/SuperStarProvisionerCDKBootstrap/SuperStarProvisionerCDKBootstrap-4.x.64272.0/AL2_x86_64/generic-flavor/src/node_modules/jsii-rosetta/test/translations/interfaces" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/SuperStarProvisionerCDKBootstrap/SuperStarProvisionerCDKBootstrap-4.x.64272.0/AL2_x86_64/generic-flavor/src/node_modules/jsii-rosetta/test/translations/classes" />
+    </SOURCES>
+  </library>
+</component>

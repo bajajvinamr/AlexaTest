@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: J2ee_servlet-3.0.404096.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/J2ee_servlet/J2ee_servlet-3.0.404096.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/servlet-api-3.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/J2ee_servlet/J2ee_servlet-3.0.404096.0/AL2_x86_64/generic-flavor/src/src" />
+    </SOURCES>
+  </library>
+</component>

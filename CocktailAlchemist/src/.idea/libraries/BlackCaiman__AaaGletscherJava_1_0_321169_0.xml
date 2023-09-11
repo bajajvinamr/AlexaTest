@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: AaaGletscherJava-1.0.321169.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/AaaGletscherJava/AaaGletscherJava-1.0.321169.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AaaGletscherJava-1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/AaaGletscherJava/AaaGletscherJava-1.0.321169.0/AL2_x86_64/generic-flavor/src/tst" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/AaaGletscherJava/AaaGletscherJava-1.0.321169.0/AL2_x86_64/generic-flavor/src/src" />
+    </SOURCES>
+  </library>
+</component>

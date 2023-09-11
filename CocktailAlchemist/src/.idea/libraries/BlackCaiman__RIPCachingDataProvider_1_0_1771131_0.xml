@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: RIPCachingDataProvider-1.0.1771131.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/RIPCachingDataProvider/RIPCachingDataProvider-1.0.1771131.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/RIPCachingDataProvider-1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/RIPCachingDataProvider/RIPCachingDataProvider-1.0.1771131.0/AL2_x86_64/generic-flavor/src/src" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/RIPCachingDataProvider/RIPCachingDataProvider-1.0.1771131.0/AL2_x86_64/generic-flavor/src/tst" />
+    </SOURCES>
+  </library>
+</component>

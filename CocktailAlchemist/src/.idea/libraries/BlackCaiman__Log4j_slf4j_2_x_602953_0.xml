@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: Log4j-slf4j-2.x.602953.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/Log4j-slf4j/Log4j-slf4j-2.x.602953.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/Log4j-slf4j-2.x.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Log4j-slf4j/Log4j-slf4j-2.x.602953.0/AL2_x86_64/generic-flavor/src/log4j-slf4j-impl/src/main/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Log4j-slf4j/Log4j-slf4j-2.x.602953.0/AL2_x86_64/generic-flavor/src/log4j-slf4j-impl/src/test/java" />
+    </SOURCES>
+  </library>
+</component>

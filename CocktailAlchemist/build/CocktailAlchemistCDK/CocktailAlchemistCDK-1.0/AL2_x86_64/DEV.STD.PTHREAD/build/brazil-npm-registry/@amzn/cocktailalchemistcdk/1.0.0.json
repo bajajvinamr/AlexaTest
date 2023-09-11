@@ -1,0 +1,50 @@
+{
+  "name": "@amzn/cocktailalchemistcdk",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "main": "dist/lib/app.js",
+  "types": "dist/types/app.d.ts",
+  "scripts": {
+    "clean": "rm -rf dist && rm -rf cdk.out",
+    "build": "tsc",
+    "watch": "tsc -w",
+    "prepare": "npm run-script build",
+    "test": "echo OK"
+  },
+  "dependencies": {
+    "@amzn/ask-cdk": "^2.1.1",
+    "@amzn/superstar-provisioner-cdk": "^4.0.0",
+    "@amzn/superstar-provisioner-cdk-bootstrap": "^4.0.0",
+    "@amzn/motecdk": "22.0.0",
+    "constructs": "^10.0.64",
+    "aws-cdk-lib": "2.35.0"
+  },
+  "devDependencies": {
+    "@amzn/pipelines": "^4.0.8",
+    "@alexa/acdl": "*",
+    "@types/node": "*",
+    "typescript": "^4.1.3",
+    "@amzn/motecdk": "22.0.0",
+    "constructs": "^10.0.64",
+    "aws-cdk-lib": "^2.35.0",
+    "@amzn/alexa-extended-cdk-constructs": "3.1.1",
+    "@amzn/hydra": "^4.0.1"
+  },
+  "readme": "## Welcome!\n\nThis package will help you manage Pipelines and your AWS Infrastructure with the power of CDK!\n\n## Useful links:\n* https://builderhub.corp.amazon.com/docs/native-aws/developer-guide/cdk-pipeline.html\n* https://code.amazon.com/packages/PipelinesConstructs/blobs/mainline/--/README.md\n* https://code.amazon.com/packages/CDKBuild/blobs/HEAD/--/README.md\n* https://docs.aws.amazon.com/cdk/api/latest/versions.html\n\n## Configuring various stages in Alexa CDK Pipeline\nThis template starts with gamma stage and all the configurations are set accordingly to it. In case you want to add beta and prod stage, follow this [AskCdk Stages](https://w.amazon.com/?Alexa_Skills_Kit/Teams/Offline_Tooling/AskCdk/stages).\n\n## About AlexaExtendedCDKConstructs:\n* The Skill Source Application comes with AlexaExtendedCDKConstructs which an extended cdk constructs library.\n### What does AlexaExtendedCDKConstructs offers:\n* Secured constructs creation.\n* Multiple Low Level Constructs encapsulated under a single Class.\n* Additional features of creating Alarms along with creation of resource itself.\n* Alexa ORR Best practices followed.\n* For more information please refer the [here](https://code.amazon.com/packages/AlexaExtendedCDKConstructs/blobs/mainline-3.0/--/README.md).\n\n## How to add Ticket Action on Alarms using AlexaExtendedCDKConstructs:\n```\nalexaAlarmConfig: {\n    overrideAlarmMap: ...,\n    alarmTicketActionProps: {\n        cti: {\n            category: 'Category',\n            type: 'Type',\n            item: 'Item'\n        },\n        resolverGroup: 'Resolver'\n    },\n    individualAlarms: ...\n    ...\n}\n```\n## How to create custom alarms using AlexaExtendedCDKConstructs:\n* Check [custom-alarms-test](https://code.amazon.com/packages/AlexaExtendedCDKConstructs/blobs/heads/mainline/--/test/alarms/custom-alarms.test.ts) file.\n* This allows us to modify/customise the threshold, DatapointsToAlarm, EvaluationPeriods, Statistic, Period , Unit etc.\n* Refer [here](https://code.amazon.com/packages/AlexaExtendedCDKConstructs/blobs/mainline-3.0/--/lib/lambda/default-lambda-alarms.ts#L33-L299) to see the default values picked for all the alarms config : \n* Steps :\n    * Suppose we want to add **PROVISIONED_CONCURRENCY_UTILIZATION_MAXIMUM_LOW_SEV** alarm.\n    * Add the alarm in the `set` in the **setIndividualAlarms()**.\n        ```\n        export function setIndividualAlarms() {\n            new Set<AlexaLambdaAlarmTags>([\n                ...\n                AlexaLambdaAlarmTags.PROVISIONED_CONCURRENCY_UTILIZATION_MAXIMUM_LOW_SEV\n            ]);     \n        }\n        ```\n    * Now if you want to override the custom alarms and want to modify the alarmConfig then go to **getOverrideAlarmMapConfig()** in the **alarmConfig.ts** file to override the alarm.\n    * Inside the function add the alarm with whatever configuration you want to add in the Map<AlexaLambdaAlarmTags, AlexaCustomAlarmProps> like this :\n        ```\n        export function getOverrideAlarmMapConfig() : Map<AlexaLambdaAlarmTags, AlexaCustomAlarmProps>{\n            return new Map<AlexaLambdaAlarmTags, AlexaCustomAlarmProps>([\n                ...\n                [AlexaLambdaAlarmTags.PROVISIONED_CONCURRENCY_UTILIZATION_MAXIMUM_LOW_SEV, {\n                    secureAlarmProp: {\n                        alarmName: functionName + \"_\"\n                        + AlexaLambdaAlarmTags.PROVISIONED_CONCURRENCY_UTILIZATION_MAXIMUM_LOW_SEV,\n                        metric: LambdaMetrics.provisionedConcurrencyUtilization({\n                        FunctionName: functionName\n                    }),\n                        threshold: 0.85,\n                        datapointsToAlarm: 10,\n                        evaluationPeriods: 10,\n                        comparisonOperator: ComparisonOperator.GREATER_THAN_OR_EQUAL_TO_THRESHOLD\n                    },\n                    alexaTicketSeverity: AlexaTicketSeverity.SEV_3,\n                    dedupeString: `ProvisionedConcurrencyUtilization-Maximum-${functionName}`\n                }]\n            ]);\n        }     \n        ```\n* Note : If you don't provide any value then it will pick the default values provided by AlexaExtendedCDKConstructs. For overriding the alarmConfig you can add `secureAlarmProp` with required parameters and values.\n",
+  "readmeFilename": "README.md",
+  "gitHead": "53e6eb93cdb17ffbc1d023b4654844b6f3184811",
+  "description": "This package will help you manage Pipelines and your AWS Infrastructure with the power of CDK!",
+  "_id": "@amzn/cocktailalchemistcdk@1.0.0",
+  "_nodeVersion": "20.5.1",
+  "_npmVersion": "8.19.4",
+  "dist": {
+    "integrity": "sha512-tlI2jyujk6DVZ5rXmUlSB03vIVTlILbBBeDPBP0aqB5gPm2rxvfG29MNPc0JqBLkRWAGXtvWA0Ld4a+tMb7BCw==",
+    "shasum": "f49f899fcbe2c8c14baed1716a94c33dd7248ec4",
+    "tarball": "brazilNpm:%40amzn%2Fcocktailalchemistcdk/1.0.0.tgz"
+  },
+  "brazil": {
+    "name": "CocktailAlchemistCDK",
+    "version": "1.0.x.x"
+  },
+  "_hasShrinkwrap": false
+}

@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: Jul-over-log4j2-2.x.772259.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/Jul-over-log4j2/Jul-over-log4j2-2.x.772259.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/Jul-over-log4j2-2.x.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Jul-over-log4j2/Jul-over-log4j2-2.x.772259.0/AL2_x86_64/generic-flavor/src/log4j-jul/src/main/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Jul-over-log4j2/Jul-over-log4j2-2.x.772259.0/AL2_x86_64/generic-flavor/src/log4j-jul/src/test/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Jul-over-log4j2/Jul-over-log4j2-2.x.772259.0/AL2_x86_64/generic-flavor/src/log4j-api/src/test/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Jul-over-log4j2/Jul-over-log4j2-2.x.772259.0/AL2_x86_64/generic-flavor/src/log4j-core/src/test/java" />
+    </SOURCES>
+  </library>
+</component>

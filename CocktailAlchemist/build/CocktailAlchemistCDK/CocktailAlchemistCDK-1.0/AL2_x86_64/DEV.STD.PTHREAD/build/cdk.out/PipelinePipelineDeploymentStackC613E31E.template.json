@@ -1,0 +1,1930 @@
+{
+ "Parameters": {
+  "PackagingAggregateId": {
+   "Type": "String",
+   "Default": "dummy",
+   "Description": "Aggregate Id that can be used to reference resources from different transformations"
+  },
+  "PackagingTransformId": {
+   "Type": "String",
+   "Default": "dummy",
+   "Description": "Deployment Id is used to figure out artifact locations in S3 and ECR"
+  },
+  "PackagingS3KeyPrefix": {
+   "Type": "String",
+   "Default": "dummy",
+   "Description": "Deployment Id is used to figure out artifact locations in S3 and ECR"
+  }
+ },
+ "Resources": {
+  "BARSBARSKey008C869E": {
+   "Type": "AWS::KMS::Key",
+   "Properties": {
+    "Description": "KMS key used to encrypt at rest artifacts used for deployments. This is the BARS key.",
+    "EnableKeyRotation": true,
+    "Enabled": true,
+    "KeyPolicy": {
+     "Statement": [
+      {
+       "Action": "kms:*",
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":iam::737088382676:root"
+          ]
+         ]
+        }
+       },
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "kms:CreateGrant",
+        "kms:ListGrants",
+        "kms:RevokeGrant"
+       ],
+       "Condition": {
+        "Bool": {
+         "kms:GrantIsForAWSResource": "true"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": {
+         "Fn::GetAtt": [
+          "BARSPipelinesBARSRole10256C1D",
+          "Arn"
+         ]
+        }
+       },
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/BARS/BARSKey/Resource"
+   }
+  },
+  "BARSBARSKeyAlias802DC3FE": {
+   "Type": "AWS::KMS::Alias",
+   "Properties": {
+    "AliasName": "alias/ArtifactEncryptionKey-c76fe9cd080e04c3f0e97f7ef6e49d50ed90f345",
+    "TargetKeyId": {
+     "Fn::GetAtt": [
+      "BARSBARSKey008C869E",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/BARS/BARSKey/Alias/Resource"
+   }
+  },
+  "BARSImageRepoC9741AEA": {
+   "Type": "AWS::ECR::Repository",
+   "Properties": {
+    "LifecyclePolicy": {
+     "LifecyclePolicyText": "{\"rules\":[{\"rulePriority\":1,\"description\":\"Expire consumed image count more than 800\",\"selection\":{\"tagStatus\":\"tagged\",\"tagPrefixList\":[\"BATS_CI_\"],\"countType\":\"imageCountMoreThan\",\"countNumber\":800},\"action\":{\"type\":\"expire\"}},{\"rulePriority\":2,\"description\":\"Expire image count more than 1600\",\"selection\":{\"tagStatus\":\"any\",\"countType\":\"imageCountMoreThan\",\"countNumber\":1600},\"action\":{\"type\":\"expire\"}}]}"
+    },
+    "RepositoryName": "barsecrrepo-c263526e9debb36d0ae4e801f6a5de7cc067bcbd",
+    "RepositoryPolicyText": {
+     "Statement": [
+      {
+       "Action": [
+        "ecr:BatchGetImage",
+        "ecr:GetDownloadUrlForLayer"
+       ],
+       "Condition": {
+        "StringLike": {
+         "aws:sourceArn": {
+          "Fn::Sub": "arn:${AWS::Partition}:lambda:${AWS::Region}:${AWS::AccountId}:function:*"
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       },
+       "Sid": "LambdaECRImageRetrievalPolicy"
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/BARS/ImageRepo/Resource"
+   }
+  },
+  "BARSAccessLoggingBucketE36DE718": {
+   "Type": "AWS::S3::Bucket",
+   "Properties": {
+    "BucketEncryption": {
+     "ServerSideEncryptionConfiguration": [
+      {
+       "ServerSideEncryptionByDefault": {
+        "SSEAlgorithm": "AES256"
+       }
+      }
+     ]
+    },
+    "BucketName": "deploymentloggingbucke-f460faf02d00e90d4acd820297ee25ab9a4b28c1",
+    "LifecycleConfiguration": {
+     "Rules": [
+      {
+       "ExpirationInDays": 3653,
+       "Id": "ExpireAfterTenYears",
+       "Status": "Enabled"
+      }
+     ]
+    },
+    "PublicAccessBlockConfiguration": {
+     "BlockPublicAcls": true,
+     "BlockPublicPolicy": true,
+     "IgnorePublicAcls": true,
+     "RestrictPublicBuckets": true
+    },
+    "VersioningConfiguration": {
+     "Status": "Enabled"
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/BARS/AccessLoggingBucket/Resource"
+   }
+  },
+  "BARSAccessLoggingBucketPolicyD060BA2A": {
+   "Type": "AWS::S3::BucketPolicy",
+   "Properties": {
+    "Bucket": {
+     "Ref": "BARSAccessLoggingBucketE36DE718"
+    },
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "s3:*",
+       "Condition": {
+        "Bool": {
+         "aws:SecureTransport": "false"
+        }
+       },
+       "Effect": "Deny",
+       "Principal": {
+        "AWS": "*"
+       },
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "BARSAccessLoggingBucketE36DE718",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "BARSAccessLoggingBucketE36DE718",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "s3:PutObject",
+       "Condition": {
+        "ArnLike": {
+         "aws:SourceArn": {
+          "Fn::GetAtt": [
+           "BARS772963B4",
+           "Arn"
+          ]
+         }
+        },
+        "StringEquals": {
+         "aws:SourceAccount": "737088382676"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "logging.s3.amazonaws.com"
+       },
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          {
+           "Fn::GetAtt": [
+            "BARSAccessLoggingBucketE36DE718",
+            "Arn"
+           ]
+          },
+          "/*"
+         ]
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/BARS/AccessLoggingBucket/Policy/Resource"
+   }
+  },
+  "BARS772963B4": {
+   "Type": "AWS::S3::Bucket",
+   "Properties": {
+    "BucketEncryption": {
+     "ServerSideEncryptionConfiguration": [
+      {
+       "ServerSideEncryptionByDefault": {
+        "KMSMasterKeyID": {
+         "Fn::GetAtt": [
+          "BARSBARSKey008C869E",
+          "Arn"
+         ]
+        },
+        "SSEAlgorithm": "aws:kms"
+       }
+      }
+     ]
+    },
+    "BucketName": "deploymentbucket-324389feca032e37e0f26c72bb4eaecaf7f41a82",
+    "LoggingConfiguration": {
+     "DestinationBucketName": {
+      "Ref": "BARSAccessLoggingBucketE36DE718"
+     }
+    },
+    "PublicAccessBlockConfiguration": {
+     "BlockPublicAcls": true,
+     "BlockPublicPolicy": true,
+     "IgnorePublicAcls": true,
+     "RestrictPublicBuckets": true
+    },
+    "VersioningConfiguration": {
+     "Status": "Enabled"
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/BARS/Resource/Resource"
+   }
+  },
+  "BARSPolicy7A3163C8": {
+   "Type": "AWS::S3::BucketPolicy",
+   "Properties": {
+    "Bucket": {
+     "Ref": "BARS772963B4"
+    },
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "s3:*",
+       "Condition": {
+        "Bool": {
+         "aws:SecureTransport": "false"
+        }
+       },
+       "Effect": "Deny",
+       "Principal": {
+        "AWS": "*"
+       },
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "BARS772963B4",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "BARS772963B4",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/BARS/Resource/Policy/Resource"
+   }
+  },
+  "BARSPipelinesBARSRole10256C1D": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Condition": {
+        "StringEquals": {
+         "sts:ExternalId": "Pipeline:5831802:CDService"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "bars.amazon.com"
+       }
+      },
+      {
+       "Action": "sts:AssumeRole",
+       "Condition": {
+        "StringEquals": {
+         "sts:ExternalId": "5831802"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "pipelines.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "RoleName": "PipelinesBARSRole-b7a61411979e023bdb44dc1209fb88fb068c7370"
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/BARS/PipelinesBARSRole/Resource"
+   }
+  },
+  "BARSPipelinesBARSRoleDefaultPolicy5D505A53": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "s3:PutObject",
+        "s3:PutObjectLegalHold",
+        "s3:PutObjectRetention",
+        "s3:PutObjectTagging",
+        "s3:PutObjectVersionTagging",
+        "s3:Abort*"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          {
+           "Fn::GetAtt": [
+            "BARS772963B4",
+            "Arn"
+           ]
+          },
+          "/*"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": [
+        "kms:Encrypt",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*",
+        "kms:Decrypt"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BARSBARSKey008C869E",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "s3:GetObject*",
+        "s3:GetBucket*",
+        "s3:List*",
+        "s3:DeleteObject*",
+        "s3:PutObject",
+        "s3:PutObjectLegalHold",
+        "s3:PutObjectRetention",
+        "s3:PutObjectTagging",
+        "s3:PutObjectVersionTagging",
+        "s3:Abort*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "BARS772963B4",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "BARS772963B4",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "kms:Decrypt",
+        "kms:DescribeKey",
+        "kms:Encrypt",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BARSBARSKey008C869E",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage",
+        "ecr:CompleteLayerUpload",
+        "ecr:UploadLayerPart",
+        "ecr:InitiateLayerUpload",
+        "ecr:PutImage"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BARSImageRepoC9741AEA",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": "ecr:GetAuthorizationToken",
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "ecr:DescribeImages",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BARSImageRepoC9741AEA",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": "kms:Decrypt",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BATSBATSKeyFA7EDF59",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BATSBATSImageRepoFE8EA8AF",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": "ecr:DescribeImages",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BATSBATSImageRepoFE8EA8AF",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "s3:GetObject*",
+        "s3:GetBucket*",
+        "s3:List*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "BATS64B3E3E8",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "BATS64B3E3E8",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "kms:Decrypt",
+        "kms:DescribeKey"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BATSBATSKeyFA7EDF59",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "BARSPipelinesBARSRoleDefaultPolicy5D505A53",
+    "Roles": [
+     {
+      "Ref": "BARSPipelinesBARSRole10256C1D"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/BARS/PipelinesBARSRole/DefaultPolicy/Resource"
+   }
+  },
+  "BATSBATSKeyFA7EDF59": {
+   "Type": "AWS::KMS::Key",
+   "Properties": {
+    "Description": "KMS key used to encrypt at rest artifacts used for deployments. This is the BATS key.",
+    "EnableKeyRotation": true,
+    "Enabled": true,
+    "KeyPolicy": {
+     "Statement": [
+      {
+       "Action": "kms:*",
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":iam::737088382676:root"
+          ]
+         ]
+        }
+       },
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "kms:CreateGrant",
+        "kms:ListGrants",
+        "kms:RevokeGrant"
+       ],
+       "Condition": {
+        "Bool": {
+         "kms:GrantIsForAWSResource": "true"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": {
+         "Fn::GetAtt": [
+          "PipelinesBATSRoleA29413FE",
+          "Arn"
+         ]
+        }
+       },
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/BATS/BATSKey/Resource"
+   }
+  },
+  "BATSBATSKeyAliasAA98823D": {
+   "Type": "AWS::KMS::Alias",
+   "Properties": {
+    "AliasName": "alias/BATSArtifactEncryption-ac1905cf6d859953ba50c873746f75ef22200160",
+    "TargetKeyId": {
+     "Fn::GetAtt": [
+      "BATSBATSKeyFA7EDF59",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/BATS/BATSKey/Alias/Resource"
+   }
+  },
+  "BATSAccessLoggingBucketAC8B82A9": {
+   "Type": "AWS::S3::Bucket",
+   "Properties": {
+    "BucketEncryption": {
+     "ServerSideEncryptionConfiguration": [
+      {
+       "ServerSideEncryptionByDefault": {
+        "SSEAlgorithm": "AES256"
+       }
+      }
+     ]
+    },
+    "BucketName": "pipelinesbatsdeploymen-aede4b11f1cc97d00b2c1c4c8f13a4b32cf62cd0",
+    "LifecycleConfiguration": {
+     "Rules": [
+      {
+       "ExpirationInDays": 3653,
+       "Id": "ExpireAfterTenYears",
+       "Status": "Enabled"
+      }
+     ]
+    },
+    "PublicAccessBlockConfiguration": {
+     "BlockPublicAcls": true,
+     "BlockPublicPolicy": true,
+     "IgnorePublicAcls": true,
+     "RestrictPublicBuckets": true
+    },
+    "VersioningConfiguration": {
+     "Status": "Enabled"
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/BATS/AccessLoggingBucket/Resource"
+   }
+  },
+  "BATSAccessLoggingBucketPolicy13A1A022": {
+   "Type": "AWS::S3::BucketPolicy",
+   "Properties": {
+    "Bucket": {
+     "Ref": "BATSAccessLoggingBucketAC8B82A9"
+    },
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "s3:*",
+       "Condition": {
+        "Bool": {
+         "aws:SecureTransport": "false"
+        }
+       },
+       "Effect": "Deny",
+       "Principal": {
+        "AWS": "*"
+       },
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "BATSAccessLoggingBucketAC8B82A9",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "BATSAccessLoggingBucketAC8B82A9",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "s3:PutObject",
+       "Condition": {
+        "ArnLike": {
+         "aws:SourceArn": {
+          "Fn::GetAtt": [
+           "BATS64B3E3E8",
+           "Arn"
+          ]
+         }
+        },
+        "StringEquals": {
+         "aws:SourceAccount": "737088382676"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "logging.s3.amazonaws.com"
+       },
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          {
+           "Fn::GetAtt": [
+            "BATSAccessLoggingBucketAC8B82A9",
+            "Arn"
+           ]
+          },
+          "/*"
+         ]
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/BATS/AccessLoggingBucket/Policy/Resource"
+   }
+  },
+  "BATS64B3E3E8": {
+   "Type": "AWS::S3::Bucket",
+   "Properties": {
+    "BucketEncryption": {
+     "ServerSideEncryptionConfiguration": [
+      {
+       "ServerSideEncryptionByDefault": {
+        "KMSMasterKeyID": {
+         "Fn::GetAtt": [
+          "BATSBATSKeyFA7EDF59",
+          "Arn"
+         ]
+        },
+        "SSEAlgorithm": "aws:kms"
+       }
+      }
+     ]
+    },
+    "BucketName": "pipelinesbatsdeploymen-22dbe646da0f86ea7a24a218fe81d1b2919e7357",
+    "LifecycleConfiguration": {
+     "Rules": [
+      {
+       "ExpirationInDays": 1,
+       "Id": "CleanupBATSTempResources",
+       "Prefix": "bats",
+       "Status": "Enabled"
+      }
+     ]
+    },
+    "LoggingConfiguration": {
+     "DestinationBucketName": {
+      "Ref": "BATSAccessLoggingBucketAC8B82A9"
+     }
+    },
+    "PublicAccessBlockConfiguration": {
+     "BlockPublicAcls": true,
+     "BlockPublicPolicy": true,
+     "IgnorePublicAcls": true,
+     "RestrictPublicBuckets": true
+    },
+    "VersioningConfiguration": {
+     "Status": "Enabled"
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/BATS/Resource/Resource"
+   }
+  },
+  "BATSPolicy784D9320": {
+   "Type": "AWS::S3::BucketPolicy",
+   "Properties": {
+    "Bucket": {
+     "Ref": "BATS64B3E3E8"
+    },
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "s3:*",
+       "Condition": {
+        "Bool": {
+         "aws:SecureTransport": "false"
+        }
+       },
+       "Effect": "Deny",
+       "Principal": {
+        "AWS": "*"
+       },
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "BATS64B3E3E8",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "BATS64B3E3E8",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/BATS/Resource/Policy/Resource"
+   }
+  },
+  "BATSBATSImageRepoFE8EA8AF": {
+   "Type": "AWS::ECR::Repository",
+   "Properties": {
+    "LifecyclePolicy": {
+     "LifecyclePolicyText": "{\"rules\":[{\"rulePriority\":1,\"description\":\"Expire consumed image count more than 800\",\"selection\":{\"tagStatus\":\"tagged\",\"tagPrefixList\":[\"BATS_CI_\"],\"countType\":\"imageCountMoreThan\",\"countNumber\":800},\"action\":{\"type\":\"expire\"}},{\"rulePriority\":2,\"description\":\"Expire image count more than 1600\",\"selection\":{\"tagStatus\":\"any\",\"countType\":\"imageCountMoreThan\",\"countNumber\":1600},\"action\":{\"type\":\"expire\"}}]}"
+    },
+    "RepositoryName": "batsecrrepo-2045c298f83b811e33d969dc47ff8cb95b0c1c92"
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/BATS/BATSImageRepo/Resource"
+   }
+  },
+  "PipelinesBATSRoleA29413FE": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Condition": {
+        "StringEquals": {
+         "bats.amazon.com:service": "CDService",
+         "bats.amazon.com:type": "Pipeline",
+         "bats.amazon.com:entity": "5831802"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "bats.amazon.com"
+       }
+      },
+      {
+       "Action": "sts:AssumeRole",
+       "Condition": {
+        "StringEquals": {
+         "bars.amazon.com:service": "CDService",
+         "bars.amazon.com:type": "Pipeline",
+         "bars.amazon.com:entity": "5831802"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "bars.amazon.com"
+       }
+      },
+      {
+       "Action": "sts:AssumeRole",
+       "Condition": {
+        "StringEquals": {
+         "sts:ExternalId": "5831802"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "pipelines.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "RoleName": "PipelinesBATSRole-e9ee60b67ad437622fa0ac5d0465bce7111cce60"
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/PipelinesBATSRole/Resource"
+   }
+  },
+  "PipelinesBATSRoleDefaultPolicy70C0B771": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "kms:Decrypt",
+        "kms:Encrypt",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BATSBATSKeyFA7EDF59",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "s3:GetObject*",
+        "s3:GetBucket*",
+        "s3:List*",
+        "s3:DeleteObject*",
+        "s3:PutObject",
+        "s3:PutObjectLegalHold",
+        "s3:PutObjectRetention",
+        "s3:PutObjectTagging",
+        "s3:PutObjectVersionTagging",
+        "s3:Abort*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "BATS64B3E3E8",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "BATS64B3E3E8",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "kms:Decrypt",
+        "kms:DescribeKey",
+        "kms:Encrypt",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BATSBATSKeyFA7EDF59",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "logs:DescribeLogStreams",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BATSLogGroup272A6107",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage",
+        "ecr:CompleteLayerUpload",
+        "ecr:UploadLayerPart",
+        "ecr:InitiateLayerUpload",
+        "ecr:PutImage"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BATSBATSImageRepoFE8EA8AF",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": "ecr:GetAuthorizationToken",
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "ecr:DescribeImages",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BATSBATSImageRepoFE8EA8AF",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "codebuild:StartBuild",
+        "codebuild:StopBuild",
+        "codebuild:ListBuildsForProject",
+        "codebuild:BatchGetBuilds"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "BATSSandboxCodeBuildProject9C2743A4",
+          "Arn"
+         ]
+        },
+        "arn:aws:codebuild:us-east-1:737088382676:project/CustomBATSSandbox*"
+       ]
+      },
+      {
+       "Action": [
+        "events:DeleteRule",
+        "events:RemoveTargets"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":events:*:*:rule/BATS*"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": [
+        "events:PutRule",
+        "events:PutTargets"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "s3:GetObject",
+        "s3:PutObject"
+       ],
+       "Condition": {
+        "StringLike": {
+         "s3:DataAccessPointArn": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":s3:*:*:accesspoint/vulcan-*"
+           ]
+          ]
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "kms:Decrypt",
+        "kms:Encrypt",
+        "kms:GenerateDataKey"
+       ],
+       "Condition": {
+        "ForAnyValue:StringLike": {
+         "kms:ResourceAliases": "alias/vulcan-artifact-encryption-key"
+        }
+       },
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage",
+        "ecr:PutImage",
+        "ecr:InitiateLayerUpload",
+        "ecr:UploadLayerPart",
+        "ecr:CompleteLayerUpload"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":ecr:*:*:repository/vulcan-*"
+         ]
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "PipelinesBATSRoleDefaultPolicy70C0B771",
+    "Roles": [
+     {
+      "Ref": "PipelinesBATSRoleA29413FE"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/PipelinesBATSRole/DefaultPolicy/Resource"
+   }
+  },
+  "BATSLogGroup272A6107": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": "BATSLogGroup-8968852389912408a09dea293bc563aa90c972c9",
+    "RetentionInDays": 3653
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/BATSLogGroup/Resource"
+   }
+  },
+  "BATSSandboxCodeBuildServiceRoleFAB1DFA7": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "codebuild.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/BATSSandboxCodeBuildServiceRole/Resource"
+   }
+  },
+  "BATSSandboxCodeBuildServiceRoleDefaultPolicyA66536B2": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "s3:GetObject*",
+        "s3:GetBucket*",
+        "s3:List*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "BATS64B3E3E8",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "BATS64B3E3E8",
+             "Arn"
+            ]
+           },
+           "/bats/Will_Be_Overridden_By_BATS.zip"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "kms:Decrypt",
+        "kms:DescribeKey"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BATSBATSKeyFA7EDF59",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "s3:GetObject*",
+        "s3:GetBucket*",
+        "s3:List*",
+        "s3:DeleteObject*",
+        "s3:PutObject",
+        "s3:PutObjectLegalHold",
+        "s3:PutObjectRetention",
+        "s3:PutObjectTagging",
+        "s3:PutObjectVersionTagging",
+        "s3:Abort*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "BATS64B3E3E8",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "BATS64B3E3E8",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "kms:Decrypt",
+        "kms:DescribeKey",
+        "kms:Encrypt",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BATSBATSKeyFA7EDF59",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":logs:us-east-1:737088382676:log-group:/aws/codebuild/",
+           {
+            "Ref": "BATSSandboxCodeBuildProject9C2743A4"
+           }
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":logs:us-east-1:737088382676:log-group:/aws/codebuild/",
+           {
+            "Ref": "BATSSandboxCodeBuildProject9C2743A4"
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "codebuild:CreateReportGroup",
+        "codebuild:CreateReport",
+        "codebuild:UpdateReport",
+        "codebuild:BatchPutTestCases",
+        "codebuild:BatchPutCodeCoverages"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":codebuild:us-east-1:737088382676:report-group/",
+          {
+           "Ref": "BATSSandboxCodeBuildProject9C2743A4"
+          },
+          "-*"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:DescribeImages",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage",
+        "ecr:GetAuthorizationToken",
+        "ecr:PutImage",
+        "ecr:CompleteLayerUpload",
+        "ecr:InitiateLayerUpload",
+        "ecr:UploadLayerPart"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "s3:GetObject",
+        "s3:PutObject"
+       ],
+       "Condition": {
+        "StringLike": {
+         "s3:DataAccessPointArn": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":s3:*:*:accesspoint/vulcan-*"
+           ]
+          ]
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "kms:Decrypt",
+        "kms:Encrypt",
+        "kms:GenerateDataKey"
+       ],
+       "Condition": {
+        "ForAnyValue:StringLike": {
+         "kms:ResourceAliases": "alias/vulcan-artifact-encryption-key"
+        }
+       },
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "BATSSandboxCodeBuildServiceRoleDefaultPolicyA66536B2",
+    "Roles": [
+     {
+      "Ref": "BATSSandboxCodeBuildServiceRoleFAB1DFA7"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/BATSSandboxCodeBuildServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "BATSSandboxCodeBuildProject9C2743A4": {
+   "Type": "AWS::CodeBuild::Project",
+   "Properties": {
+    "Artifacts": {
+     "Location": {
+      "Ref": "BATS64B3E3E8"
+     },
+     "Name": "manifest.json",
+     "NamespaceType": "BUILD_ID",
+     "Packaging": "NONE",
+     "Path": "bats/codebuild",
+     "Type": "S3"
+    },
+    "Cache": {
+     "Type": "NO_CACHE"
+    },
+    "EncryptionKey": "alias/aws/s3",
+    "Environment": {
+     "ComputeType": "BUILD_GENERAL1_LARGE",
+     "Image": "aws/codebuild/amazonlinux2-x86_64-standard:4.0",
+     "ImagePullCredentialsType": "CODEBUILD",
+     "PrivilegedMode": true,
+     "Type": "LINUX_CONTAINER"
+    },
+    "Name": "BATSSandboxCodeBuildPr-e691a340a6b0861a0710b5fc55d072a07b0b6711",
+    "ServiceRole": {
+     "Fn::GetAtt": [
+      "BATSSandboxCodeBuildServiceRoleFAB1DFA7",
+      "Arn"
+     ]
+    },
+    "Source": {
+     "Location": {
+      "Fn::Join": [
+       "",
+       [
+        {
+         "Ref": "BATS64B3E3E8"
+        },
+        "/bats/Will_Be_Overridden_By_BATS.zip"
+       ]
+      ]
+     },
+     "Type": "S3"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/BATSSandboxCodeBuildProject/Resource"
+   }
+  },
+  "ChangeSetApproverRoleAD563530": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "bonescsa.aws.internal"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": [
+          "s3:CreateBucket",
+          "s3:DeleteBucket",
+          "s3:ListBucket",
+          "s3:DeleteBucketPolicy",
+          "s3:PutBucketPolicy",
+          "s3:PutBucketVersioning",
+          "s3:PutEncryptionConfiguration",
+          "s3:ListBucketVersions",
+          "s3:GetBucketAcl"
+         ],
+         "Effect": "Allow",
+         "Resource": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":s3:::changesetapproval-*"
+           ]
+          ]
+         }
+        },
+        {
+         "Action": [
+          "s3:GetObject",
+          "s3:PutObject",
+          "s3:DeleteObject",
+          "s3:DeleteObjectVersion"
+         ],
+         "Effect": "Allow",
+         "Resource": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":s3:::changesetapproval-*/*"
+           ]
+          ]
+         }
+        },
+        {
+         "Action": [
+          "cloudformation:Describe*",
+          "cloudformation:GetTemplate"
+         ],
+         "Effect": "Allow",
+         "Resource": "*"
+        },
+        {
+         "Action": [
+          "cloudformation:CreateChangeSet",
+          "cloudformation:DeleteChangeSet"
+         ],
+         "Effect": "Allow",
+         "Resource": "*"
+        },
+        {
+         "Action": [
+          "cloudformation:DetectStackDrift",
+          "cloudformation:DetectStackResourceDrift",
+          "cloudformation:ListStackResources"
+         ],
+         "Effect": "Allow",
+         "Resource": "*"
+        },
+        {
+         "Action": "ssm:GetParameters",
+         "Effect": "Allow",
+         "Resource": "*"
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "changesetapprovalPolicy"
+     }
+    ],
+    "RoleName": "BONESBootstrapChangeSe-33b1b6f149e644ab1a59340460bc0f889bd190f6"
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/ChangeSetApproverRole/Resource"
+   }
+  },
+  "CloudFormationExecutionRole09AE950A": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "cloudformation.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": "*",
+         "Effect": "Allow",
+         "Resource": "*"
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "pipelinesCloudFormationChangeSetPolicy"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/CloudFormationExecutionRole/Resource"
+   }
+  },
+  "PipelinesChangeSetExecutionRole93499E34": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "cloudformation.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": "*",
+         "Effect": "Allow",
+         "Resource": "*"
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "pipelinesCloudFormationChangeSetPolicy"
+     }
+    ],
+    "RoleName": "PipelinesCloudFormatio-d641e4389c17341f5f84a7fd5c318c003606fc28"
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/PipelinesChangeSetExecutionRole/Resource"
+   }
+  },
+  "PipelinesCloudFormationRole9A8154EF": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Condition": {
+        "StringEquals": {
+         "sts:ExternalId": "5831802"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "pipelines.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Ref": "PipelinesCloudFormationManagedPolicy"
+     }
+    ],
+    "RoleName": "PipelinesChangeSetRole-e0521acaa13fe053c094de343f028ac73eab33b5"
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/PipelinesCloudFormationRole/Resource"
+   }
+  },
+  "PipelinesCloudFormationManagedPolicy": {
+   "Type": "AWS::IAM::ManagedPolicy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "cloudformation:CreateChangeSet",
+        "cloudformation:DeleteChangeSet",
+        "cloudformation:DescribeChangeSet",
+        "cloudformation:DescribeStacks",
+        "cloudformation:DescribeStackEvents",
+        "cloudformation:ExecuteChangeSet",
+        "cloudformation:UpdateTerminationProtection"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "iam:PassRole",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "PipelinesChangeSetExecutionRole93499E34",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "s3:Get*",
+        "s3:List*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "BARS772963B4",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "BARS772963B4",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        },
+        {
+         "Fn::GetAtt": [
+          "BATS64B3E3E8",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "BATS64B3E3E8",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "kms:Decrypt*",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "BARSBARSKey008C869E",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::GetAtt": [
+          "BATSBATSKeyFA7EDF59",
+          "Arn"
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "s3:GetObject",
+       "Condition": {
+        "StringLike": {
+         "s3:DataAccessPointArn": "arn:*:s3:*:*:accesspoint/vulcan-*"
+        }
+       },
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "kms:Decrypt",
+       "Condition": {
+        "ForAnyValue:StringLike": {
+         "kms:ResourceAliases": "alias/vulcan-artifact-encryption-key"
+        }
+       },
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/PipelinesCloudFormationManagedPolicy"
+   }
+  },
+  "PipelineC660917D": {
+   "Type": "AMZN::ContinuousDeployment::Pipeline",
+   "Properties": {
+    "PropertiesCompressed": "QlpoOTFBWSZTWRY8wbcAJojfgCAAUBf/8D///+6////6YBN+Ps+g6bTb4AFAFAHc8UaI03qejdYcZi73eT3j28zuqaIs1ptATu0uCIlCE9KZkqf6lVUf/tNqqqf/5DVVT/9lVUP/z0VVT//Sqo//aqqP/1VT/9pVUwf+aqo/9VR/44AAAAYAAAAAAAAFUhGTJpoRUVVT/9o1VUf/tKqn/6qp//qqp//6lVT/9VU//VU//VVA/8qoAA/9VQH/qqBEkgTTSZNBiZNCNEZFVB/+VVP/1VQ3+VR/qoP8Ko/1U/1UCSITRoaTIFPTIp5GlVP96n6FVT/yVT/VT/wVU/9pqeSVTP1R/pUEUSBNBNNMU/RDJo0Ewqqj/8lVP/1VR/+Cqp/v0qp/6VT/2qqP/TKqW/5/Pm9akgPnseEvcCMwPlIeY/pz9mBfj9HSh53eaPzPDCYjEgdOYF5mWWu194hqBNgMudhUsLBiCT29XVlECiM0otObW+TXWuI9BFyn1iZShD/uHuxWR9l7CIf7Asx7GUzxzH6gSc6wlbRTAoJIHViWMhpFLCkbClAlnDFMkgA6I1SRJ87rFNEDTFJl7ptGQSoU3F2N9pfLpDAhQnIS8Si9IprE9zYQApCwrBP6EglUgkBhCQmtDSOQIIZEKQy1HCMKQlikRgWhLTGSVitIAQiwhmNKUwTFGCQByYBGQTBIqQSAljQjbeP6ia3pdkUNYJbaQhLtCmR4SmFSFCLRjGzLHj4zYQ3DoWpjU1eg6/48+7J3ZhJmEBJIg/CK45UZECktr7IDYYRRIJAkcEipkonsjXIr3TCGsCg6aw58qqsWWUuAiidOdItpJ7AUBMSj/t5+41o8yIEAJKCR3MBdtiWtZOwQ8VHug5gLD4HHOgagbTU+/K2x1xJKlRtmAhjjjxU1+d4FmEzxRyRzRxEzEnS7LFcEcQdfGQJISQJGcXCBhlVbYT3bqa4tPK4Bu2/pZlT1A6SCT8p5t3U/IHSwFOYFl9C0lufmONiwwMb0lbb7SnAnM52lUf533Hl88im98pxPivpEQztp1z1ljXvF8N6X/jtOD2DVOOKW7tarYdDibryOLy8HvOONYGdR8khKUf0nuPPsk+xiaI482eC3XVdDxZ3iUW85kx7KN5RYcJq/i0KD8toN9rjI3rUVG2MtxR1x9GNvxqjez2dXV/Pk06NoNcSE++2huO+Vc8wTZ1Qa3xh9kMyjYY3pEH/pRC47yKSp55dX7geL1HCXOJJaquOcb7jgc8D3bREQtzXfkW/K/NYK5c7jqOJQRKJfYjr71BLsSmJrYkMvKs1Yz1BLod1g4Z+/lyzZIY3dw7//zh1rUHkts/HXVJ/bQUvX+V9c7drIiIZT+Z+ekRDHo4rZjluarOhC8hLbiaZaZasyOqEEE9c6lYVsAzlHMDDMhWffY/PTI71ebXGb1qOHOt4JwX4V7px5NWltfXolYX31Pmt9hbnXE5swcoccwbwVb2n0pbK+BvezOzgY5TGYO2hwN4NsV4tvnlRXUHolod9ag0LSvabZykLCeR3dV+nyUme/cUHyVunmhl3Xq3m2BPOwrjzNKTHsFB7ftCk552jqSDU77ZbToP948b4t4LY58Hf0U8FYKT/6L1gvzbxx0sNxXSbrrI6YwREJ83VEq087yOdZcSEG4977rgasMdZi/dNqc2l+u9795vQkipfZr1ZVi9lhQvyts1bdrp0JnSQD542WPWY2E33cd1eyQb7cqCCQ4kqJM5di7xjlffsX9m36HV90NSpw3+8t27u6VtvnDyd9hV1WUNhmL1reCottyRELdw6IiHGuq8bTE99h1oSpe36jM/IL7kRDi2L04g739q4FJ0cUgp78+XrL4PM95HQ16+KQWT8GB2xMdeT9wJ6za0FKTnQey7jiw2wur5G3NRxBtux3lDa7im7mYv5HMHktoLeYSHgzfvI5r1VJLljhzW1Bv2KUVEur5271bfOZi/Y5Fe6+aGM8PYArheGcAhCdwoULRIdBQzRuR80PftQhxVDqj+6H3AieQJxE1WqDXVUKjFDArz1CiRXEF+or81P5U9fvStfKgJWJKlgnAV4/VXsEuDbDl8kB0iTMUPASrpBDzR7/sfUSsS2xHVOtgG8SyclKfYVqbCH0SHcjfF+aoVqDnQ5aKaCboUSKQHYSB8JIcyEUIHAIyCITygQ5LC+7YJgYB6bETRehhBcXs31pJrU7NOXnEqBllTUJYrcjejfnqyVqHIhlrVKwk+hgKX5L/i/BxlMRgRgQxwxAn46hXDjsirqz3a7RTq7ntJFSyOWUA9rEFa9XHUQka6forBLKZ1KCfhTLckPIJeUrUsEgS62Om2k0sq1zOaJj+RLjBiVJq1Kb9somoDrzCv6E2kXXxERoi0yFwmHHEE+tZ2lRImeNQirDqGb6s183ErXiHzOO/kpVCRTI44GhANZA1VAaKvndEOaFiFSaF2wsjSFCTCEA3ywloV4/2zpPzEh8FLKXmuBxXioRIJyw9URDwz09LwBPjctjHTM2E2xEwooNV41aAfxHik1nyNgptE4J7CuAJ+EIgENv7NtOVSCdTubhsD2xmW9qoSAYhr7+tTKJn3g26rn3fFyhjjUl7JvU1cRJdgkvDvu/pvg0iu33OnYyh2ol1/2zM7Myc9H9IPUzM3/KsOb/zMEiTEhMmYD2E9PMT/FKCeaQwjdBIol0+Xd5ENwEmA3B9IjQS/AHw/HOHVWnkvxhiBPI/XWWoOMpWY2XlZAPDymBIymcMQH4ecX8gzxlNC3A6dU+jMpI8m+KSjy2tUlAZDgao0HPiItBe7/ed2wt6vBJIKMI+wLPgkg25lNHiBt1/IY+wteDsne9oAzMd4hxAvOSPP5Ge84uv1D28PXvQpbNiXISCSF9/QF9QEbUL5iO7Vs9vyi2ImuF+4kaLQOCnGO78ibhEviB/ub2cZIRjGEggHMTxVPMrkLtExnOqaoXdV0swycKKFIJaSyUkRxYn/v3WixqCETEu9BM6/H+PHnUDvbvhaxYg2gSjFBxthADx8JlwEfGjza+h2TKVcDJBW7ArLmCxulYcPUOYjHd94bC3Z8cNWJmNDXpK0DTZvBWxN0i3DEo2cXJG4YR473EmRL3pF4rql8EDYZVlbwiaZbpMDrA+Ofo+fLSlB2/mzod9Wagn1S2tu4J11fjaY6ltYatSYw/wjVdl+8jf/T9z9WR1Xv579m+QdifGqWG/6of32YwpEI917cD3HKdIg78woPMbRGZEHeodG6dFEeXBH1R6pRxiPLJjVCjkEoJpQ/2yhmeTm3RjLo5cugCY3s4cpnWggBqiYQLCAH7XAbJXMUxsxKdVAKIMHcw0nSrtfJkD6gIIJYN1aTTG1JDbgIDms3Q1BjsAcCbZmOycrMfTaBOL7yQyBZrcO46OkSNy48ZqUPIOsMfuOznU4I1OP8q6jlce8++ZzLHUTvPmbWRSeBISEohBJIM4GYJJy0MxThwx2Md+KSSYieejV6UEOkg18ujs7eLyN4HvcDrIdpgWARY9sobr7pP+k4P3rBV/cfsOfJbXHjzam1R3Qa0883vqw6FWXnErekHOiJfUKJR9Tn/J/xKjYh43EQUwUUJRJDnAQ0iS6DjOUNpfWtdeoD6jViJOI4FbpgbhxfNBM17+xC6dBhHgTEYdWnk08oFK33/5t6rt268DV89m1WN8h0bVN664QXvXcCPwMhIp6Y4IU8ohfD1tAYWsobBMAhGJFNNiMRvnuHhqzG84RH7g7Z+V5ccgfju3wyzVeyDpN1qIO8+wCEbgIPyegsDkJVIiyglCCwTsj+3bF9KzkPZU8eAG8Dw7wjvA3nvOIHjPYce222qo7oCVhzjF8DZ/Wu34sOc4fcZ6a4juCQ7g/tEQdD+Ii88Nc5S4X0k8G69u2LJJTZ/aPfWdT4Ce5YdVCIbCfETzoV0Chnmsgsk5aG4BqiwKfIK/mCt0zVA9sDkYJh2PefhF2UCM0S/kKHoo9luum+28TOKhbU5RBtXATSBSzjMgVfK5F5oASPHIZiM9Mw3HuatEN8dYBEGiJCCJCQGAMREEf3zRXK5OXycRB4CDcUE28sNEaZtpn+wnhwEdURgkVW4mxijD65hG3kjgjQg4OAPkpWkYHRAaqaNO27eqdy3eYrwihqvA7EIQF5wRClh0BhLNjASI6rNdxoEkgKyxqE7oBjnnl/IdM16qm9Qh0OwR+2S6dveIbBbhQjbvVNZHsB/Bf2hkCOQgGr7ugQjB7yKaquvR3EHaiNVOSv4I+aOmCn1A3BWqG0PaYCJRTeJrARO76amYBEeGgjs0DiTw2MgrsLAEjglAxF2ujAi2RJeAYRAMLyxYvs4N5ojae7vD2P3rggOGZkkgO1TgJY1hndp8RWgoQiFwsvViVzB2CQiga0c6M1OVqtamrO7gM6/T3h9joIfWAkIwEg4j6EfEDgCnXKmfSo7PASoLDugR0c50QwQD1/QcZ9Tiq4gAaIZAbvq/NUq4R3rsoW5GI7D6ONrcV4rxG4ppjxh70daORKRKMyQObqV6ZqRuUoJAGwTyzKtcKQJrpGCOfZUNYK9pyN3vxp/YMFA1BXARPA6p2npFDo7H9Uvb9aOIuQkQNSoaC8NEcBG8wE1qkh0hyP0l0M/iUzqJTYSB2FE2RvFG9UYCJ6kdOMggVG97hYc+VhDOJ963QTOaJ4meQxGkzoj8Q/ITuQ5g8LCQ5MIpQEKCEYvgobcjDQDcDYSjuruwgUQ6ZUYgpDCqFQid+glXEJo0TSCXAlxGKFaJlzKjQIWZgkxHGVcEw/FUMUIAnUQaoYc7lMhcoDK5iXmFjJG8wXWJoqF+IFwHjoVhC0EYgy0TESIO0l5hbmIcDCSHZJM2kmWnScfBhB0CVfzGD8OdO0XipGgS8FIDdUlUf3xE4coPraxtztnTsAhgwF8hOvi+TwAoHpIIUEiWiDFinOaz3CRgVbY2rbNbFJPnTKJ2mQBCmIQHp/a1VYj4KHXKpq5oB/HrCRBBJMRH6Ktwj9uH5em4Xl/RCP+FCNUkjQks/y4HqguWCfYT/Wg4WVkbQfGlA0hoR/4XckU4UJAWPMG3A=="
+   },
+   "DependsOn": [
+    "BARSBARSKeyAlias802DC3FE",
+    "BARSBARSKey008C869E",
+    "BARSImageRepoC9741AEA",
+    "BARSPipelinesBARSRoleDefaultPolicy5D505A53",
+    "BARSPipelinesBARSRole10256C1D",
+    "BARSPolicy7A3163C8",
+    "BARS772963B4",
+    "BATSBATSImageRepoFE8EA8AF",
+    "BATSBATSKeyAliasAA98823D",
+    "BATSBATSKeyFA7EDF59",
+    "BATSPolicy784D9320",
+    "BATS64B3E3E8",
+    "BATSLogGroup272A6107",
+    "BATSSandboxCodeBuildProject9C2743A4",
+    "ChangeSetApproverRoleAD563530",
+    "PipelinesBATSRoleDefaultPolicy70C0B771",
+    "PipelinesBATSRoleA29413FE",
+    "PipelinesChangeSetExecutionRole93499E34",
+    "PipelinesCloudFormationRole9A8154EF"
+   ],
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/Pipeline/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/21Qy07DMBD8lt5d9wUIbjQRcABElHBHrrNUbmxv5EdRifzvOE5KisRpZ3Zm1zu+okt6s5rdM/WtF61oQQoNlnYvzEGGXtfF2Ksc4w3JtmX1oI/CoFagHamAewPVJvO8ARfl9z9yXm0v6XmXzSX6+hGNYk6g/s9C8k+do2oNWAu/RwSyprd3dDljX3bO62YuxY520VowwxQ4MCQqH12jYoRnOPVb+rKVgtmeJBAIcEO7Elq0wqFJtokFYje0GxNF5ZwtlQKl4KepPfBABFNxI8p0eKqTc0KvTLN9jDMOSdz3X437J4O+7Q1nHAjHGnZeyJp2hcED8HTLCEMgJVj0hqf33rxrvRtSDN1AdJynB7s4rpf0mq5mByvE3HjthAJaDvUH5J+kzv0BAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "Pipeline/PipelineDeploymentStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "BARSKeyArnExport": {
+   "Value": {
+    "Fn::GetAtt": [
+     "BARSBARSKey008C869E",
+     "Arn"
+    ]
+   },
+   "Export": {
+    "Name": "Pipeline-CocktailAlchemist:BARSKeyArn"
+   }
+  },
+  "PipelinepipelineID9ABE0107": {
+   "Description": "The Pipeline ID",
+   "Value": {
+    "Ref": "PipelineC660917D"
+   },
+   "Export": {
+    "Name": "5831802"
+   }
+  },
+  "PipelinepipelineURL16E1BB2E": {
+   "Description": "The Pipeline",
+   "Value": "https://pipelines.amazon.com/pipelines/CocktailAlchemist"
+  }
+ }
+}

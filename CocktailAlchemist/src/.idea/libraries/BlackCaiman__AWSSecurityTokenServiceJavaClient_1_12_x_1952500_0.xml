@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: AWSSecurityTokenServiceJavaClient-1.12.x.1952500.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/AWSSecurityTokenServiceJavaClient/AWSSecurityTokenServiceJavaClient-1.12.x.1952500.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AWSSecurityTokenServiceJavaClient-1.12.x.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/AWSSecurityTokenServiceJavaClient/AWSSecurityTokenServiceJavaClient-1.12.x.1952500.0/AL2_x86_64/DEV.STD.PTHREAD/build/generated-src" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/AWSSecurityTokenServiceJavaClient/AWSSecurityTokenServiceJavaClient-1.12.x.1952500.0/AL2_x86_64/generic-flavor/src/tst" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/AWSSecurityTokenServiceJavaClient/AWSSecurityTokenServiceJavaClient-1.12.x.1952500.0/AL2_x86_64/generic-flavor/src/src" />
+    </SOURCES>
+  </library>
+</component>

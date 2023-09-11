@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: Maven-org-apiguardian_apiguardian-api-1.x.259792.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/Maven-org-apiguardian_apiguardian-api/Maven-org-apiguardian_apiguardian-api-1.x.259792.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/apiguardian-api-1.1.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Maven-org-apiguardian_apiguardian-api/Maven-org-apiguardian_apiguardian-api-1.x.259792.0/AL2_x86_64/generic-flavor/src/third-party-artifacts/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2-sources" />
+    </SOURCES>
+  </library>
+</component>

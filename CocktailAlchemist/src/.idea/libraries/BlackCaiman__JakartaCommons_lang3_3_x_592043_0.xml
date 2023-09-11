@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: JakartaCommons-lang3-3.x.592043.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/JakartaCommons-lang3/JakartaCommons-lang3-3.x.592043.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/commons-lang3-3.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/JakartaCommons-lang3/JakartaCommons-lang3-3.x.592043.0/AL2_x86_64/generic-flavor/src/commons-lang3/src/test/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/JakartaCommons-lang3/JakartaCommons-lang3-3.x.592043.0/AL2_x86_64/generic-flavor/src/commons-lang3/src/main/java" />
+    </SOURCES>
+  </library>
+</component>

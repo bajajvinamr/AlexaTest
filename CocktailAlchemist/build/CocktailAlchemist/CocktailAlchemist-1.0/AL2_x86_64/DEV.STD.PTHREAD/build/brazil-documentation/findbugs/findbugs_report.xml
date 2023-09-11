@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<BugCollection version="3.1.11" sequence="0" timestamp="1694359272981" analysisTimestamp="1694359273008" release="">
+  <Project projectName="">
+    <Jar>/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/build/CocktailAlchemist/CocktailAlchemist-1.0/AL2_x86_64/DEV.STD.PTHREAD/build/private/classes/library</Jar>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Maven-com-google-dagger_dagger-compiler/Maven-com-google-dagger_dagger-compiler-2.x.275263.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/dagger-compiler-2.13.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/AutoService/AutoService-1.x.496326.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AutoService-1.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/AutoCommon/AutoCommon-0.x.495846.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AutoCommon-0.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Google-java-format/Google-java-format-1.x.243181.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/google-java-format-1.1.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/JavaPoet/JavaPoet-1.9.x.278800.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/JavaPoet-1.9.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Maven-com-google-auto-value_auto-value/Maven-com-google-auto-value_auto-value-1.4.215848.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/auto-value-1.4-rc1.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Maven-com-google-dagger_dagger-producers/Maven-com-google-dagger_dagger-producers-2.x.238847.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/dagger-producers-2.13.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/DaggerRuntime/DaggerRuntime-2.x.234007.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/dagger-2.13.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/GoogleGuava/GoogleGuava-21.x.477882.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/GoogleGuava-21.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Maven-com-google-code-findbugs_jsr305/Maven-com-google-code-findbugs_jsr305-3.x.241196.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/jsr305-3.0.2.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Maven-com-google-errorprone_error_prone_annotations/Maven-com-google-errorprone_error_prone_annotations-2.x.406099.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/error_prone_annotations-2.18.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Maven-javax-annotation_jsr250-api/Maven-javax-annotation_jsr250-api-1.0.x.206169.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/jsr250-api-1.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Maven-javax-inject_javax_inject/Maven-javax-inject_javax_inject-1.x.212929.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/javax.inject-1.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Maven-org-eclipse-core_org_eclipse_core_contenttype/Maven-org-eclipse-core_org_eclipse_core_contenttype-3.x.205165.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/org.eclipse.core.contenttype-3.4.100.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Maven-org-eclipse-core_org_eclipse_core_jobs/Maven-org-eclipse-core_org_eclipse_core_jobs-3.x.205157.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/org.eclipse.core.jobs-3.5.100.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Maven-org-eclipse-core_org_eclipse_core_resources/Maven-org-eclipse-core_org_eclipse_core_resources-3.x.205157.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/org.eclipse.core.resources-3.7.100.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Maven-org-eclipse-core_org_eclipse_core_runtime/Maven-org-eclipse-core_org_eclipse_core_runtime-3.x.205155.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/org.eclipse.core.runtime-3.7.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Maven-org-eclipse-equinox_org_eclipse_equinox_preferences/Maven-org-eclipse-equinox_org_eclipse_equinox_preferences-3.x.205167.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/org.eclipse.equinox.preferences-3.4.1.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Maven-org-eclipse-equinox_org_eclipse_equinox_registry/Maven-org-eclipse-equinox_org_eclipse_equinox_registry-3.x.205178.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/org.eclipse.equinox.registry-3.5.101.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Maven-org-eclipse-equinox_org_eclipse_equinox_common/Maven-org-eclipse-equinox_org_eclipse_equinox_common-3.x.205152.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/org.eclipse.equinox.common-3.6.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Maven-org-eclipse-jdt_org_eclipse_jdt_core/Maven-org-eclipse-jdt_org_eclipse_jdt_core-3.x.205465.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/org.eclipse.jdt.core-3.10.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Maven-org-eclipse-osgi_org_eclipse_osgi/Maven-org-eclipse-osgi_org_eclipse_osgi-3.x.205054.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/org.eclipse.osgi-3.7.1.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Lombok/Lombok-1.18.x.28565.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/lombok-1.18.26.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/build/CocktailAlchemist/CocktailAlchemist-1.0/AL2_x86_64/DEV.STD.PTHREAD/build/private/classes/generated</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/AskSdkJava/AskSdkJava-2.x.51047.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AskSdkJava-2.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/AskSdkJavaApacheHttpClient/AskSdkJavaApacheHttpClient-2.x.57848.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AskSdkJavaApacheHttpClient-2.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/AskSdkJavaDynamoDbPersistence/AskSdkJavaDynamoDbPersistence-2.x.57890.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AskSdkJavaDynamoDbPersistence-2.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/AWSDynamoDBMidlevel/AWSDynamoDBMidlevel-1.12.x.541522.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AWSDynamoDBMidlevel-1.12.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/AWSDynamoDBJavaModel/AWSDynamoDBJavaModel-1.12.x.1030603.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AWSDynamoDBJavaModel-1.12.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/AWSJavaClientRuntime/AWSJavaClientRuntime-1.12.x.2109639.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AWSJavaClientRuntime-1.12.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/AWSJavaClientJmxSPI/AWSJavaClientJmxSPI-1.12.x.1655670.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AWSJavaClientJmxSPI-1.12.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/AWSJavaClientSigners/AWSJavaClientSigners-1.12.x.1662514.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AWSJavaClientSigners-1.12.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/AWSJavaClientCore/AWSJavaClientCore-1.12.x.1659523.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AWSJavaClientCore-1.12.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/AWSJavaClientRuntimeConfigOverride/AWSJavaClientRuntimeConfigOverride-1.12.x.138495.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AWSJavaClientRuntimeConfigOverride-1.12.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/AWSJavaCredentialInterfaces/AWSJavaCredentialInterfaces-1.12.x.2287031.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AWSJavaCredentialInterfaces-1.12.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Apache-HttpComponents-HttpClient/Apache-HttpComponents-HttpClient-4.5.x.685414.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/Apache-HttpComponents-HttpClient-4.5.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Apache-HttpComponents-HttpCore/Apache-HttpComponents-HttpCore-4.4.x.555650.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/Apache-HttpComponents-HttpCore-4.4.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/AskSdkJavaFreeMarker/AskSdkJavaFreeMarker-2.x.5402.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AskSdkJavaFreeMarker-2.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/AskSdkJavaLambdaSupport/AskSdkJavaLambdaSupport-2.x.57790.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AskSdkJavaLambdaSupport-2.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/AskSdkJavaServletSupport/AskSdkJavaServletSupport-2.x.57648.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AskSdkJavaServletSupport-2.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/AskSdkJavaCore/AskSdkJavaCore-2.x.58070.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AskSdkJavaCore-2.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/AlexaSdkJavaRuntime/AlexaSdkJavaRuntime-2.x.5369.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AlexaSdkJavaRuntime-2.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/AskSdkJavaGeneratedClient/AskSdkJavaGeneratedClient-1.x.65876.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AskSdkJavaGeneratedClient-1.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/AskSdkJavaApiBase/AskSdkJavaApiBase-2.x.8190.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AskSdkJavaApiBase-2.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/J2ee_servlet/J2ee_servlet-3.0.404096.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/servlet-api-3.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/JMESPathJava/JMESPathJava-1.12.x.151886.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/JMESPathJava-1.12.x.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Jackson-dataformat-cbor/Jackson-dataformat-cbor-2.12.x.172541.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/jackson-dataformat-cbor-2.12.7.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Jackson-datatype-jsr310/Jackson-datatype-jsr310-2.12.x.131037.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/jackson-datatype-jsr310-2.12.7.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Jackson-databind/Jackson-databind-2.12.x.247051.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/jackson-databind-2.12.7.1.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Jackson-annotations/Jackson-annotations-2.12.x.234103.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/jackson-annotations-2.12.7.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Jackson-core/Jackson-core-2.12.x.232093.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/jackson-core-2.12.7.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/JakartaCommons-cli/JakartaCommons-cli-1.2.394289.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/commons-cli-1.2.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/JakartaCommons-codec/JakartaCommons-codec-1.x.481734.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/commons-codec-1.15.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Joda-time/Joda-time-2.x.559875.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/joda-time-2.12.5.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/KeyMasterDaemonJavaClient/KeyMasterDaemonJavaClient-1.0.284680.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/KeyMasterDaemonJavaClient-1.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/AaaGletscherJava/AaaGletscherJava-1.0.321169.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AaaGletscherJava-1.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/AAAJavaCommons/AAAJavaCommons-1.0.451563.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AAAJavaCommons-1.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/CoralMetrics/CoralMetrics-1.0.585502.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/CoralMetrics-1.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/JUnixSocket/JUnixSocket-2.x.25160.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/junixsocket-common-2.6.2.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/JUnixSocket/JUnixSocket-2.x.25160.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/junixsocket-demo-2.6.2.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/JUnixSocket/JUnixSocket-2.x.25160.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/junixsocket-mysql-2.6.2.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/JUnixSocket/JUnixSocket-2.x.25160.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/junixsocket-native-common-2.6.2.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/JUnixSocket/JUnixSocket-2.x.25160.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/junixsocket-rmi-2.6.2.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/JakartaCommons-logging/JakartaCommons-logging-1.2.464004.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/JakartaCommons-logging-1.2.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/LambdaSandboxJavaAPI/LambdaSandboxJavaAPI-1.0.220298.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/LambdaSandboxJavaAPI-1.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Maven-commons-io_commons-io/Maven-commons-io_commons-io-2.5.x.248952.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/commons-io-2.5.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Maven-org-freemarker_freemarker/Maven-org-freemarker_freemarker-2.3.x.3284.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/freemarker-2.3.28.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Maven-org-scijava_native-lib-loader/Maven-org-scijava_native-lib-loader-2.x.349406.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/native-lib-loader-2.1.3.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Maven-software-amazon-ion_ion-java/Maven-software-amazon-ion_ion-java-1.x.266629.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/ion-java-1.5.1.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Slf4j/Slf4j-1.7.451076.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/slf4j-api-1.7.32.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/Users/khsrivas/brazil-pkg-cache/packages/Sun-JSR-275/Sun-JSR-275-0.4.0.447802.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/jsr-275.jar</AuxClasspathEntry>
+    <SrcDir>/Users/khsrivas/Workspace/CocktailAlchemist/CocktailAlchemist/src/CocktailAlchemist/src</SrcDir>
+  </Project>
+  <Errors errors="0" missingClasses="0"></Errors>
+  <FindBugsSummary timestamp="Sun, 10 Sep 2023 20:51:12 +0530" total_classes="24" referenced_classes="94" total_bugs="0" total_size="405" num_packages="5" java_version="11.0.20" vm_version="11.0.20+8-LTS" cpu_seconds="2.88" clock_seconds="1.16" peak_mbytes="232.61" alloc_mbytes="1024.00" gc_seconds="0.02">
+    <FileStats path="com/alexa/cocktailalchemist/lambda/HelloWorldStreamHandler.java" bugCount="0" size="16"/>
+    <FileStats path="com/alexa/cocktailalchemist/lambda/constants/LocaleConstants.java" bugCount="0" size="4"/>
+    <FileStats path="com/alexa/cocktailalchemist/lambda/constants/RequestIntentNames.java" bugCount="0" size="8"/>
+    <FileStats path="com/alexa/cocktailalchemist/lambda/dagger/DaggerDependencyComponent.java" bugCount="0" size="54"/>
+    <FileStats path="com/alexa/cocktailalchemist/lambda/dagger/DependencyComponent.java" bugCount="0" size="8"/>
+    <FileStats path="com/alexa/cocktailalchemist/lambda/dagger/RequestHandlersModule.java" bugCount="0" size="17"/>
+    <FileStats path="com/alexa/cocktailalchemist/lambda/dagger/RequestHandlersModule_CancelandStopIntentHandlerFactory.java" bugCount="0" size="15"/>
+    <FileStats path="com/alexa/cocktailalchemist/lambda/dagger/RequestHandlersModule_CocktailHandlerFactory.java" bugCount="0" size="15"/>
+    <FileStats path="com/alexa/cocktailalchemist/lambda/dagger/RequestHandlersModule_FallbackIntentHandlerFactory.java" bugCount="0" size="15"/>
+    <FileStats path="com/alexa/cocktailalchemist/lambda/dagger/RequestHandlersModule_HelloWorldIntentHandlerFactory.java" bugCount="0" size="15"/>
+    <FileStats path="com/alexa/cocktailalchemist/lambda/dagger/RequestHandlersModule_HelpIntentHandlerFactory.java" bugCount="0" size="15"/>
+    <FileStats path="com/alexa/cocktailalchemist/lambda/dagger/RequestHandlersModule_LaunchRequestHandlerFactory.java" bugCount="0" size="15"/>
+    <FileStats path="com/alexa/cocktailalchemist/lambda/dagger/RequestHandlersModule_SessionEndedRequestHandlerFactory.java" bugCount="0" size="15"/>
+    <FileStats path="com/alexa/cocktailalchemist/lambda/handlers/CancelandStopIntentHandler.java" bugCount="0" size="14"/>
+    <FileStats path="com/alexa/cocktailalchemist/lambda/handlers/CocktailHandler.java" bugCount="0" size="91"/>
+    <FileStats path="com/alexa/cocktailalchemist/lambda/handlers/FallbackIntentHandler.java" bugCount="0" size="16"/>
+    <FileStats path="com/alexa/cocktailalchemist/lambda/handlers/HelloWorldIntentHandler.java" bugCount="0" size="16"/>
+    <FileStats path="com/alexa/cocktailalchemist/lambda/handlers/HelpIntentHandler.java" bugCount="0" size="16"/>
+    <FileStats path="com/alexa/cocktailalchemist/lambda/handlers/LaunchRequestHandler.java" bugCount="0" size="15"/>
+    <FileStats path="com/alexa/cocktailalchemist/lambda/handlers/SessionEndedRequestHandler.java" bugCount="0" size="9"/>
+    <FileStats path="com/alexa/cocktailalchemist/lambda/utils/LocaleProvider.java" bugCount="0" size="7"/>
+    <FileStats path="com/alexa/cocktailalchemist/lambda/utils/ResourceBundleProvider.java" bugCount="0" size="9"/>
+    <PackageStats package="com.alexa.cocktailalchemist.lambda" total_bugs="0" total_types="1" total_size="16">
+      <ClassStats class="com.alexa.cocktailalchemist.lambda.HelloWorldStreamHandler" sourceFile="HelloWorldStreamHandler.java" interface="false" size="16" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.alexa.cocktailalchemist.lambda.constants" total_bugs="0" total_types="2" total_size="12">
+      <ClassStats class="com.alexa.cocktailalchemist.lambda.constants.LocaleConstants" sourceFile="LocaleConstants.java" interface="false" size="4" bugs="0"/>
+      <ClassStats class="com.alexa.cocktailalchemist.lambda.constants.RequestIntentNames" sourceFile="RequestIntentNames.java" interface="false" size="8" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.alexa.cocktailalchemist.lambda.dagger" total_bugs="0" total_types="11" total_size="184">
+      <ClassStats class="com.alexa.cocktailalchemist.lambda.dagger.DaggerDependencyComponent" sourceFile="DaggerDependencyComponent.java" interface="false" size="46" bugs="0"/>
+      <ClassStats class="com.alexa.cocktailalchemist.lambda.dagger.DaggerDependencyComponent$Builder" sourceFile="DaggerDependencyComponent.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="com.alexa.cocktailalchemist.lambda.dagger.DependencyComponent" sourceFile="DependencyComponent.java" interface="true" size="8" bugs="0"/>
+      <ClassStats class="com.alexa.cocktailalchemist.lambda.dagger.RequestHandlersModule" sourceFile="RequestHandlersModule.java" interface="false" size="17" bugs="0"/>
+      <ClassStats class="com.alexa.cocktailalchemist.lambda.dagger.RequestHandlersModule_CancelandStopIntentHandlerFactory" sourceFile="RequestHandlersModule_CancelandStopIntentHandlerFactory.java" interface="false" size="15" bugs="0"/>
+      <ClassStats class="com.alexa.cocktailalchemist.lambda.dagger.RequestHandlersModule_CocktailHandlerFactory" sourceFile="RequestHandlersModule_CocktailHandlerFactory.java" interface="false" size="15" bugs="0"/>
+      <ClassStats class="com.alexa.cocktailalchemist.lambda.dagger.RequestHandlersModule_FallbackIntentHandlerFactory" sourceFile="RequestHandlersModule_FallbackIntentHandlerFactory.java" interface="false" size="15" bugs="0"/>
+      <ClassStats class="com.alexa.cocktailalchemist.lambda.dagger.RequestHandlersModule_HelloWorldIntentHandlerFactory" sourceFile="RequestHandlersModule_HelloWorldIntentHandlerFactory.java" interface="false" size="15" bugs="0"/>
+      <ClassStats class="com.alexa.cocktailalchemist.lambda.dagger.RequestHandlersModule_HelpIntentHandlerFactory" sourceFile="RequestHandlersModule_HelpIntentHandlerFactory.java" interface="false" size="15" bugs="0"/>
+      <ClassStats class="com.alexa.cocktailalchemist.lambda.dagger.RequestHandlersModule_LaunchRequestHandlerFactory" sourceFile="RequestHandlersModule_LaunchRequestHandlerFactory.java" interface="false" size="15" bugs="0"/>
+      <ClassStats class="com.alexa.cocktailalchemist.lambda.dagger.RequestHandlersModule_SessionEndedRequestHandlerFactory" sourceFile="RequestHandlersModule_SessionEndedRequestHandlerFactory.java" interface="false" size="15" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.alexa.cocktailalchemist.lambda.handlers" total_bugs="0" total_types="8" total_size="177">
+      <ClassStats class="com.alexa.cocktailalchemist.lambda.handlers.CancelandStopIntentHandler" sourceFile="CancelandStopIntentHandler.java" interface="false" size="14" bugs="0"/>
+      <ClassStats class="com.alexa.cocktailalchemist.lambda.handlers.CocktailHandler" sourceFile="CocktailHandler.java" interface="false" size="79" bugs="0"/>
+      <ClassStats class="com.alexa.cocktailalchemist.lambda.handlers.CocktailHandler$Cocktail" sourceFile="CocktailHandler.java" interface="false" size="12" bugs="0"/>
+      <ClassStats class="com.alexa.cocktailalchemist.lambda.handlers.FallbackIntentHandler" sourceFile="FallbackIntentHandler.java" interface="false" size="16" bugs="0"/>
+      <ClassStats class="com.alexa.cocktailalchemist.lambda.handlers.HelloWorldIntentHandler" sourceFile="HelloWorldIntentHandler.java" interface="false" size="16" bugs="0"/>
+      <ClassStats class="com.alexa.cocktailalchemist.lambda.handlers.HelpIntentHandler" sourceFile="HelpIntentHandler.java" interface="false" size="16" bugs="0"/>
+      <ClassStats class="com.alexa.cocktailalchemist.lambda.handlers.LaunchRequestHandler" sourceFile="LaunchRequestHandler.java" interface="false" size="15" bugs="0"/>
+      <ClassStats class="com.alexa.cocktailalchemist.lambda.handlers.SessionEndedRequestHandler" sourceFile="SessionEndedRequestHandler.java" interface="false" size="9" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.alexa.cocktailalchemist.lambda.utils" total_bugs="0" total_types="2" total_size="16">
+      <ClassStats class="com.alexa.cocktailalchemist.lambda.utils.LocaleProvider" sourceFile="LocaleProvider.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="com.alexa.cocktailalchemist.lambda.utils.ResourceBundleProvider" sourceFile="ResourceBundleProvider.java" interface="false" size="9" bugs="0"/>
+    </PackageStats>
+    <FindBugsProfile>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine" totalMilliseconds="229" invocations="958" avgMicrosecondsPerInvocation="239" maxMicrosecondsPerInvocation="6611" standardDeviationMicrosecondsPerInvocation="549"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassDataAnalysisEngine" totalMilliseconds="99" invocations="963" avgMicrosecondsPerInvocation="103" maxMicrosecondsPerInvocation="7316" standardDeviationMicrosecondsPerInvocation="323"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FieldItemSummary" totalMilliseconds="49" invocations="94" avgMicrosecondsPerInvocation="530" maxMicrosecondsPerInvocation="7018" standardDeviationMicrosecondsPerInvocation="1093"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.JavaClassAnalysisEngine" totalMilliseconds="46" invocations="160" avgMicrosecondsPerInvocation="289" maxMicrosecondsPerInvocation="19839" standardDeviationMicrosecondsPerInvocation="1656"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNoSideEffectMethods" totalMilliseconds="44" invocations="94" avgMicrosecondsPerInvocation="469" maxMicrosecondsPerInvocation="16231" standardDeviationMicrosecondsPerInvocation="1705"/>
+      <ClassProfile name="edu.umd.cs.findbugs.util.TopologicalSort" totalMilliseconds="33" invocations="932" avgMicrosecondsPerInvocation="35" maxMicrosecondsPerInvocation="5749" standardDeviationMicrosecondsPerInvocation="216"/>
+      <ClassProfile name="edu.umd.cs.findbugs.OpcodeStack$JumpInfoFactory" totalMilliseconds="24" invocations="348" avgMicrosecondsPerInvocation="69" maxMicrosecondsPerInvocation="1543" standardDeviationMicrosecondsPerInvocation="153"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.MethodGenFactory" totalMilliseconds="20" invocations="123" avgMicrosecondsPerInvocation="168" maxMicrosecondsPerInvocation="14221" standardDeviationMicrosecondsPerInvocation="1292"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.IsNullValueDataflowFactory" totalMilliseconds="17" invocations="116" avgMicrosecondsPerInvocation="147" maxMicrosecondsPerInvocation="3359" standardDeviationMicrosecondsPerInvocation="379"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteDirectlyRelevantTypeQualifiers" totalMilliseconds="15" invocations="94" avgMicrosecondsPerInvocation="166" maxMicrosecondsPerInvocation="2073" standardDeviationMicrosecondsPerInvocation="339"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FunctionsThatMightBeMistakenForProcedures" totalMilliseconds="15" invocations="94" avgMicrosecondsPerInvocation="161" maxMicrosecondsPerInvocation="3080" standardDeviationMicrosecondsPerInvocation="455"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.TypeDataflowFactory" totalMilliseconds="14" invocations="116" avgMicrosecondsPerInvocation="123" maxMicrosecondsPerInvocation="4604" standardDeviationMicrosecondsPerInvocation="437"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.CFGFactory" totalMilliseconds="13" invocations="116" avgMicrosecondsPerInvocation="120" maxMicrosecondsPerInvocation="4424" standardDeviationMicrosecondsPerInvocation="409"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.BuildObligationPolicyDatabase" totalMilliseconds="12" invocations="94" avgMicrosecondsPerInvocation="135" maxMicrosecondsPerInvocation="982" standardDeviationMicrosecondsPerInvocation="225"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.OverridingEqualsNotSymmetrical" totalMilliseconds="11" invocations="94" avgMicrosecondsPerInvocation="119" maxMicrosecondsPerInvocation="4152" standardDeviationMicrosecondsPerInvocation="441"/>
+    </FindBugsProfile>
+  </FindBugsSummary>
+  <ClassFeatures></ClassFeatures>
+  <History></History>
+</BugCollection>

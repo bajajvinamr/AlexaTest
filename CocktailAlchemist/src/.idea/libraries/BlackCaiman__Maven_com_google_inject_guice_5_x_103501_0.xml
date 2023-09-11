@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: Maven-com-google-inject_guice-5.x.103501.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/Maven-com-google-inject_guice/Maven-com-google-inject_guice-5.x.103501.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/guice-6.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Maven-com-google-inject_guice/Maven-com-google-inject_guice-5.x.103501.0/AL2_x86_64/generic-flavor/src/third-party-artifacts/com/google/inject/guice/6.0.0/guice-6.0.0-sources" />
+    </SOURCES>
+  </library>
+</component>

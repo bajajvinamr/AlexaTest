@@ -1,0 +1,21 @@
+{
+    "manifest": {
+      "apis": {
+        "custom": {
+          "endpoint": {
+            "uri": "arn:aws:lambda:us-west-2:737088382676:function:CocktailAlchemist-Lambda-gamma"
+          },
+          
+          "interfaces": []
+        }
+      },
+      "publishingInformation": {
+        "locales": {
+          "en-US": {
+            "name": "Cocktail Alchemist"
+          }
+        }
+      },
+      "manifestVersion": "1.0"
+    }
+  }

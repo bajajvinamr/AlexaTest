@@ -1,0 +1,140 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "cocktail alchemist",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": [
+                        "cancel",
+                        "nevermind",
+                        "forget it"
+                    ]
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": [
+                        "help",
+                        "assistance",
+                        "what can you do"
+                    ]
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": [
+                        "stop",
+                        "quit",
+                        "done"
+                    ]
+                },
+                {
+                    "name": "SuggestDrinkIntent",
+                    "slots": [
+                        {
+                            "name": "BaseSpirit",
+                            "type": "BASE_SPIRIT"
+                        }
+                    ],
+                    "samples": [
+                        "Suggest a {BaseSpirit} cocktail",
+                        "What cocktails can I make with {BaseSpirit}",
+                        "Give me a cocktail idea with {BaseSpirit}",
+                        "Tell me a drink with {BaseSpirit}",
+                        "Suggest a drink"
+                    ]
+                },
+                {
+                    "name": "TellInstructionsIntent",
+                    "samples": [
+                        "How do I make it",
+                        "Tell me the recipe",
+                        "What's the recipe",
+                        "Instructions",
+                        "How to prepare it"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                }
+            ],
+            "types": [
+                {
+                    "name": "BASE_SPIRIT",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "vodka"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "rum"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "tequila"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "whiskey"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "gin"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "brandy"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "champagne"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sake"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "beer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "wine"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "scotch"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "cognac"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "rye"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "bourbon"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

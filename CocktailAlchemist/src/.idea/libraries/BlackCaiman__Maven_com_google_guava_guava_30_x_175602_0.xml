@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: Maven-com-google-guava_guava-30.x.175602.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/Maven-com-google-guava_guava/Maven-com-google-guava_guava-30.x.175602.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/guava-30.1-jre.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Maven-com-google-guava_guava/Maven-com-google-guava_guava-30.x.175602.0/AL2_x86_64/generic-flavor/src/third-party-artifacts/com/google/guava/guava/30.1-jre/guava-30.1-jre-sources" />
+    </SOURCES>
+  </library>
+</component>

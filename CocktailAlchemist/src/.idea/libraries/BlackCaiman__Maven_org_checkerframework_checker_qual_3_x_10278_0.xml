@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: Maven-org-checkerframework_checker-qual-3.x.10278.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/Maven-org-checkerframework_checker-qual/Maven-org-checkerframework_checker-qual-3.x.10278.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/checker-qual-3.36.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Maven-org-checkerframework_checker-qual/Maven-org-checkerframework_checker-qual-3.x.10278.0/AL2_x86_64/generic-flavor/src/third-party-artifacts/org/checkerframework/checker-qual/3.36.0/checker-qual-3.36.0-sources" />
+    </SOURCES>
+  </library>
+</component>

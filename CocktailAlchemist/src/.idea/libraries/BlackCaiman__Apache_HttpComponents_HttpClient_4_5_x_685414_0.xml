@@ -1,0 +1,29 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: Apache-HttpComponents-HttpClient-4.5.x.685414.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpClient/Apache-HttpComponents-HttpClient-4.5.x.685414.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/Apache-HttpComponents-HttpClient-4.5.x.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpClient/Apache-HttpComponents-HttpClient-4.5.x.685414.0/AL2_x86_64/generic-flavor/src/httpclient-cache/src/test/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpClient/Apache-HttpComponents-HttpClient-4.5.x.685414.0/AL2_x86_64/generic-flavor/src/httpclient-osgi/src/test/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpClient/Apache-HttpComponents-HttpClient-4.5.x.685414.0/AL2_x86_64/generic-flavor/src/httpclient-cache/src/main/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpClient/Apache-HttpComponents-HttpClient-4.5.x.685414.0/AL2_x86_64/generic-flavor/src/httpclient-win/src/main/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpClient/Apache-HttpComponents-HttpClient-4.5.x.685414.0/AL2_x86_64/generic-flavor/src/httpmime/src/main/java-deprecated" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpClient/Apache-HttpComponents-HttpClient-4.5.x.685414.0/AL2_x86_64/generic-flavor/src/fluent-hc/src/main/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpClient/Apache-HttpComponents-HttpClient-4.5.x.685414.0/AL2_x86_64/generic-flavor/src/httpclient/src/main/java-deprecated" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpClient/Apache-HttpComponents-HttpClient-4.5.x.685414.0/AL2_x86_64/generic-flavor/src/httpclient-win/src/examples" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpClient/Apache-HttpComponents-HttpClient-4.5.x.685414.0/AL2_x86_64/generic-flavor/src/httpclient-osgi/src/main/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpClient/Apache-HttpComponents-HttpClient-4.5.x.685414.0/AL2_x86_64/generic-flavor/src/httpclient/src/test/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpClient/Apache-HttpComponents-HttpClient-4.5.x.685414.0/AL2_x86_64/generic-flavor/src/httpclient-win/src/test/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpClient/Apache-HttpComponents-HttpClient-4.5.x.685414.0/AL2_x86_64/generic-flavor/src/fluent-hc/src/test/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpClient/Apache-HttpComponents-HttpClient-4.5.x.685414.0/AL2_x86_64/generic-flavor/src/httpmime/src/main/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpClient/Apache-HttpComponents-HttpClient-4.5.x.685414.0/AL2_x86_64/generic-flavor/src/httpclient/src/main/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpClient/Apache-HttpComponents-HttpClient-4.5.x.685414.0/AL2_x86_64/generic-flavor/src/fluent-hc/src/examples" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpClient/Apache-HttpComponents-HttpClient-4.5.x.685414.0/AL2_x86_64/generic-flavor/src/httpmime/src/examples" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpClient/Apache-HttpComponents-HttpClient-4.5.x.685414.0/AL2_x86_64/generic-flavor/src/httpmime/src/test/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpClient/Apache-HttpComponents-HttpClient-4.5.x.685414.0/AL2_x86_64/generic-flavor/src/httpclient/src/examples" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Apache-HttpComponents-HttpClient/Apache-HttpComponents-HttpClient-4.5.x.685414.0/AL2_x86_64/generic-flavor/src/httpclient-cache/src/main/java-deprecated" />
+    </SOURCES>
+  </library>
+</component>

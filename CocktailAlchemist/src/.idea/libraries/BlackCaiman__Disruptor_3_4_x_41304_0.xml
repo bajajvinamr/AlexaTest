@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: Disruptor-3.4.x.41304.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/Disruptor/Disruptor-3.4.x.41304.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/disruptor-3.4.x.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Disruptor/Disruptor-3.4.x.41304.0/AL2_x86_64/generic-flavor/src/third-party-src/src/test/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Disruptor/Disruptor-3.4.x.41304.0/AL2_x86_64/generic-flavor/src/third-party-src/src/perftest/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Disruptor/Disruptor-3.4.x.41304.0/AL2_x86_64/generic-flavor/src/third-party-src/src/main/java" />
+    </SOURCES>
+  </library>
+</component>

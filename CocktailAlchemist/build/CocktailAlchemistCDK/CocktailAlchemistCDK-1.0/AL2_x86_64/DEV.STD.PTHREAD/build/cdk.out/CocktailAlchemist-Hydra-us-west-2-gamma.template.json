@@ -1,0 +1,255 @@
+{
+ "Parameters": {
+  "PackagingAggregateId": {
+   "Type": "String",
+   "Default": "default_aggregate_id",
+   "Description": "Aggregate Id that can be used to reference resources from different transformations"
+  },
+  "PackagingTransformId": {
+   "Type": "String",
+   "Default": "default_aggregate_id_transform",
+   "Description": "Deployment Id is used to figure out artifact locations in S3 and ECR"
+  },
+  "PackagingS3KeyPrefix": {
+   "Type": "String",
+   "Default": "local_development_resources",
+   "Description": "Deployment Id is used to figure out artifact locations in S3 and ECR"
+  },
+  "AmazonPipelinesRollbackFlag": {
+   "Type": "String",
+   "Default": "false",
+   "Description": "When a rollback deployment is triggered in Pipelines, the system will override the AmazonPipelinesRollbackFlag with a value of true"
+  }
+ },
+ "Conditions": {
+  "IsRollback": {
+   "Fn::Equals": [
+    {
+     "Ref": "AmazonPipelinesRollbackFlag"
+    },
+    "true"
+   ]
+  }
+ },
+ "Resources": {
+  "CocktailAlchemistHydraTestRunResourcesgammaHydraTestInvocationRoleFC162A50": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      },
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "RoleName": "HydraInvocationRole-0b35b9bed964518be739f3e84a7b62cebab9e3a7"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-Hydra-us-west-2-gamma/CocktailAlchemist-HydraTestRunResources-gamma/HydraTestInvocationRole/Resource"
+   }
+  },
+  "CocktailAlchemistHydraTestRunResourcesgammaHydraTestInvocationRoleDefaultPolicyE483C66D": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:DeleteLogGroup",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":logs:*:*:*"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": [
+        "ec2:CreateNetworkInterface",
+        "ec2:DeleteNetworkInterface",
+        "ec2:DescribeNetworkInterfaces",
+        "ec2:DescribeSecurityGroups",
+        "ec2:DescribeSubnets"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "ecr:GetAuthorizationToken",
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "s3:GetObject",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":s3:::codetest-us-west-2-737088382676-do-not-delete/*"
+          ]
+         ]
+        },
+        "arn:aws:s3:::deploymentbucket-cc64298188a7b3d1e4b8d990b42e52a11c4f94b0/*"
+       ]
+      },
+      {
+       "Action": "kms:Decrypt",
+       "Condition": {
+        "StringLike": {
+         "kms:ViaService": "s3.us-west-2.amazonaws.com",
+         "kms:EncryptionContext:aws:s3:arn": [
+          "arn:aws:s3:::deploymentbucket-cc64298188a7b3d1e4b8d990b42e52a11c4f94b0/*"
+         ]
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "BONESBootstrap-5831802-737088382676-us-west-2:BARSKeyArn"
+       }
+      },
+      {
+       "Action": [
+        "dynamodb:BatchWriteItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":dynamodb:us-west-2:737088382676:table/CODETEST_*_*"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": [
+        "cloudformation:DescribeStacks",
+        "cloudformation:ListStacks"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "cloudwatch:PutMetricData",
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "s3:GetObject",
+       "Condition": {
+        "StringLike": {
+         "s3:DataAccessPointArn": "arn:*:s3:*:*:accesspoint/vulcan-*"
+        }
+       },
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "kms:Decrypt",
+       "Condition": {
+        "StringLike": {
+         "kms:ViaService": "s3.*.amazonaws.com"
+        },
+        "ForAnyValue:StringLike": {
+         "kms:ResourceAliases": "alias/vulcan-artifact-encryption-key"
+        }
+       },
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::ImportValue": "CocktailAlchemist-LambdaStack-us-west-2-gamma:ExportsOutputFnGetAttFunctionCocktailAlchemistLambdagamma9BE6C33AArn10014C71"
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::ImportValue": "CocktailAlchemist-LambdaStack-us-west-2-gamma:ExportsOutputFnGetAttFunctionCocktailAlchemistLambdagamma9BE6C33AArn10014C71"
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "CocktailAlchemistHydraTestRunResourcesgammaHydraTestInvocationRoleDefaultPolicyE483C66D",
+    "Roles": [
+     {
+      "Ref": "CocktailAlchemistHydraTestRunResourcesgammaHydraTestInvocationRoleFC162A50"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-Hydra-us-west-2-gamma/CocktailAlchemist-HydraTestRunResources-gamma/HydraTestInvocationRole/DefaultPolicy/Resource"
+   }
+  },
+  "CocktailAlchemistHydraTestRunResourcesgammaHydraPersistentConfiguration6858A638": {
+   "Type": "AWS::CodeTest::PersistentConfiguration",
+   "Properties": {
+    "Name": "CocktailAlchemistTe-9d9c4a8156889d9f5d360d6c79d85f3d9093abd3",
+    "ResultsRoleArn": "arn:aws:iam::737088382676:role/HydraTestResultsRole-8f14556b5f3fdc727345a8f034790edb25f59ede",
+    "Version": "20230707000000"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-Hydra-us-west-2-gamma/CocktailAlchemist-HydraTestRunResources-gamma/HydraPersistentConfiguration"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/zWOwW6DMBBEv4W7WSAKVXqLlBxyRCT3yoVNs8ReI69JRRH/XkyS08xq3qxmCzlMH0Wy1/aPs556NMQocMTeuNEih3PQzV0V5Qu5ja3XMJ2iXFBCPXCN4gbfoKjDldegQi8kYWkfHF/pZ/A6kON5VhvYfUKe6F9Jm/aeGvqGaWlV2muLAX18sXRairxasC/SFqbaGYzRqpUz1IzxfLpZvResyMvPil2L0En22ORQQpF0QpT6gQNZhPqp/2IShn4AAQAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-Hydra-us-west-2-gamma/CDKMetadata/Default"
+   }
+  }
+ }
+}

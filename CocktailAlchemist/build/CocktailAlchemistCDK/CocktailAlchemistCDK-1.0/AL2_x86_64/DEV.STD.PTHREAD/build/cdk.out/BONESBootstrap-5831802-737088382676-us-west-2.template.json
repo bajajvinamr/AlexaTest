@@ -1,0 +1,1351 @@
+{
+ "Description": "(Disambiguator: 5831802) Resources used by internal tools to deploy and test your artifacts in your account; see: https://code.amazon.com/packages/CDKBuild/trees/HEAD#brazil-build-deploy-bootstrap",
+ "Resources": {
+  "BARSBARSKey008C869E": {
+   "Type": "AWS::KMS::Key",
+   "Properties": {
+    "Description": "KMS key used to encrypt at rest artifacts used for deployments. This is the BARS key.",
+    "EnableKeyRotation": true,
+    "Enabled": true,
+    "KeyPolicy": {
+     "Statement": [
+      {
+       "Action": "kms:*",
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":iam::737088382676:root"
+          ]
+         ]
+        }
+       },
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "kms:CreateGrant",
+        "kms:ListGrants",
+        "kms:RevokeGrant"
+       ],
+       "Condition": {
+        "Bool": {
+         "kms:GrantIsForAWSResource": "true"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": {
+         "Fn::GetAtt": [
+          "BARSPipelinesBARSRole10256C1D",
+          "Arn"
+         ]
+        }
+       },
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "BONESBootstrap-5831802-737088382676-us-west-2/BARS/BARSKey/Resource"
+   }
+  },
+  "BARSBARSKeyAlias802DC3FE": {
+   "Type": "AWS::KMS::Alias",
+   "Properties": {
+    "AliasName": "alias/ArtifactEncryptionKey-8e5a30ef599a405194685c1819224a10b4eb3ebd",
+    "TargetKeyId": {
+     "Fn::GetAtt": [
+      "BARSBARSKey008C869E",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "BONESBootstrap-5831802-737088382676-us-west-2/BARS/BARSKey/Alias/Resource"
+   }
+  },
+  "BARSImageRepoC9741AEA": {
+   "Type": "AWS::ECR::Repository",
+   "Properties": {
+    "LifecyclePolicy": {
+     "LifecyclePolicyText": "{\"rules\":[{\"rulePriority\":1,\"description\":\"Expire consumed image count more than 800\",\"selection\":{\"tagStatus\":\"tagged\",\"tagPrefixList\":[\"BATS_CI_\"],\"countType\":\"imageCountMoreThan\",\"countNumber\":800},\"action\":{\"type\":\"expire\"}},{\"rulePriority\":2,\"description\":\"Expire image count more than 1600\",\"selection\":{\"tagStatus\":\"any\",\"countType\":\"imageCountMoreThan\",\"countNumber\":1600},\"action\":{\"type\":\"expire\"}}]}"
+    },
+    "RepositoryName": "barsecrrepo-9a02629faf118f5e8cd97900d6918e7565c384a8",
+    "RepositoryPolicyText": {
+     "Statement": [
+      {
+       "Action": [
+        "ecr:BatchGetImage",
+        "ecr:GetDownloadUrlForLayer"
+       ],
+       "Condition": {
+        "StringLike": {
+         "aws:sourceArn": {
+          "Fn::Sub": "arn:${AWS::Partition}:lambda:${AWS::Region}:${AWS::AccountId}:function:*"
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       },
+       "Sid": "LambdaECRImageRetrievalPolicy"
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "BONESBootstrap-5831802-737088382676-us-west-2/BARS/ImageRepo/Resource"
+   }
+  },
+  "BARSAccessLoggingBucketE36DE718": {
+   "Type": "AWS::S3::Bucket",
+   "Properties": {
+    "BucketEncryption": {
+     "ServerSideEncryptionConfiguration": [
+      {
+       "ServerSideEncryptionByDefault": {
+        "SSEAlgorithm": "AES256"
+       }
+      }
+     ]
+    },
+    "BucketName": "deploymentloggingbucke-d124e3d54bde9007b8ee7e7ca260664355d2e4e6",
+    "LifecycleConfiguration": {
+     "Rules": [
+      {
+       "ExpirationInDays": 3653,
+       "Id": "ExpireAfterTenYears",
+       "Status": "Enabled"
+      }
+     ]
+    },
+    "PublicAccessBlockConfiguration": {
+     "BlockPublicAcls": true,
+     "BlockPublicPolicy": true,
+     "IgnorePublicAcls": true,
+     "RestrictPublicBuckets": true
+    },
+    "VersioningConfiguration": {
+     "Status": "Enabled"
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "BONESBootstrap-5831802-737088382676-us-west-2/BARS/AccessLoggingBucket/Resource"
+   }
+  },
+  "BARSAccessLoggingBucketPolicyD060BA2A": {
+   "Type": "AWS::S3::BucketPolicy",
+   "Properties": {
+    "Bucket": {
+     "Ref": "BARSAccessLoggingBucketE36DE718"
+    },
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "s3:*",
+       "Condition": {
+        "Bool": {
+         "aws:SecureTransport": "false"
+        }
+       },
+       "Effect": "Deny",
+       "Principal": {
+        "AWS": "*"
+       },
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "BARSAccessLoggingBucketE36DE718",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "BARSAccessLoggingBucketE36DE718",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "s3:PutObject",
+       "Condition": {
+        "ArnLike": {
+         "aws:SourceArn": {
+          "Fn::GetAtt": [
+           "BARS772963B4",
+           "Arn"
+          ]
+         }
+        },
+        "StringEquals": {
+         "aws:SourceAccount": "737088382676"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "logging.s3.amazonaws.com"
+       },
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          {
+           "Fn::GetAtt": [
+            "BARSAccessLoggingBucketE36DE718",
+            "Arn"
+           ]
+          },
+          "/*"
+         ]
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "BONESBootstrap-5831802-737088382676-us-west-2/BARS/AccessLoggingBucket/Policy/Resource"
+   }
+  },
+  "BARS772963B4": {
+   "Type": "AWS::S3::Bucket",
+   "Properties": {
+    "BucketEncryption": {
+     "ServerSideEncryptionConfiguration": [
+      {
+       "ServerSideEncryptionByDefault": {
+        "KMSMasterKeyID": {
+         "Fn::GetAtt": [
+          "BARSBARSKey008C869E",
+          "Arn"
+         ]
+        },
+        "SSEAlgorithm": "aws:kms"
+       }
+      }
+     ]
+    },
+    "BucketName": "deploymentbucket-cc64298188a7b3d1e4b8d990b42e52a11c4f94b0",
+    "LoggingConfiguration": {
+     "DestinationBucketName": {
+      "Ref": "BARSAccessLoggingBucketE36DE718"
+     }
+    },
+    "PublicAccessBlockConfiguration": {
+     "BlockPublicAcls": true,
+     "BlockPublicPolicy": true,
+     "IgnorePublicAcls": true,
+     "RestrictPublicBuckets": true
+    },
+    "VersioningConfiguration": {
+     "Status": "Enabled"
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "BONESBootstrap-5831802-737088382676-us-west-2/BARS/Resource/Resource"
+   }
+  },
+  "BARSPolicy7A3163C8": {
+   "Type": "AWS::S3::BucketPolicy",
+   "Properties": {
+    "Bucket": {
+     "Ref": "BARS772963B4"
+    },
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "s3:*",
+       "Condition": {
+        "Bool": {
+         "aws:SecureTransport": "false"
+        }
+       },
+       "Effect": "Deny",
+       "Principal": {
+        "AWS": "*"
+       },
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "BARS772963B4",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "BARS772963B4",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "BONESBootstrap-5831802-737088382676-us-west-2/BARS/Resource/Policy/Resource"
+   }
+  },
+  "BARSPipelinesBARSRole10256C1D": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Condition": {
+        "StringEquals": {
+         "sts:ExternalId": "Pipeline:5831802:CDService"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "bars.amazon.com"
+       }
+      },
+      {
+       "Action": "sts:AssumeRole",
+       "Condition": {
+        "StringEquals": {
+         "sts:ExternalId": "5831802"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "pipelines.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "RoleName": "PipelinesBARSRole-51cb120324e12c1d64f002f176c748562d1f0061"
+   },
+   "Metadata": {
+    "aws:cdk:path": "BONESBootstrap-5831802-737088382676-us-west-2/BARS/PipelinesBARSRole/Resource"
+   }
+  },
+  "BARSPipelinesBARSRoleDefaultPolicy5D505A53": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "s3:PutObject",
+        "s3:PutObjectLegalHold",
+        "s3:PutObjectRetention",
+        "s3:PutObjectTagging",
+        "s3:PutObjectVersionTagging",
+        "s3:Abort*"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          {
+           "Fn::GetAtt": [
+            "BARS772963B4",
+            "Arn"
+           ]
+          },
+          "/*"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": [
+        "kms:Encrypt",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*",
+        "kms:Decrypt"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BARSBARSKey008C869E",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "s3:GetObject*",
+        "s3:GetBucket*",
+        "s3:List*",
+        "s3:DeleteObject*",
+        "s3:PutObject",
+        "s3:PutObjectLegalHold",
+        "s3:PutObjectRetention",
+        "s3:PutObjectTagging",
+        "s3:PutObjectVersionTagging",
+        "s3:Abort*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "BARS772963B4",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "BARS772963B4",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "kms:Decrypt",
+        "kms:DescribeKey",
+        "kms:Encrypt",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BARSBARSKey008C869E",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "kms:Decrypt",
+        "kms:Encrypt",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BARSBARSKey008C869E",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage",
+        "ecr:CompleteLayerUpload",
+        "ecr:UploadLayerPart",
+        "ecr:InitiateLayerUpload",
+        "ecr:PutImage"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BARSImageRepoC9741AEA",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": "ecr:GetAuthorizationToken",
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "ecr:DescribeImages",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BARSImageRepoC9741AEA",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "BARSPipelinesBARSRoleDefaultPolicy5D505A53",
+    "Roles": [
+     {
+      "Ref": "BARSPipelinesBARSRole10256C1D"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "BONESBootstrap-5831802-737088382676-us-west-2/BARS/PipelinesBARSRole/DefaultPolicy/Resource"
+   }
+  },
+  "CodeDeployPipelinesCodeDeployRoleDDA586B5": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Condition": {
+        "StringEquals": {
+         "sts:ExternalId": "5831802"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "pipelines.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Ref": "CodeDeployPipelinesCodeDeployPolicyE6BCA7ED"
+     }
+    ],
+    "RoleName": "PipelinesCodeDeployRol-7555549344f7ba0acad0f8f9681fc1dba23eb666"
+   },
+   "Metadata": {
+    "aws:cdk:path": "BONESBootstrap-5831802-737088382676-us-west-2/CodeDeploy/PipelinesCodeDeployRole/Resource"
+   }
+  },
+  "CodeDeployPipelinesCodeDeployPolicyE6BCA7ED": {
+   "Type": "AWS::IAM::ManagedPolicy",
+   "Properties": {
+    "Description": "",
+    "Path": "/",
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "events:*",
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "codedeploy:*",
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "s3:Get*",
+        "s3:List*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "BARS772963B4",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "BARS772963B4",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "kms:Decrypt*",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BARSBARSKey008C869E",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "BONESBootstrap-5831802-737088382676-us-west-2/CodeDeploy/PipelinesCodeDeployPolicy/Resource"
+   }
+  },
+  "PipelinesCloudWatchPipelinesCloudWatchRole3350B38B": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Condition": {
+        "StringEquals": {
+         "sts:ExternalId": "5831802"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "pipelines.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Ref": "PipelinesCloudWatchPipelinesCloudWatchPolicy76913B55"
+     }
+    ],
+    "RoleName": "PipelinesCloudWatchRol-ec653579387961da29a225c89efa09f425b033ba"
+   },
+   "Metadata": {
+    "aws:cdk:path": "BONESBootstrap-5831802-737088382676-us-west-2/PipelinesCloudWatch/PipelinesCloudWatchRole/Resource"
+   }
+  },
+  "PipelinesCloudWatchPipelinesCloudWatchPolicy76913B55": {
+   "Type": "AWS::IAM::ManagedPolicy",
+   "Properties": {
+    "Description": "",
+    "Path": "/",
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "cloudwatch:GetMetricData",
+        "cloudwatch:DescribeAlarmHistory",
+        "cloudwatch:DescribeAlarms"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "BONESBootstrap-5831802-737088382676-us-west-2/PipelinesCloudWatch/PipelinesCloudWatchPolicy/Resource"
+   }
+  },
+  "ChangeSetApproverRoleAD563530": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "bonescsa.aws.internal"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": [
+          "s3:CreateBucket",
+          "s3:DeleteBucket",
+          "s3:ListBucket",
+          "s3:DeleteBucketPolicy",
+          "s3:PutBucketPolicy",
+          "s3:PutBucketVersioning",
+          "s3:PutEncryptionConfiguration",
+          "s3:ListBucketVersions",
+          "s3:GetBucketAcl"
+         ],
+         "Effect": "Allow",
+         "Resource": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":s3:::changesetapproval-*"
+           ]
+          ]
+         }
+        },
+        {
+         "Action": [
+          "s3:GetObject",
+          "s3:PutObject",
+          "s3:DeleteObject",
+          "s3:DeleteObjectVersion"
+         ],
+         "Effect": "Allow",
+         "Resource": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":s3:::changesetapproval-*/*"
+           ]
+          ]
+         }
+        },
+        {
+         "Action": [
+          "cloudformation:Describe*",
+          "cloudformation:GetTemplate"
+         ],
+         "Effect": "Allow",
+         "Resource": "*"
+        },
+        {
+         "Action": [
+          "cloudformation:CreateChangeSet",
+          "cloudformation:DeleteChangeSet"
+         ],
+         "Effect": "Allow",
+         "Resource": "*"
+        },
+        {
+         "Action": [
+          "cloudformation:DetectStackDrift",
+          "cloudformation:DetectStackResourceDrift",
+          "cloudformation:ListStackResources"
+         ],
+         "Effect": "Allow",
+         "Resource": "*"
+        },
+        {
+         "Action": "ssm:GetParameters",
+         "Effect": "Allow",
+         "Resource": "*"
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "changesetapprovalPolicy"
+     }
+    ],
+    "RoleName": "BONESBootstrapChangeSe-900f51309e879dbb60072aeada622b2b0d7c15d2"
+   },
+   "Metadata": {
+    "aws:cdk:path": "BONESBootstrap-5831802-737088382676-us-west-2/ChangeSetApproverRole/Resource"
+   }
+  },
+  "CloudFormationExecutionRole09AE950A": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "cloudformation.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": "*",
+         "Effect": "Allow",
+         "Resource": "*"
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "pipelinesCloudFormationChangeSetPolicy"
+     }
+    ],
+    "RoleName": "PipelinesChangeSetExec-3f779e652c9e7a8c19c874da5e55de0634ed9620"
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "BONESBootstrap-5831802-737088382676-us-west-2/CloudFormationExecutionRole/Resource"
+   }
+  },
+  "PipelinesCloudFormationRole9A8154EF": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Condition": {
+        "StringEquals": {
+         "sts:ExternalId": "5831802"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "pipelines.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Ref": "PipelinesCloudFormationManagedPolicy"
+     }
+    ],
+    "RoleName": "PipelinesChangeSetRole-1d3f9ccab8cfe2806c4624eab5f522f9e89d0d42"
+   },
+   "Metadata": {
+    "aws:cdk:path": "BONESBootstrap-5831802-737088382676-us-west-2/PipelinesCloudFormationRole/Resource"
+   }
+  },
+  "PipelinesCloudFormationManagedPolicy": {
+   "Type": "AWS::IAM::ManagedPolicy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "cloudformation:CreateChangeSet",
+        "cloudformation:DeleteChangeSet",
+        "cloudformation:DescribeChangeSet",
+        "cloudformation:DescribeStacks",
+        "cloudformation:DescribeStackEvents",
+        "cloudformation:ExecuteChangeSet",
+        "cloudformation:UpdateTerminationProtection"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "iam:PassRole",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "CloudFormationExecutionRole09AE950A",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "s3:Get*",
+        "s3:List*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "BARS772963B4",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "BARS772963B4",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "kms:Decrypt*",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BARSBARSKey008C869E",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": "s3:GetObject",
+       "Condition": {
+        "StringLike": {
+         "s3:DataAccessPointArn": "arn:*:s3:*:*:accesspoint/vulcan-*"
+        }
+       },
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "kms:Decrypt",
+       "Condition": {
+        "ForAnyValue:StringLike": {
+         "kms:ResourceAliases": "alias/vulcan-artifact-encryption-key"
+        }
+       },
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "BONESBootstrap-5831802-737088382676-us-west-2/PipelinesCloudFormationManagedPolicy"
+   }
+  },
+  "HydraHydraTestBATSManagedPolicy4D07D27F": {
+   "Type": "AWS::IAM::ManagedPolicy",
+   "Properties": {
+    "Description": "Policy for Hydra/BATS to create and get artifacts in your S3 bucket as well as publish logs to CloudWatchLogs.",
+    "Path": "/",
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "s3:PutObject",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":s3:::codetest-us-west-2-737088382676-do-not-delete/*"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:DescribeLogGroups",
+        "logs:DescribeLogStreams",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":logs:us-west-2:737088382676:log-group:CODETEST-Logs-CodeTestEntities-737088382676-*"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":logs:us-west-2:737088382676:log-group:CODETEST-Logs-CodeTestEntities-737088382676-*:log-stream:*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "BONESBootstrap-5831802-737088382676-us-west-2/Hydra/HydraTestBATSManagedPolicy/Resource"
+   }
+  },
+  "HydraHydraTestBATS8497CB1A": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Condition": {
+        "StringEquals": {
+         "bats.amazon.com:type": "Hydra",
+         "bats.amazon.com:entity": "5831802"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "bats.amazon.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Ref": "HydraHydraTestBATSManagedPolicy4D07D27F"
+     }
+    ],
+    "RoleName": "HydraBATSRole-368f24c16740f48de1d70c03264cbb9a051c6c16"
+   },
+   "Metadata": {
+    "aws:cdk:path": "BONESBootstrap-5831802-737088382676-us-west-2/Hydra/HydraTestBATS/Resource"
+   }
+  },
+  "HydraHydraTestManagedPolicy2F797490": {
+   "Type": "AWS::IAM::ManagedPolicy",
+   "Properties": {
+    "Description": "Policy for Hydra to create/manage Hydra related resources in your account.",
+    "Path": "/",
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "s3:CreateBucket",
+        "s3:GetObject",
+        "s3:ListBucket"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":s3:::codetest-us-west-2-737088382676-do-not-delete"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":s3:::codetest-us-west-2-737088382676-do-not-delete/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "lambda:AddPermission",
+        "lambda:GetFunctionConfiguration",
+        "lambda:UpdateFunctionConfiguration",
+        "lambda:UpdateFunctionCode",
+        "lambda:CreateFunction",
+        "lambda:DeleteFunction",
+        "lambda:ListVersionsByFunction",
+        "lambda:GetFunction",
+        "lambda:Invoke*"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":lambda:us-west-2:737088382676:function:CODETEST_*_*"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": "sns:Publish",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":sns:*:*:Setup_CustomerStackStatusTopic-*"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": [
+        "cloudformation:createStack",
+        "cloudformation:updateStack",
+        "cloudformation:describeStacks",
+        "cloudformation:deleteStack"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":cloudformation:us-west-2:737088382676:stack/CodeTestEntities-*"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": "logs:*",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":logs:us-west-2:737088382676:log-group:CodeTestEntities-*"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": [
+        "logs:CreateLogGroup",
+        "logs:DeleteLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":logs:us-west-2:737088382676:log-group:/aws/lambda/*"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": [
+        "ec2:CreateNetworkInterface",
+        "ec2:DescribeNetworkInterfaces",
+        "ec2:DeleteNetworkInterface",
+        "ec2:DescribeSecurityGroups",
+        "ec2:DescribeSubnets",
+        "ec2:DescribeVpcs"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "gigahydrafrontend:*",
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "BONESBootstrap-5831802-737088382676-us-west-2/Hydra/HydraTestManagedPolicy/Resource"
+   }
+  },
+  "HydraHydraTestFCCFEF3F": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "codetest.aws.internal"
+       }
+      },
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Ref": "HydraHydraTestManagedPolicy2F797490"
+     }
+    ],
+    "RoleName": "HydraTestRole-eaaa90606498bb425062186e9c6292d46cb33576"
+   },
+   "Metadata": {
+    "aws:cdk:path": "BONESBootstrap-5831802-737088382676-us-west-2/Hydra/HydraTest/Resource"
+   }
+  },
+  "HydraHydraTestResults39111CFE": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "RoleName": "HydraTestResultsRole-8f14556b5f3fdc727345a8f034790edb25f59ede"
+   },
+   "Metadata": {
+    "aws:cdk:path": "BONESBootstrap-5831802-737088382676-us-west-2/Hydra/HydraTestResults/Resource"
+   }
+  },
+  "HydraHydraTestResultsDefaultPolicy5D738582": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:GetItem",
+        "dynamodb:Query",
+        "dynamodb:Scan"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":dynamodb:us-west-2:737088382676:table/CODETEST_TestRunData_DO-NOT-DELETE"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":dynamodb:us-west-2:737088382676:table/CODETEST_TestRunData_DO-NOT-DELETE/index/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "HydraHydraTestResultsDefaultPolicy5D738582",
+    "Roles": [
+     {
+      "Ref": "HydraHydraTestResults39111CFE"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "BONESBootstrap-5831802-737088382676-us-west-2/Hydra/HydraTestResults/DefaultPolicy/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1VQy07DMBD8lt4dN20BwY0kgJAQokoOHJFxFnDjeCM/ikLkf8eJSxNOszM7nvXuBU3p1WZ1y9ofte5EB1IoMHTIEa2xmnWVZbwheVZW9+ooNKoWlCUVcKeh2uWON2DJ/u9hgTXcQSexX7rntkRXvzLLv5btosqW9Dx6cj+gbpkVqJaWx77WbCF4sqXXNzRdsW+T8LpJpHinQyBvQ9OGbZ6gJ8WHGiGTgpmRTIUnwDUdSujQCIt6ss3ME7MLt4hLhs6pirBHKXg/y5F7IlgbElHClDXi7DxVz0yxT6hn/Z/gPSnBoNN8inhxtnM2fiyqnqhwZ3ow6+M2pZd0szoYIRLtlBUt0DLiL+iXeN7bAQAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "BONESBootstrap-5831802-737088382676-us-west-2/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "BARSKeyArnExport": {
+   "Value": {
+    "Fn::GetAtt": [
+     "BARSBARSKey008C869E",
+     "Arn"
+    ]
+   },
+   "Export": {
+    "Name": "BONESBootstrap-5831802-737088382676-us-west-2:BARSKeyArn"
+   }
+  }
+ }
+}

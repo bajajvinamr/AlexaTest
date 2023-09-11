@@ -1,0 +1,4 @@
+{"direction":"consumed","namespace":"npm","repo":"NpmMetadataIndex","name":"aws-cdk-lib","version":"2.35.0","sha1sum":"abbf8af3d85ad2af438f6ce344c26204451f8ec5"}
+{"direction":"consumed","namespace":"npm","repo":"NpmMetadataIndex","name":"typescript","version":"4.1.6","sha1sum":"1becd85d77567c3c741172339e93ce2e69932138"}
+{"direction":"consumed","namespace":"npm","repo":"NpmMetadataIndex","name":"fsevents","version":"2.3.2","sha1sum":"8a526f78b8fdf4623b709e0b975c52c24c02fd1a"}
+{"direction":"produced","namespace":"npm","repo":"Brazil","name":"@amzn/cocktailalchemistcdk","version":"1.0.0"}

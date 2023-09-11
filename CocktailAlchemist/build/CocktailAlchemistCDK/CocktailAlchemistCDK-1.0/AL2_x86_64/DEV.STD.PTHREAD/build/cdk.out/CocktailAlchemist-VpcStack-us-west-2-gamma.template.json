@@ -1,0 +1,662 @@
+{
+ "Parameters": {
+  "PackagingAggregateId": {
+   "Type": "String",
+   "Default": "default_aggregate_id",
+   "Description": "Aggregate Id that can be used to reference resources from different transformations"
+  },
+  "PackagingTransformId": {
+   "Type": "String",
+   "Default": "default_aggregate_id_transform",
+   "Description": "Deployment Id is used to figure out artifact locations in S3 and ECR"
+  },
+  "PackagingS3KeyPrefix": {
+   "Type": "String",
+   "Default": "local_development_resources",
+   "Description": "Deployment Id is used to figure out artifact locations in S3 and ECR"
+  },
+  "AmazonPipelinesRollbackFlag": {
+   "Type": "String",
+   "Default": "false",
+   "Description": "When a rollback deployment is triggered in Pipelines, the system will override the AmazonPipelinesRollbackFlag with a value of true"
+  }
+ },
+ "Conditions": {
+  "IsRollback": {
+   "Fn::Equals": [
+    {
+     "Ref": "AmazonPipelinesRollbackFlag"
+    },
+    "true"
+   ]
+  }
+ },
+ "Resources": {
+  "gammaVpc410949D6": {
+   "Type": "AWS::EC2::VPC",
+   "Properties": {
+    "CidrBlock": "10.0.0.0/16",
+    "EnableDnsHostnames": true,
+    "EnableDnsSupport": true,
+    "InstanceTenancy": "default",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/Resource"
+   }
+  },
+  "gammaVpcPublicSubnet1SubnetB32510F9": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      0,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.0.0.0/19",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "gammaVpc410949D6"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet1/Subnet"
+   }
+  },
+  "gammaVpcPublicSubnet1RouteTableF0063D39": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "gammaVpc410949D6"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet1/RouteTable"
+   }
+  },
+  "gammaVpcPublicSubnet1RouteTableAssociationBF4DB124": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "gammaVpcPublicSubnet1RouteTableF0063D39"
+    },
+    "SubnetId": {
+     "Ref": "gammaVpcPublicSubnet1SubnetB32510F9"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet1/RouteTableAssociation"
+   }
+  },
+  "gammaVpcPublicSubnet1DefaultRouteA35506FA": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "gammaVpcIGWF8A9AA34"
+    },
+    "RouteTableId": {
+     "Ref": "gammaVpcPublicSubnet1RouteTableF0063D39"
+    }
+   },
+   "DependsOn": [
+    "gammaVpcVPCGW033C0BF5"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet1/DefaultRoute"
+   }
+  },
+  "gammaVpcPublicSubnet1EIP44BE4D52": {
+   "Type": "AWS::EC2::EIP",
+   "Properties": {
+    "Domain": "vpc",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet1"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet1/EIP"
+   }
+  },
+  "gammaVpcPublicSubnet1NATGateway3D9168D3": {
+   "Type": "AWS::EC2::NatGateway",
+   "Properties": {
+    "AllocationId": {
+     "Fn::GetAtt": [
+      "gammaVpcPublicSubnet1EIP44BE4D52",
+      "AllocationId"
+     ]
+    },
+    "SubnetId": {
+     "Ref": "gammaVpcPublicSubnet1SubnetB32510F9"
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet1"
+     }
+    ]
+   },
+   "DependsOn": [
+    "gammaVpcPublicSubnet1DefaultRouteA35506FA",
+    "gammaVpcPublicSubnet1RouteTableAssociationBF4DB124"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet1/NATGateway"
+   }
+  },
+  "gammaVpcPublicSubnet2Subnet66F02624": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      1,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.0.32.0/19",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "gammaVpc410949D6"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet2/Subnet"
+   }
+  },
+  "gammaVpcPublicSubnet2RouteTable08704A64": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "gammaVpc410949D6"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet2/RouteTable"
+   }
+  },
+  "gammaVpcPublicSubnet2RouteTableAssociation60DD818F": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "gammaVpcPublicSubnet2RouteTable08704A64"
+    },
+    "SubnetId": {
+     "Ref": "gammaVpcPublicSubnet2Subnet66F02624"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet2/RouteTableAssociation"
+   }
+  },
+  "gammaVpcPublicSubnet2DefaultRoute913DB785": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "gammaVpcIGWF8A9AA34"
+    },
+    "RouteTableId": {
+     "Ref": "gammaVpcPublicSubnet2RouteTable08704A64"
+    }
+   },
+   "DependsOn": [
+    "gammaVpcVPCGW033C0BF5"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet2/DefaultRoute"
+   }
+  },
+  "gammaVpcPublicSubnet3SubnetFE84DC8A": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      2,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.0.64.0/19",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet3"
+     }
+    ],
+    "VpcId": {
+     "Ref": "gammaVpc410949D6"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet3/Subnet"
+   }
+  },
+  "gammaVpcPublicSubnet3RouteTable7E666758": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet3"
+     }
+    ],
+    "VpcId": {
+     "Ref": "gammaVpc410949D6"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet3/RouteTable"
+   }
+  },
+  "gammaVpcPublicSubnet3RouteTableAssociationF131D5C5": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "gammaVpcPublicSubnet3RouteTable7E666758"
+    },
+    "SubnetId": {
+     "Ref": "gammaVpcPublicSubnet3SubnetFE84DC8A"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet3/RouteTableAssociation"
+   }
+  },
+  "gammaVpcPublicSubnet3DefaultRoute452BAB00": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "gammaVpcIGWF8A9AA34"
+    },
+    "RouteTableId": {
+     "Ref": "gammaVpcPublicSubnet3RouteTable7E666758"
+    }
+   },
+   "DependsOn": [
+    "gammaVpcVPCGW033C0BF5"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PublicSubnet3/DefaultRoute"
+   }
+  },
+  "gammaVpcPrivateSubnet1Subnet26DA8502": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      0,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.0.96.0/19",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "Name",
+      "Value": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "gammaVpc410949D6"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet1/Subnet"
+   }
+  },
+  "gammaVpcPrivateSubnet1RouteTable9F4A3392": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "gammaVpc410949D6"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet1/RouteTable"
+   }
+  },
+  "gammaVpcPrivateSubnet1RouteTableAssociation52B15627": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "gammaVpcPrivateSubnet1RouteTable9F4A3392"
+    },
+    "SubnetId": {
+     "Ref": "gammaVpcPrivateSubnet1Subnet26DA8502"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet1/RouteTableAssociation"
+   }
+  },
+  "gammaVpcPrivateSubnet1DefaultRoute00766C6C": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "gammaVpcPublicSubnet1NATGateway3D9168D3"
+    },
+    "RouteTableId": {
+     "Ref": "gammaVpcPrivateSubnet1RouteTable9F4A3392"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet1/DefaultRoute"
+   }
+  },
+  "gammaVpcPrivateSubnet2Subnet1582B192": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      1,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.0.128.0/19",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "Name",
+      "Value": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "gammaVpc410949D6"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet2/Subnet"
+   }
+  },
+  "gammaVpcPrivateSubnet2RouteTable9BCC97D8": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "gammaVpc410949D6"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet2/RouteTable"
+   }
+  },
+  "gammaVpcPrivateSubnet2RouteTableAssociation77586D38": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "gammaVpcPrivateSubnet2RouteTable9BCC97D8"
+    },
+    "SubnetId": {
+     "Ref": "gammaVpcPrivateSubnet2Subnet1582B192"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet2/RouteTableAssociation"
+   }
+  },
+  "gammaVpcPrivateSubnet2DefaultRoute47E123BC": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "gammaVpcPublicSubnet1NATGateway3D9168D3"
+    },
+    "RouteTableId": {
+     "Ref": "gammaVpcPrivateSubnet2RouteTable9BCC97D8"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet2/DefaultRoute"
+   }
+  },
+  "gammaVpcPrivateSubnet3Subnet3B7FB667": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      2,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.0.160.0/19",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "Name",
+      "Value": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet3"
+     }
+    ],
+    "VpcId": {
+     "Ref": "gammaVpc410949D6"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet3/Subnet"
+   }
+  },
+  "gammaVpcPrivateSubnet3RouteTable501423EB": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet3"
+     }
+    ],
+    "VpcId": {
+     "Ref": "gammaVpc410949D6"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet3/RouteTable"
+   }
+  },
+  "gammaVpcPrivateSubnet3RouteTableAssociationEF2824A7": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "gammaVpcPrivateSubnet3RouteTable501423EB"
+    },
+    "SubnetId": {
+     "Ref": "gammaVpcPrivateSubnet3Subnet3B7FB667"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet3/RouteTableAssociation"
+   }
+  },
+  "gammaVpcPrivateSubnet3DefaultRouteD0280F8D": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "gammaVpcPublicSubnet1NATGateway3D9168D3"
+    },
+    "RouteTableId": {
+     "Ref": "gammaVpcPrivateSubnet3RouteTable501423EB"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/PrivateSubnet3/DefaultRoute"
+   }
+  },
+  "gammaVpcIGWF8A9AA34": {
+   "Type": "AWS::EC2::InternetGateway",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/IGW"
+   }
+  },
+  "gammaVpcVPCGW033C0BF5": {
+   "Type": "AWS::EC2::VPCGatewayAttachment",
+   "Properties": {
+    "InternetGatewayId": {
+     "Ref": "gammaVpcIGWF8A9AA34"
+    },
+    "VpcId": {
+     "Ref": "gammaVpc410949D6"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/gamma-Vpc/VPCGW"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/0WPzU7DMBCEnyV3Z5tGgOBGFRDqBVkp6hVtnK3Y1rEj/7QqVd8duyXKab+dHY1mH6CCp2XxisOvWYw8kmZDHt5o1PY8kAmbgOoganh+garAky9Vfyg1d3Bpdkaiw4ECOZGWxpqeA1sjku2bVA2X7ajyZSsbIWOnWW1iZyhkbabWxkBf2Gma9VlbeW8V4y13Mmd4X8s8PjF8YKATnoV0fEw4B69NapZ4Mtyb/G+rkB77yR9eRUveRqduuRNfhbE9wd4vjnUFj7As9p65dNEEHgja+/wDibW60D8BAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-VpcStack-us-west-2-gamma/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "ExportsOutputRefgammaVpc410949D69A02AAFC": {
+   "Value": {
+    "Ref": "gammaVpc410949D6"
+   },
+   "Export": {
+    "Name": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpc410949D69A02AAFC"
+   }
+  },
+  "ExportsOutputRefgammaVpcPrivateSubnet1Subnet26DA8502D1273738": {
+   "Value": {
+    "Ref": "gammaVpcPrivateSubnet1Subnet26DA8502"
+   },
+   "Export": {
+    "Name": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpcPrivateSubnet1Subnet26DA8502D1273738"
+   }
+  },
+  "ExportsOutputRefgammaVpcPrivateSubnet2Subnet1582B1927587BDA1": {
+   "Value": {
+    "Ref": "gammaVpcPrivateSubnet2Subnet1582B192"
+   },
+   "Export": {
+    "Name": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpcPrivateSubnet2Subnet1582B1927587BDA1"
+   }
+  },
+  "ExportsOutputRefgammaVpcPrivateSubnet3Subnet3B7FB66736264C2C": {
+   "Value": {
+    "Ref": "gammaVpcPrivateSubnet3Subnet3B7FB667"
+   },
+   "Export": {
+    "Name": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpcPrivateSubnet3Subnet3B7FB66736264C2C"
+   }
+  }
+ }
+}

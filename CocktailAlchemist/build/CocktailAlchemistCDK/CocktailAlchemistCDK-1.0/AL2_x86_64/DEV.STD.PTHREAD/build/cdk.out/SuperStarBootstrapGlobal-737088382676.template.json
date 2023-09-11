@@ -1,0 +1,488 @@
+{
+ "Description": "Bootstrap stack to enable Provisioner to operate on the account https://w.amazon.com/bin/view/Nebula/CCN/Provisioner/GettingStarted/",
+ "Parameters": {
+  "PackagingAggregateId": {
+   "Type": "String",
+   "Default": "default_aggregate_id",
+   "Description": "Aggregate Id that can be used to reference resources from different transformations"
+  },
+  "PackagingTransformId": {
+   "Type": "String",
+   "Default": "default_aggregate_id_transform",
+   "Description": "Deployment Id is used to figure out artifact locations in S3 and ECR"
+  },
+  "PackagingS3KeyPrefix": {
+   "Type": "String",
+   "Default": "local_development_resources",
+   "Description": "Deployment Id is used to figure out artifact locations in S3 and ECR"
+  },
+  "AmazonPipelinesRollbackFlag": {
+   "Type": "String",
+   "Default": "false",
+   "Description": "When a rollback deployment is triggered in Pipelines, the system will override the AmazonPipelinesRollbackFlag with a value of true"
+  }
+ },
+ "Conditions": {
+  "IsRollback": {
+   "Fn::Equals": [
+    {
+     "Ref": "AmazonPipelinesRollbackFlag"
+    },
+    "true"
+   ]
+  }
+ },
+ "Resources": {
+  "ProvisionerRoleCD6E5884": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":iam::169826055070:root"
+          ]
+         ]
+        }
+       }
+      },
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": [
+         {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":iam::985409143257:root"
+           ]
+          ]
+         },
+         {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":iam::113025808262:root"
+           ]
+          ]
+         },
+         {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":iam::791674550530:root"
+           ]
+          ]
+         }
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "RoleName": "Temporary-CCN-Provisioner-Role"
+   },
+   "Metadata": {
+    "aws:cdk:path": "SuperStarBootstrapGlobal-737088382676/ProvisionerRole/Resource"
+   }
+  },
+  "ProvisionerRoleDefaultPolicy91BE224F": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "ec2:CreateTags",
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "tag:TagResources",
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "ec2:CreateTags",
+       "Effect": "Allow",
+       "Resource": "arn:aws:ec2:*:*:security-group/*"
+      },
+      {
+       "Action": "iam:ListRoleTags",
+       "Effect": "Allow",
+       "Resource": "arn:aws:iam::*:role/*"
+      },
+      {
+       "Action": [
+        "elasticloadbalancing:DescribeLoadBalancers",
+        "ec2:DescribeAvailabilityZones",
+        "ec2:DescribeVpcEndpointServiceConfigurations",
+        "ec2:CreateVpcEndpoint",
+        "ec2:DescribeVpcEndpoints",
+        "ec2:DescribeVpcEndpointServices",
+        "ec2:ModifyVpcEndpointServicePermissions",
+        "ec2:AcceptVpcEndpointConnections",
+        "ec2:DescribeSecurityGroups",
+        "ec2:DescribeSecurityGroupReferences",
+        "ec2:DescribeStaleSecurityGroups",
+        "ec2:CreateSecurityGroup",
+        "ec2:DescribeSubnets",
+        "ec2:DescribeRouteTables",
+        "ec2:DescribeVpcs",
+        "route53:GetHostedZone",
+        "route53:ListHostedZones",
+        "route53:ListHostedZonesByName",
+        "route53:ListHostedZonesByVpc",
+        "route53:ChangeResourceRecordSets",
+        "route53:ListResourceRecordSets",
+        "route53:CreateHostedZone",
+        "route53:DeleteHostedZone",
+        "route53:GetChange"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "ec2:DeleteVpcEndpoints",
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "ec2:AuthorizeSecurityGroupIngress",
+        "ec2:RevokeSecurityGroupIngress",
+        "ec2:DeleteSecurityGroup"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "iam:ListAttachedRolePolicies",
+        "iam:ListRolePolicies",
+        "iam:GetRolePolicy"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "ProvisionerRoleCD6E5884",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "iam:GetPolicyVersion",
+        "iam:GetPolicy",
+        "ec2:AcceptVpcPeeringConnection",
+        "ec2:DeleteTags",
+        "ec2:DescribeVpcPeeringConnections",
+        "ec2:ModifyVpcPeeringConnectionOptions",
+        "ec2:CreateRoute",
+        "ec2:DeleteRoute",
+        "ec2:ReplaceRoute",
+        "ec2:DescribeNetworkInterfaces",
+        "ec2:CreateRouteTable",
+        "ec2:DeleteRouteTable"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "ec2:CreateVpcEndpointServiceConfiguration",
+        "ec2:ModifyVpcEndpointServiceConfiguration",
+        "ec2:DeleteVpcEndpointServiceConfigurations",
+        "ec2:DescribeVpcEndpointServiceConfigurations"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "ec2:DescribeVpcEndpointConnections",
+        "ec2:DescribeVpcEndpointServicePermissions",
+        "ec2:ModifyVpcEndpoint",
+        "ec2:RejectVpcEndpointConnections"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ProvisionerRoleDefaultPolicy91BE224F",
+    "Roles": [
+     {
+      "Ref": "ProvisionerRoleCD6E5884"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "SuperStarBootstrapGlobal-737088382676/ProvisionerRole/DefaultPolicy/Resource"
+   }
+  },
+  "SuperStarCfnRegistrarLambdaRole8D5CE144": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ],
+    "RoleName": "SuperStarCfnRegistrarLambdaRole"
+   },
+   "Metadata": {
+    "aws:cdk:path": "SuperStarBootstrapGlobal-737088382676/SuperStarCfnRegistrarLambdaRole/Resource"
+   }
+  },
+  "SuperStarCfnRegistrarLambdaRoleDefaultPolicyB1416441": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "cloudformation:RegisterType",
+        "cloudformation:DescribeTypeRegistration",
+        "cloudformation:SetTypeDefaultVersion"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "s3:GetObject",
+        "s3:ListBucket"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "iam:PassRole",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "SuperStarRPDKLoggingRole70DA39AE",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "SuperStarCfnRegistrarLambdaRoleDefaultPolicyB1416441",
+    "Roles": [
+     {
+      "Ref": "SuperStarCfnRegistrarLambdaRole8D5CE144"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "SuperStarBootstrapGlobal-737088382676/SuperStarCfnRegistrarLambdaRole/DefaultPolicy/Resource"
+   }
+  },
+  "VersionAnnouncerLambdaFuncSuperStarVersionAnnouncerLambdaRole7F21498B": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+         ],
+         "Effect": "Allow",
+         "Resource": "*"
+        },
+        {
+         "Action": [
+          "ec2:CreateNetworkInterface",
+          "ec2:DescribeNetworkInterfaces",
+          "ec2:DeleteNetworkInterface"
+         ],
+         "Effect": "Allow",
+         "Resource": "*"
+        },
+        {
+         "Action": [
+          "execute-api:Invoke",
+          "execute-api:ManageConnections"
+         ],
+         "Effect": "Allow",
+         "Resource": "arn:aws:execute-api:*:*:*",
+         "Sid": "SuperStarAPICalls"
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "ReporterPolicy"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "SuperStarBootstrapGlobal-737088382676/VersionAnnouncerLambdaFuncSuperStarVersionAnnouncerLambdaRole/Resource"
+   }
+  },
+  "VersionAnnouncerLambdaFuncC72B5F0C": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "ZipFile": "\nfrom botocore.auth import SigV4Auth\nfrom botocore.awsrequest import AWSRequest\nimport boto3, logging, urllib3, json\nimport cfnresponse\n\nhttp = urllib3.PoolManager()\nsession = boto3.Session()\ncredentials = session.get_credentials()\ncreds = credentials.get_frozen_credentials()\n\ndef signed_request(method, url, service_name, region, data=None, params=None, headers=None):\n    body=json.dumps(data)\n    request = AWSRequest(method=method, url=url, data=body, params=params, headers=headers)\n    SigV4Auth(creds, service_name, region).add_auth(request)\n    return http.request(method, url, headers=dict(request.headers), body=body)\n\n# https://issues.amazon.com/issues/Provisioner-981\ndef lambda_handler(event, context):\n    logger = logging.getLogger()\n    logger.setLevel(logging.INFO)\n    try:\n        if event['RequestType'] == 'Delete':\n            logger.info('Deleted!')\n            cfnresponse.send(event, context, cfnresponse.SUCCESS, {})\n            return\n\n        props = event['ResourceProperties']\n\n        r = signed_request(\n            method='POST',\n            url='https://'+props['Host']+'/v2/bootstrap_template_versions',\n            service_name='execute-api',\n            region='us-east-1',\n            data={\n                'clientVersion': props['ClientVersion'],\n                'serviceProviderVersion': props['ServiceProviderVersion']\n            },\n            headers={'Content-Type': 'application/x-amz-json-1.1'})\n\n        logger.info('Request status_code: ' + str(r.status))\n        logger.info('Request data: ' + str(r.data))\n\n        if r.status == 200:\n            logger.info('Successfully announced the bootstrap version!')\n            logger.info('clientVersion: ' + props['ClientVersion'])\n            logger.info('serviceProviderVersion: ' + props['ServiceProviderVersion'])\n            cfnresponse.send(event, context, cfnresponse.SUCCESS, {})\n        else:\n            logger.error('Failed to announce the bootstrap version')\n            cfnresponse.send(event, context, cfnresponse.FAILED, {})\n    except Exception as e:\n        logger.exception('Signaling failure to CloudFormation.')\n        logger.error('Encountered exception: ' + str(e))\n        cfnresponse.send(event, context, cfnresponse.FAILED, {})\n  "
+    },
+    "Handler": "index.lambda_handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "VersionAnnouncerLambdaFuncSuperStarVersionAnnouncerLambdaRole7F21498B",
+      "Arn"
+     ]
+    },
+    "Runtime": "python3.7",
+    "Timeout": 60
+   },
+   "DependsOn": [
+    "VersionAnnouncerLambdaFuncSuperStarVersionAnnouncerLambdaRole7F21498B"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "SuperStarBootstrapGlobal-737088382676/VersionAnnouncerLambdaFunc/Resource"
+   }
+  },
+  "BootstrapVersionAnnouncement": {
+   "Type": "Custom::BootstrapVersionAnnounce",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "VersionAnnouncerLambdaFuncC72B5F0C",
+      "Arn"
+     ]
+    },
+    "Host": "api.provisioner.superstar.amazon.dev",
+    "ClientVersion": "4",
+    "ServiceProviderVersion": "3"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "SuperStarBootstrapGlobal-737088382676/BootstrapVersionAnnouncement/Default"
+   }
+  },
+  "SuperStarRPDKLoggingRole70DA39AE": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "resources.cloudformation.amazonaws.com"
+       }
+      },
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "cloudformation.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:DescribeLogGroups",
+          "logs:DescribeLogStreams",
+          "logs:PutLogEvents",
+          "cloudwatch:ListMetrics",
+          "cloudwatch:PutMetricData"
+         ],
+         "Effect": "Allow",
+         "Resource": "*"
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "ReporterPolicy"
+     }
+    ],
+    "RoleName": "SuperStarRPDKLoggingRole"
+   },
+   "Metadata": {
+    "aws:cdk:path": "SuperStarBootstrapGlobal-737088382676/SuperStarRPDKLoggingRole/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/0WMwW7CQAxEv4X7xqSISnCrigRXFPVeOYkrme6uI3uXCqL8O0sA9TRvNPZbQw314gPDNS4tD6SWUKtB5czGEkmrrv+tWpFkSXGAzxd9URg8Jjp4adG7FWy2RYR/Nj94bmHc/cQjKgZKpK6UncSeU7G6cvY9MgYYG/F03+Y8iufucq8PmpzH0PYI4z7Hbv4s24unyTVkkrUrhmxJwn8twidPLkpPcLLleVXDO7wtTsZcaY6JA0HzyBtbLVNCBwEAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "SuperStarBootstrapGlobal-737088382676/CDKMetadata/Default"
+   }
+  }
+ }
+}

@@ -1,0 +1,130 @@
+{
+ "Parameters": {
+  "PackagingAggregateId": {
+   "Type": "String",
+   "Default": "default_aggregate_id",
+   "Description": "Aggregate Id that can be used to reference resources from different transformations"
+  },
+  "PackagingTransformId": {
+   "Type": "String",
+   "Default": "default_aggregate_id_transform",
+   "Description": "Deployment Id is used to figure out artifact locations in S3 and ECR"
+  },
+  "PackagingS3KeyPrefix": {
+   "Type": "String",
+   "Default": "local_development_resources",
+   "Description": "Deployment Id is used to figure out artifact locations in S3 and ECR"
+  },
+  "AmazonPipelinesRollbackFlag": {
+   "Type": "String",
+   "Default": "false",
+   "Description": "When a rollback deployment is triggered in Pipelines, the system will override the AmazonPipelinesRollbackFlag with a value of true"
+  }
+ },
+ "Conditions": {
+  "IsRollback": {
+   "Fn::Equals": [
+    {
+     "Ref": "AmazonPipelinesRollbackFlag"
+    },
+    "true"
+   ]
+  }
+ },
+ "Resources": {
+  "gammaCocktailAlchemistEnvironmentCfnD12738BD": {
+   "Type": "Retail::ConsumerNetwork::ServiceEnvironment",
+   "Properties": {
+    "Meta": {
+     "Description": "Alexa Baseline Service Environment for deploying skill with AskCdk",
+     "WikiLink": "https://w.amazon.com/?Alexa_Skills_Kit/Teams/Offline_Tooling/AskCdk/dev-guide-skill-source-application"
+    },
+    "ServiceName": "CocktailAlchemist-ServiceEnvironment",
+    "ServiceStage": "gamma",
+    "BindleGUID": "amzn1.bindle.resource.35vyruntqzn6eid7ubjxlpmla",
+    "Dependencies": {
+     "PandaService-prod": {
+      "Fqen": "/svc1/PandaService/prod/us-east-1"
+     },
+     "CloudAuth-prod": {
+      "Fqen": "/svc1/CloudAuth/prod/us-east-1"
+     },
+     "AlexaSkillManagementApiService-gamma": {
+      "Fqen": "/svc1/AlexaSkillManagementApiService/gamma/us-east-1"
+     }
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-SuperstarStack-us-west-2-gamma/gamma-CocktailAlchemistEnvironment/Cfn"
+   }
+  },
+  "gammaCocktailAlchemistEnvironmentgammaVpcCfn1AC76E28": {
+   "Type": "Retail::ConsumerNetwork::ClientConfiguration",
+   "Properties": {
+    "Fqen": {
+     "Fn::GetAtt": [
+      "gammaCocktailAlchemistEnvironmentCfnD12738BD",
+      "Fqen"
+     ]
+    },
+    "NetworkTargetId": {
+     "Fn::ImportValue": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpc410949D69A02AAFC"
+    },
+    "EnvironmentDefinitionVersion": {
+     "Fn::GetAtt": [
+      "gammaCocktailAlchemistEnvironmentCfnD12738BD",
+      "DefinitionVersion"
+     ]
+    },
+    "Workspace": {
+     "SubContainers": [
+      {
+       "Fn::ImportValue": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpcPrivateSubnet1Subnet26DA8502D1273738"
+      },
+      {
+       "Fn::ImportValue": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpcPrivateSubnet2Subnet1582B1927587BDA1"
+      },
+      {
+       "Fn::ImportValue": "CocktailAlchemist-VpcStack-us-west-2-gamma:ExportsOutputRefgammaVpcPrivateSubnet3Subnet3B7FB66736264C2C"
+      }
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-SuperstarStack-us-west-2-gamma/gamma-CocktailAlchemistEnvironment/gamma-Vpc/Cfn"
+   }
+  },
+  "cloudAuthPolicy63DE67D2": {
+   "Type": "AWS::IAM::ManagedPolicy",
+   "Properties": {
+    "Description": "",
+    "Path": "/",
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "execute-api:Invoke",
+       "Effect": "Allow",
+       "Resource": [
+        "arn:aws:execute-api:*:568383657092:*",
+        "arn:aws:execute-api:*:174627225380:*"
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-SuperstarStack-us-west-2-gamma/cloudAuthPolicy/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/22NwW7CMBBEvyV3ZwmoVO2tEu2xEoIPQFtnQQv22lo7QRDl3xvTckDiNKvZNzMv0MDwOq8+0F9lFjmSY6EEnxRduHiSvM1oT6b5J1IXSVNGraOGnhMHIa1te4JhS9qzpS/pWYOUqFnt5ZnreJJVkD0fOsU8dRTyiT2OZgFv79BUeE5lpXb8A8MEr1HRUya9JYO0fKuZsB2jh+EbBQ/UroNjeynMgzGaDaXQqaXyut+jkdASHNOsXzSwhHl1TMy1dpLZE2z+9BdNrOSoMgEAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-SuperstarStack-us-west-2-gamma/CDKMetadata/Default"
+   }
+  }
+ }
+}

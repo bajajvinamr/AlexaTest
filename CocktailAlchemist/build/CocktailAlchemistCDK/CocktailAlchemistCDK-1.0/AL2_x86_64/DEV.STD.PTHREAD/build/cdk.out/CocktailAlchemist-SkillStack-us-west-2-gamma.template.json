@@ -1,0 +1,82 @@
+{
+ "Parameters": {
+  "PackagingAggregateId": {
+   "Type": "String",
+   "Default": "default_aggregate_id",
+   "Description": "Aggregate Id that can be used to reference resources from different transformations"
+  },
+  "PackagingTransformId": {
+   "Type": "String",
+   "Default": "default_aggregate_id_transform",
+   "Description": "Deployment Id is used to figure out artifact locations in S3 and ECR"
+  },
+  "PackagingS3KeyPrefix": {
+   "Type": "String",
+   "Default": "local_development_resources",
+   "Description": "Deployment Id is used to figure out artifact locations in S3 and ECR"
+  },
+  "AmazonPipelinesRollbackFlag": {
+   "Type": "String",
+   "Default": "false",
+   "Description": "When a rollback deployment is triggered in Pipelines, the system will override the AmazonPipelinesRollbackFlag with a value of true"
+  }
+ },
+ "Conditions": {
+  "IsRollback": {
+   "Fn::Equals": [
+    {
+     "Ref": "AmazonPipelinesRollbackFlag"
+    },
+    "true"
+   ]
+  }
+ },
+ "Resources": {
+  "CocktailAlchemistSkilluswest2gammaF63DEE1F": {
+   "Type": "Custom::AlexaSkill",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::ImportValue": "CocktailAlchemist-skill-deployer-us-west-2-gamma:ExportsOutputFnGetAttCfnFunctionD7182995ArnF86A8B17"
+    },
+    "SkillName": "CocktailAlchemist",
+    "SkillId": "amzn1.ask.skill.8d72a536-6c5b-4141-925a-8f49a9160bea",
+    "SkillPackageURL": {
+     "Fn::Join": [
+      "",
+      [
+       "https://s3.us-west-2.",
+       {
+        "Ref": "AWS::URLSuffix"
+       },
+       "/deploymentbucket-cc64298188a7b3d1e4b8d990b42e52a11c4f94b0/local_development_resources_transform/cdk.out/de94519c94b4ed3c7b6b5cbb7e9024e8609b57ea5e415e4224693eed2e4421c2_asset.de94519c94b4ed3c7b6b5cbb7e9024e8609b57ea5e415e4224693eed2e4421c2.zip"
+      ]
+     ]
+    },
+    "SkillPackageHash": "de94519c94b4ed3c7b6b5cbb7e9024e8609b57ea5e415e4224693eed2e4421c2",
+    "MaxBuildTimeMinutes": 55,
+    "SkillStage": "development",
+    "SkillPackageBucket": "deploymentbucket-cc64298188a7b3d1e4b8d990b42e52a11c4f94b0",
+    "SkillPackageKey": "local_development_resources_transform/cdk.out/de94519c94b4ed3c7b6b5cbb7e9024e8609b57ea5e415e4224693eed2e4421c2_asset.de94519c94b4ed3c7b6b5cbb7e9024e8609b57ea5e415e4224693eed2e4421c2.zip",
+    "SkillInvocationPrefix": "",
+    "SkillEndpoint": {
+     "Fn::ImportValue": "CocktailAlchemist-LambdaStack-us-west-2-gamma:ExportsOutputFnGetAttFunctionCocktailAlchemistLambdagamma9BE6C33AArn10014C71"
+    },
+    "SkipSkillEnablement": false
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-SkillStack-us-west-2-gamma/CocktailAlchemist-Skill-us-west-2-gamma/Resource/Default"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/0WMQQ6CQBAE38J9GRDU6E3BBxh8AFlhIAPsLGEWjRL+LmqMp+rqdHoNIWxX3kGbJwc99dgRo8AJ+84+DLK7OF20KoLdHkJP38Uvytbv6ApTWvFZD9qgw0EtklouyZFltczySeJci6ATOL6hJIZkLFp0iRac1adczmviWmUodhwKVOkozpq/VvzLs2JbIjQS3KIQNrDyGiHyh5EdGYTsyxdKWOQSzwAAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "CocktailAlchemist-SkillStack-us-west-2-gamma/CDKMetadata/Default"
+   }
+  }
+ }
+}

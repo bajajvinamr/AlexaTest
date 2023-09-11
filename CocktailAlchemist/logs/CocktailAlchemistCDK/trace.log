@@ -1,0 +1,12 @@
+{"phase":"start","data":{"pid":97237},"id":"97237","operation":"brazil-build","time":1694372992546.746,"program":"brazil-build"}
+{"phase":"start","data":{"package":"NodeJS-default"},"id":"NodeJS-default","operation":"bootstrap-buildtool","time":1694372992547.5828,"program":"brazil-build"}
+{"phase":"finish","data":{},"id":"NodeJS-default","operation":"bootstrap-buildtool","time":1694372992548.4512,"program":"brazil-build"}
+{"phase":"start","data":{"package":"CDKBuild-4.x"},"id":"CDKBuild-4.x","operation":"bootstrap-buildtool","time":1694372992548.506,"program":"brazil-build"}
+{"phase":"finish","data":{},"id":"CDKBuild-4.x","operation":"bootstrap-buildtool","time":1694372992548.9512,"program":"brazil-build"}
+{"phase":"start","data":{"package":"NpmPrettyMuch-1.1"},"id":"NpmPrettyMuch-1.1","operation":"bootstrap-buildtool","time":1694372992548.991,"program":"brazil-build"}
+{"phase":"finish","data":{},"id":"NpmPrettyMuch-1.1","operation":"bootstrap-buildtool","time":1694372992549.375,"program":"brazil-build"}
+{"phase":"start","data":{"package":"BrazilPath-1.1"},"id":"BrazilPath-1.1","operation":"bootstrap-buildtool","time":1694372992549.4138,"program":"brazil-build"}
+{"phase":"finish","data":{},"id":"BrazilPath-1.1","operation":"bootstrap-buildtool","time":1694372992549.7908,"program":"brazil-build"}
+{"phase":"start","data":{"command":"cdk-build"},"id":"cdk-build","operation":"exec-buildsystem","time":1694372992549.9412,"program":"brazil-build"}
+{"phase":"finish","data":{},"id":"cdk-build","operation":"exec-buildsystem","time":1694373103139.2751,"program":"brazil-build"}
+{"phase":"finish","data":{"pid":97237,"exit_code":0},"id":"97237","operation":"brazil-build","time":1694373103140.915,"program":"brazil-build"}

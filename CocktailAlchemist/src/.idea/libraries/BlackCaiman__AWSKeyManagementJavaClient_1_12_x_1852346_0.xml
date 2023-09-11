@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: AWSKeyManagementJavaClient-1.12.x.1852346.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/AWSKeyManagementJavaClient/AWSKeyManagementJavaClient-1.12.x.1852346.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/AWSKeyManagementJavaClient-1.12.x.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/AWSKeyManagementJavaClient/AWSKeyManagementJavaClient-1.12.x.1852346.0/AL2_x86_64/generic-flavor/src/src" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/AWSKeyManagementJavaClient/AWSKeyManagementJavaClient-1.12.x.1852346.0/AL2_x86_64/generic-flavor/src/tst" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/AWSKeyManagementJavaClient/AWSKeyManagementJavaClient-1.12.x.1852346.0/AL2_x86_64/DEV.STD.PTHREAD/build/generated-src" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,71 @@
+{
+  "version": "33.0.0",
+  "files": {
+    "89d96a7e461d9c503e95f63521757aa1c9082dad6f2f35444c8786e67b5f0cec": {
+      "source": {
+        "path": "asset.89d96a7e461d9c503e95f63521757aa1c9082dad6f2f35444c8786e67b5f0cec.zip",
+        "packaging": "file"
+      },
+      "destinations": {
+        "development-737088382676-us-west-2": {
+          "bucketName": "deploymentbucket-cc64298188a7b3d1e4b8d990b42e52a11c4f94b0",
+          "objectKey": "local_development_resources_transform/cdk.out/89d96a7e461d9c503e95f63521757aa1c9082dad6f2f35444c8786e67b5f0cec_asset.89d96a7e461d9c503e95f63521757aa1c9082dad6f2f35444c8786e67b5f0cec.zip",
+          "region": "us-west-2"
+        }
+      }
+    },
+    "5a3663ce3e50ece5538e00e1f36ec9bae09ff86d9cd6853ef97bac132a8d55c7": {
+      "source": {
+        "path": "asset.5a3663ce3e50ece5538e00e1f36ec9bae09ff86d9cd6853ef97bac132a8d55c7.zip",
+        "packaging": "file"
+      },
+      "destinations": {
+        "development-737088382676-us-west-2": {
+          "bucketName": "deploymentbucket-cc64298188a7b3d1e4b8d990b42e52a11c4f94b0",
+          "objectKey": "local_development_resources_transform/cdk.out/5a3663ce3e50ece5538e00e1f36ec9bae09ff86d9cd6853ef97bac132a8d55c7_asset.5a3663ce3e50ece5538e00e1f36ec9bae09ff86d9cd6853ef97bac132a8d55c7.zip",
+          "region": "us-west-2"
+        }
+      }
+    },
+    "ee9a971a6dc859e3f59841877535bd6a2abb27e1431d2d6773da745b009180e1": {
+      "source": {
+        "path": "asset.ee9a971a6dc859e3f59841877535bd6a2abb27e1431d2d6773da745b009180e1.zip",
+        "packaging": "file"
+      },
+      "destinations": {
+        "development-737088382676-us-west-2": {
+          "bucketName": "deploymentbucket-cc64298188a7b3d1e4b8d990b42e52a11c4f94b0",
+          "objectKey": "local_development_resources_transform/cdk.out/ee9a971a6dc859e3f59841877535bd6a2abb27e1431d2d6773da745b009180e1_asset.ee9a971a6dc859e3f59841877535bd6a2abb27e1431d2d6773da745b009180e1.zip",
+          "region": "us-west-2"
+        }
+      }
+    },
+    "bee21039eea678ea646283b91310db11b1ed645e25c4b94c4e8d1b929fd5e35a": {
+      "source": {
+        "path": "asset.bee21039eea678ea646283b91310db11b1ed645e25c4b94c4e8d1b929fd5e35a.zip",
+        "packaging": "file"
+      },
+      "destinations": {
+        "development-737088382676-us-west-2": {
+          "bucketName": "deploymentbucket-cc64298188a7b3d1e4b8d990b42e52a11c4f94b0",
+          "objectKey": "local_development_resources_transform/cdk.out/bee21039eea678ea646283b91310db11b1ed645e25c4b94c4e8d1b929fd5e35a_asset.bee21039eea678ea646283b91310db11b1ed645e25c4b94c4e8d1b929fd5e35a.zip",
+          "region": "us-west-2"
+        }
+      }
+    },
+    "d757fde4f232bbef4d5ca97d6d265653ad9ccb2b2cfe407669519576bd382889": {
+      "source": {
+        "path": "asset.d757fde4f232bbef4d5ca97d6d265653ad9ccb2b2cfe407669519576bd382889.zip",
+        "packaging": "file"
+      },
+      "destinations": {
+        "development-737088382676-us-west-2": {
+          "bucketName": "deploymentbucket-cc64298188a7b3d1e4b8d990b42e52a11c4f94b0",
+          "objectKey": "local_development_resources_transform/cdk.out/d757fde4f232bbef4d5ca97d6d265653ad9ccb2b2cfe407669519576bd382889_asset.d757fde4f232bbef4d5ca97d6d265653ad9ccb2b2cfe407669519576bd382889.zip",
+          "region": "us-west-2"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

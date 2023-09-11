@@ -1,0 +1,21 @@
+{
+    "manifest": {
+      "apis": {
+        "custom": {
+          "endpoint": {
+            "uri": "{{skillEndpoint}}"
+          },
+          
+          "interfaces": []
+        }
+      },
+      "publishingInformation": {
+        "locales": {
+          "en-US": {
+            "name": "Cocktail Alchemist"
+          }
+        }
+      },
+      "manifestVersion": "1.0"
+    }
+  }

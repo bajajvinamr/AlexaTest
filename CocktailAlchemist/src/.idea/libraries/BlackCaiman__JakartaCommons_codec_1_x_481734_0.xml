@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: JakartaCommons-codec-1.x.481734.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/JakartaCommons-codec/JakartaCommons-codec-1.x.481734.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/commons-codec-1.15.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/JakartaCommons-codec/JakartaCommons-codec-1.x.481734.0/AL2_x86_64/generic-flavor/src/commons-codec-1.15-src/src/main/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/JakartaCommons-codec/JakartaCommons-codec-1.x.481734.0/AL2_x86_64/generic-flavor/src/commons-codec-1.15-src/src/test/java" />
+    </SOURCES>
+  </library>
+</component>

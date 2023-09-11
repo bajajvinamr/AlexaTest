@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: Jcl-over-log4j2-2.x.592552.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/Jcl-over-log4j2/Jcl-over-log4j2-2.x.592552.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/Jcl-over-log4j2-2.x.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Jcl-over-log4j2/Jcl-over-log4j2-2.x.592552.0/AL2_x86_64/generic-flavor/src/log4j-jcl/src/main/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Jcl-over-log4j2/Jcl-over-log4j2-2.x.592552.0/AL2_x86_64/generic-flavor/src/log4j-jcl/src/test/java" />
+    </SOURCES>
+  </library>
+</component>

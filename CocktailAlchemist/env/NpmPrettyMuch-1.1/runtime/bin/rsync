@@ -1,0 +1,2 @@
+#!/apollo/sbin/envroot /bin/bash
+/usr/bin/rsync "$@"

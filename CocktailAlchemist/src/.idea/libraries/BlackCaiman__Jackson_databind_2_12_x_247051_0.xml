@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: Jackson-databind-2.12.x.247051.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/Jackson-databind/Jackson-databind-2.12.x.247051.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/jackson-databind-2.12.7.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Jackson-databind/Jackson-databind-2.12.x.247051.0/AL2_x86_64/generic-flavor/src/third-party-src/src/test/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Jackson-databind/Jackson-databind-2.12.x.247051.0/AL2_x86_64/generic-flavor/src/third-party-src/src/test-jdk14/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Jackson-databind/Jackson-databind-2.12.x.247051.0/AL2_x86_64/generic-flavor/src/third-party-src/src/main/java" />
+    </SOURCES>
+  </library>
+</component>

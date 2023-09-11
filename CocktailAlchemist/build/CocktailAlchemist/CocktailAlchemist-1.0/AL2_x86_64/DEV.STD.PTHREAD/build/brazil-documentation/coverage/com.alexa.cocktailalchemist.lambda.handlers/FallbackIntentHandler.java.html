@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FallbackIntentHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CocktailAlchemist</a> &gt; <a href="index.source.html" class="el_package">com.alexa.cocktailalchemist.lambda.handlers</a> &gt; <span class="el_source">FallbackIntentHandler.java</span></div><h1>FallbackIntentHandler.java</h1><pre class="source lang-java linenums">package com.alexa.cocktailalchemist.lambda.handlers;
+
+import com.alexa.cocktailalchemist.lambda.constants.RequestIntentNames;
+import com.alexa.cocktailalchemist.lambda.utils.ResourceBundleProvider;
+import com.amazon.ask.dispatcher.request.handler.HandlerInput;
+import com.amazon.ask.dispatcher.request.handler.RequestHandler;
+import com.amazon.ask.model.Response;
+
+import java.util.Optional;
+import java.util.ResourceBundle;
+
+import static com.amazon.ask.request.Predicates.intentName;
+
+/**
+ * A basic skill handler to handle FallbackIntent. It will handle all
+ * requests that weren't handled by implemented handlers.
+ */
+<span class="fc" id="L18">public class FallbackIntentHandler implements RequestHandler {</span>
+
+    /**
+     * Validates whether the intent request is FallbackIntent or not.
+     * @param input HandlerInput
+     * @return boolean
+     */
+    @Override
+    public boolean canHandle(HandlerInput input) {
+<span class="fc" id="L27">        return input.matches(intentName(RequestIntentNames.AMAZON_FALLBACK_INTENT));</span>
+    }
+
+    /**
+     * This method sends a &quot;Sorry, I don't know that. You can say try saying help!&quot; message.
+     * @param input HandlerInput
+     * @return Response
+     */
+    @Override
+    public Optional&lt;Response&gt; handle(HandlerInput input) {
+<span class="fc" id="L37">        final ResourceBundle resourceBundle = ResourceBundleProvider.getResourceBundleFromHandlerInput(input);</span>
+<span class="fc" id="L38">        final String speechText = resourceBundle.getString(&quot;FALLBACK_INTENT_SPEECH&quot;);</span>
+<span class="fc" id="L39">        final String skillCardDisplayName = resourceBundle.getString(&quot;SKILL_CARD_DISPLAY_NAME&quot;);</span>
+<span class="fc" id="L40">        return input.getResponseBuilder()</span>
+<span class="fc" id="L41">                .withSpeech(speechText)</span>
+<span class="fc" id="L42">                .withSimpleCard(skillCardDisplayName, speechText)</span>
+<span class="fc" id="L43">                .withReprompt(speechText)</span>
+<span class="fc" id="L44">                .build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

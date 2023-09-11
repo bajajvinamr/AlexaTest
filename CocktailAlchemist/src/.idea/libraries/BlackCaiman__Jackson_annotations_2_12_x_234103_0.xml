@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: Jackson-annotations-2.12.x.234103.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/Jackson-annotations/Jackson-annotations-2.12.x.234103.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/jackson-annotations-2.12.7.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Jackson-annotations/Jackson-annotations-2.12.x.234103.0/AL2_x86_64/generic-flavor/src/third-party-src/src/test/java" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/Jackson-annotations/Jackson-annotations-2.12.x.234103.0/AL2_x86_64/generic-flavor/src/third-party-src/src/main/java" />
+    </SOURCES>
+  </library>
+</component>

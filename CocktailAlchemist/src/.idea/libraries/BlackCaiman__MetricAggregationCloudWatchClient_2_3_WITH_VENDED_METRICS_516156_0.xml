@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="BlackCaiman: MetricAggregationCloudWatchClient-2.3_WITH_VENDED_METRICS.516156.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/brazil-pkg-cache/packages/MetricAggregationCloudWatchClient/MetricAggregationCloudWatchClient-2.3_WITH_VENDED_METRICS.516156.0/AL2_x86_64/DEV.STD.PTHREAD/build/lib/MetricAggregationCloudWatchClient-2.3_WITH_VENDED_METRICS.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/MetricAggregationCloudWatchClient/MetricAggregationCloudWatchClient-2.3_WITH_VENDED_METRICS.516156.0/AL2_x86_64/generic-flavor/src/src" />
+      <root url="file://$USER_HOME$/brazil-pkg-cache/packages/MetricAggregationCloudWatchClient/MetricAggregationCloudWatchClient-2.3_WITH_VENDED_METRICS.516156.0/AL2_x86_64/generic-flavor/src/tst" />
+    </SOURCES>
+  </library>
+</component>

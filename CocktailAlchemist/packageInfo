@@ -1,0 +1,11 @@
+base = {
+  workspace = khsrivas_CocktailAlchemist; 
+  versionSet = "CocktailAlchemist/development";
+};
+packages = { 
+  CocktailAlchemist-IM-Package-1.0 = .; 
+  CocktailAlchemistCDK-1.0 = .;
+  CocktailAlchemist-1.0 = .;
+  CocktailAlchemistTests-1.0 = .;
+};
+platformOverride = AL2_x86_64;
